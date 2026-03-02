@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.20)  2 MAR 2026 08:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.20)  2 MAR 2026 09:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -330,37 +330,13 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 LaTeX Font Info:    Calculating math sizes for size <14> on input line 55.
 \c@sv@footnote=\count326
-
-
-Package natbib Warning: Citation `lavoie2014' on page 1 undefined on input line 157.
-
-
-Package natbib Warning: Citation `lavoie2014' on page 1 undefined on input line 161.
-
 LaTeX Font Info:    Trying to load font information for TS1+aer on input line 166.
 LaTeX Font Info:    No file TS1aer.fd. on input line 166.
+
 
 LaTeX Font Warning: Font shape `TS1/aer/m/n' undefined
 (Font)              using `TS1/cmr/m/n' instead
 (Font)              for symbol `textperiodcentered' on input line 166.
-
-
-Package natbib Warning: Citation `thermodynamics2025' on page 1 undefined on input line 168.
-
-
-Package natbib Warning: Citation `thermodynamics2025' on page 1 undefined on input line 173.
-
-
-Package natbib Warning: Citation `lavoie2014' on page 1 undefined on input line 173.
-
-
-Package natbib Warning: Citation `luyben2014' on page 1 undefined on input line 183.
-
-
-Package natbib Warning: Citation `essien2019' on page 1 undefined on input line 183.
-
-
-Package natbib Warning: Citation `luyben2014' on page 1 undefined on input line 190.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -368,96 +344,20 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [1{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 {c:/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-
-Package natbib Warning: Citation `oliveira2021' on page 2 undefined on input line 196.
-
-
-Package natbib Warning: Citation `labmater2024' on page 2 undefined on input line 196.
-
-
-Package natbib Warning: Citation `oliveira2021' on page 2 undefined on input line 200.
-
-
-Package natbib Warning: Citation `labmater2024' on page 2 undefined on input line 200.
-
-
-Package natbib Warning: Citation `labmater2024' on page 2 undefined on input line 204.
-
-
-Package natbib Warning: Citation `lavoie2014' on page 2 undefined on input line 210.
-
-
-Package natbib Warning: Citation `thermodynamics2025' on page 2 undefined on input line 210.
-
-
-Package natbib Warning: Citation `thermodynamics2025' on page 2 undefined on input line 218.
-
-
-Package natbib Warning: Citation `oliveira2021' on page 2 undefined on input line 218.
-
-
-Package natbib Warning: Citation `luyben2014' on page 2 undefined on input line 282.
-
-
-Package natbib Warning: Citation `luyben2014' on page 2 undefined on input line 287.
-
-
-Package natbib Warning: Citation `luyben2014' on page 2 undefined on input line 295.
-
-
-Package natbib Warning: Citation `essien2019' on page 2 undefined on input line 301.
-
-
-Package natbib Warning: Citation `thermodynamics2025' on page 2 undefined on input line 310.
-
-
-Package natbib Warning: Citation `lavoie2014' on page 2 undefined on input line 310.
-
-
-Package natbib Warning: Citation `thermodynamics2025' on page 2 undefined on input line 323.
-
-
-Package natbib Warning: Citation `oliveira2021' on page 2 undefined on input line 339.
-
-
-Package natbib Warning: Citation `labmater2024' on page 2 undefined on input line 339.
-
-
-Package natbib Warning: Citation `oliveira2021' on page 2 undefined on input line 344.
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [2]
-
-Package natbib Warning: Citation `oliveira2021' on page 3 undefined on input line 352.
-
-
-Package natbib Warning: Citation `labmater2024' on page 3 undefined on input line 352.
-
-
-Package natbib Warning: Citation `labmater2024' on page 3 undefined on input line 360.
-
-
-Package natbib Warning: Citation `oliveira2021' on page 3 undefined on input line 395.
-
-
-Package natbib Warning: Citation `escribano2025' on page 3 undefined on input line 395.
-
-
-Package natbib Warning: Citation `escribano2025' on page 3 undefined on input line 405.
-
-
-Overfull \hbox (46.20126pt too wide) in paragraph at lines 432--439
+Overfull \hbox (46.20126pt too wide) in paragraph at lines 437--444
  [][] 
  []
 
-No file main.bbl.
-[3]
+(./main.bbl
+LaTeX Font Info:    Trying to load font information for T1+aett on input line 36.
+ (c:/texlive/2025/texmf-dist/tex/latex/ae/t1aett.fd
+File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
+) [3]) [4
 
-Package natbib Warning: There were undefined citations.
-
-(./main.aux)
+] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -468,18 +368,18 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 5545 strings out of 467533
- 85411 string characters out of 5423668
- 518921 words of memory out of 5000000
- 34346 multiletter control sequences out of 15000+600000
- 650938 words of font info for 86 fonts, out of 8000000 for 9000
+ 5610 strings out of 467533
+ 86568 string characters out of 5423668
+ 519219 words of memory out of 5000000
+ 34403 multiletter control sequences out of 15000+600000
+ 651427 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  59i,13n,67p,336b,415s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on main.pdf (3 pages, 157594 bytes).
+<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on main.pdf (4 pages, 175601 bytes).
 PDF statistics:
- 75 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
+ 83 PDF objects out of 1000 (max. 8388607)
+ 50 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

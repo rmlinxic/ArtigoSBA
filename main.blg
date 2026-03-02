@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: ifacconf.bst
+Illegal, another \bibstyle command---line 58 of file main.aux
+ : \bibstyle
+ :          {ifacconf}
+I'm skipping whatever remains of this command
+Database file #1: ifacconf.bib
+You've used 9 entries,
+            2921 wiz_defined-function locations,
+            650 strings with 6479 characters,
+and the built_in function-call counts, 4946 in all, are:
+= -- 415
+> -- 168
+< -- 7
++ -- 65
+- -- 54
+* -- 319
+:= -- 803
+add.period$ -- 36
+call.type$ -- 9
+change.case$ -- 57
+chr.to.int$ -- 9
+cite$ -- 9
+duplicate$ -- 391
+empty$ -- 392
+format.name$ -- 79
+if$ -- 981
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 82
+newline$ -- 63
+num.names$ -- 36
+pop$ -- 134
+preamble$ -- 1
+purify$ -- 48
+quote$ -- 0
+skip$ -- 130
+stack$ -- 0
+substring$ -- 213
+swap$ -- 188
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 81
+warning$ -- 0
+while$ -- 34
+width$ -- 0
+write$ -- 140
+(There was 1 error message)
