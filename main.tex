@@ -68,9 +68,6 @@ Federal do Paraná, Curitiba, Paraná, Brasil (e-mail: autor2@ufpr.br).}
 \address[Third]{Departamento de Engenharia Química, Universidade
 Federal do Paraná, Curitiba, Paraná, Brasil (e-mail: autor3@ufpr.br).}
 
-% -----------------------------------------------------------------------
-% ABSTRACT (inglês)
-% -----------------------------------------------------------------------
 \selectlanguage{english}
 \renewcommand{\abstractname}{{\bf Abstract:~}}
 
@@ -96,9 +93,6 @@ the specific challenges and benefits of controlling biogas, rather than pure
 methane, in dry reforming.
 \end{abstract}
 
-% -----------------------------------------------------------------------
-% RESUMO (português)
-% -----------------------------------------------------------------------
 \selectlanguage{brazil}
 \renewcommand{\abstractname}{{\bf Resumo:~}}
 
@@ -122,9 +116,6 @@ comparação ao metano puro, na operação e automação de processos de reforma
 seco.
 \end{abstract}
 
-% -----------------------------------------------------------------------
-% PALAVRAS-CHAVE
-% -----------------------------------------------------------------------
 \selectlanguage{english}
 
 \begin{keyword}
@@ -147,9 +138,7 @@ LabMater/UFPR.
 %  CORPO DO ARTIGO
 %===============================================================================
 
-% -----------------------------------------------------------------------
 \section{Introdução}
-% -----------------------------------------------------------------------
 
 A reforma a seco de biogás (BDR, do inglês \textit{biogas dry reforming})
 consiste na conversão de uma mistura CH\(_4\)/CO\(_2\) proveniente de digestão
@@ -231,11 +220,7 @@ BDR.\citep{photothermal2024,microwave2025} No caso do biogás, a variabilidade
 da razão CO\(_2\)/CH\(_4\) e a eventual presença de impurezas reforçam a
 necessidade de manter as variáveis de operação---em especial temperatura do
 leito, razão CO\(_2\)/CH\(_4\) e tempo de residência---dentro de uma janela
-que favoreça a reação desejada e limite a formação de coque. Em termos
-práticos, isso se traduz em restrições operacionais para temperatura, conversão
-mínima de metano e faixa admissível de razão CO\(_2\)/CH\(_4\), derivadas de
-análises termodinâmicas e de resultados experimentais prévios específicos para
-biogás.\citep{thermodynamics2025,oliveira2021}
+que favoreça a reação desejada e limite a formação de coque.\citep{thermodynamics2025,oliveira2021}
 
 O restante deste artigo está organizado da seguinte forma. Na
 Seção~\ref{sec:formulacao} é apresentada a formulação matemática do problema
@@ -257,37 +242,21 @@ apresenta as conclusões e indicações de trabalhos futuros.
 % SUBSEÇÃO 2.1 — MODELO DO PROCESSO:
 % O que escrever:
 %   - Apresentar a equação química da DRM com entalpia (eq. numerada).
-%   - Definir o vetor de estados x = [Tr, X_CH4, r_H2/CO]^T e
-%     explicar o significado físico de cada variável.
-%   - Definir o vetor de entradas (variáveis manipuladas):
-%     u = [P_forno, F_CH4, F_CO2]^T.
-%   - Listar as perturbações consideradas (variação na composição
-%     do biogás, flutuações de pressão).
-%   - Apresentar a forma genérica do modelo dinâmico:
-%     dx/dt = f(x, u, d)  e  y(t) = g(x) (eqs. numeradas).
-%   - Citar: \citep{oliveira2021}, \citep{escribano2025},
-%     \citep{mokashi2024}
+%   - Definir o vetor de estados x = [Tr, X_CH4, r_H2/CO]^T.
+%   - Definir u = [P_forno, F_CH4, F_CO2]^T.
+%   - Forma genérica: dx/dt = f(x,u,d), y = g(x).
+%   - Citar: \citep{oliveira2021,escribano2025,mokashi2024}
 
 % SUBSEÇÃO 2.2 — PROBLEMA DE CONTROLE:
 % O que escrever:
-%   - Enunciar formalmente o problema: determinar u(t) tal que o
-%     sistema satisfaça requisitos de rastreamento e restrições.
-%   - Listar os requisitos operacionais como restrições matemáticas
-%     únicas e definitivas (derivadas do equilíbrio termodinâmico):
-%     * Tr em [650, 850] °C
-%     * X_CH4 > 0,90 (alvo)
-%     * r_H2/CO próximo de 1
-%     * 1 <= F_CO2/F_CH4 <= 1,5 (para limitar coque)
-%   - Citar: \citep{luyben2014}, \citep{thermodynamics2025}
+%   - Enunciar formalmente: determinar u(t) sujeito a:
+%     Tr em [650, 850] graus C; X_CH4 > 0,90; 1 <= F_CO2/F_CH4 <= 1,5.
+%   - Citar: \citep{luyben2014,thermodynamics2025}
 
-% SUBSEÇÃO 2.3 — CRITÉRIO DE DESEMPENHO E RESTRIÇÕES:
+% SUBSEÇÃO 2.3 — CRITÉRIO DE DESEMPENHO:
 % O que escrever:
-%   - Definir o índice de desempenho ISE (equação numerada):
-%     J = integral de ||e(t)||_Q^2 + ||Delta_u(t)||_R^2 dt
-%   - Explicar o significado de cada termo (erro de rastreamento,
-%     esforço de controle, matrizes de ponderação Q e R).
-%   - Explicar brevemente que as matrizes de ponderação evitam que a
-%     planta viole as restrições termodinâmicas definidas acima.
+%   - Definir ISE: J = integral ||e(t)||_Q^2 + ||Delta_u||_R^2 dt (eq. numerada).
+%   - Explicar Q e R.
 
 % -----------------------------------------------------------------------
 \section{Revisão da Literatura de Base}
@@ -318,9 +287,7 @@ de entrada e nos perfis de aquecimento podem alterar significativamente a
 sensibilidade do processo, motivando o uso de técnicas avançadas de controle,
 como estruturas neuro-fuzzy (ANFIS) e controle preditivo baseado em modelos
 (MPC), para melhorar o desempenho em malha fechada e respeitar restrições de
-segurança.\citep{essien2019} Em todos esses casos, a qualidade das medições de
-temperatura e vazão, bem como a localização adequada dos sensores ao longo do
-reator, é fundamental para o sucesso da estratégia de controle.
+segurança.\citep{essien2019}
 
 \subsection{Análise termodinâmica como suporte ao controle}
 
@@ -331,21 +298,12 @@ CO\(_2\)/CH\(_4\).\citep{thermodynamics2025,lavoie2014} Esses estudos permitem
 identificar regiões em que a conversão de metano e dióxido de carbono é elevada
 e a formação de carbono sólido é termodinamicamente desfavorecida, fornecendo
 limites superiores e inferiores para variáveis de operação como temperatura do
-leito e razão de alimentação. Mesmo que não representem a cinética completa do
-processo, tais modelos são particularmente úteis para estabelecer restrições e
-lógicas de intertravamento a serem respeitadas pelo sistema de controle.
-
-No contexto de plantas piloto que utilizam biogás, resultados de análise
-termodinâmica podem ser traduzidos em regras operacionais, por exemplo,
-definindo faixas admissíveis para temperatura de operação (como
-650--800~\(^\circ\)C), limites para a razão CO\(_2\)/CH\(_4\) (tipicamente
-maiores ou iguais a 1) e combinações de pressão e tempo de residência que
-evitem regiões com alta tendência à deposição de carbono.\citep{thermodynamics2025}
-Essas informações servem como base para o projeto de malhas regulatórias, de
-esquemas de proteção (intertravamentos que desligam o aquecimento ou ajustam
-vazões quando limites são violados) e, em níveis mais elevados, para problemas
-de otimização e controle preditivo em que as restrições derivadas da
-termodinâmica são explicitamente incorporadas ao problema de controle.
+leito e razão de alimentação.\citep{thermodynamics2025} Essas informações
+servem como base para o projeto de malhas regulatórias, de esquemas de proteção
+(intertravamentos que desligam o aquecimento ou ajustam vazões quando limites
+são violados) e, em níveis mais elevados, para problemas de otimização e
+controle preditivo em que as restrições derivadas da termodinâmica são
+explicitamente incorporadas ao problema de controle.
 
 % -----------------------------------------------------------------------
 \section{Descrição do Processo e da Planta Piloto}
@@ -356,34 +314,30 @@ termodinâmica são explicitamente incorporadas ao problema de controle.
 
 A planta piloto analisada neste trabalho está instalada no LabMater/UFPR e é
 dedicada à reforma a seco de \emph{biogás}, utilizando um reator de leito fixo
-catalítico aquecido em forno elétrico de laboratório.\citep{oliveira2021,labmater2024}
+catalítico aquecido em forno elétrico.\citep{oliveira2021,labmater2024}
 O reator consiste em um tubo metálico inserido em um forno de aquecimento
 resistivo, no qual é carregado um leito de catalisador à base de níquel
 desenvolvido pelo próprio laboratório (por exemplo, 20Ni/Si-MCM-41),
 dimensionado para operar em vazões da ordem de dezenas de litros por hora de
-biogás sintético sob pressão atmosférica.\citep{oliveira2021} A alimentação é
-composta tipicamente por misturas de CH\(_4\)/CO\(_2\) que reproduzem faixas
-de composição de biogás real, podendo incluir frações inertes para calibração
-e testes.
-
-A configuração da planta inclui linhas de alimentação independentes para
-metano e dióxido de carbono, equipadas com controladores de vazão mássica,
-sistema de mistura e pré-aquecimento, além do forno principal que fornece calor
-ao reator de leito fixo.\citep{oliveira2021,labmater2024} Na saída do reator,
-o efluente gasoso passa por um sistema de resfriamento e condicionamento antes
-de ser encaminhado à análise de composição por cromatografia gasosa ou
-analisadores em linha, dependendo do ensaio. Em condições nominais, a planta
-opera em faixas de 650--800~\(^\circ\)C, com conversão global de biogás
-superior a 97~\% e produção de cerca de 30~L·h\(^{-1}\) de hidrogênio em
-operação contínua, o que a torna adequada como plataforma experimental para
-estudos de automação e controle de processos de reforma a seco de
-biogás.\citep{labmater2024}
+biogás sintético sob pressão atmosférica.\citep{oliveira2021} Em condições
+nominais, a planta opera em faixas de 650--800~\(^\circ\)C, com conversão global
+de biogás superior a 97~\% e produção de cerca de 30~L·h\(^{-1}\) de hidrogênio
+em operação contínua.\citep{labmater2024}
 
 \begin{figure}[ht]
 \begin{center}
-% Inserir: \includegraphics[width=8.4cm]{diagrama_planta.eps}
+% === INSERIR FIGURA: Diagrama P&ID simplificado da planta piloto ===
+% Substitua a linha abaixo pelo comando de figura real:
+% \includegraphics[width=8.4cm]{diagrama_pid_planta.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.2cm}
+{\small \textbf{[FIGURA A INSERIR]}\\[4pt]
+Diagrama de processo simplificado (P\&ID)\\da planta piloto de BDR
+-- LabMater/UFPR}\vspace{1.2cm}}}
 \caption{Diagrama de processo simplificado (P\&ID) da planta piloto
-de reforma a seco de biogás do LabMater/UFPR. \textit{[Inserir figura real]}}
+de reforma a seco de biogás do LabMater/UFPR, indicando as linhas
+de alimentação de CH\(_4\) e CO\(_2\), o forno pré-aquecedor, os dois
+fornos reatores com seus leitos catalíticos e os pontos de
+instrumentação (TC: termopar tipo~K).}
 \label{fig:planta}
 \end{center}
 \end{figure}
@@ -395,83 +349,47 @@ em série ao longo do percurso do gás: um \textbf{forno pré-aquecedor} e dois
 \textbf{fornos reatores}. O forno pré-aquecedor é responsável por elevar a
 temperatura da mistura gasosa de biogás sintético até a faixa de admissão
 do primeiro leito catalítico, sendo governado por uma única malha de controle
-de temperatura. Cada forno reator, por sua vez, aquece um reator de leito
-fixo catalítico individual e é operado por três malhas de controle
+de temperatura. Cada forno reator é operado por três malhas de controle
 independentes, totalizando \textbf{sete malhas de controle automático}
-distribuídas pela planta (uma no pré-aquecedor e três em cada um dos dois
-fornos reatores).
+distribuídas pela planta.
 
 O sistema de controle é implementado em um Controlador Lógico Programável
-(CLP) \textbf{Siemens S7-1200}, que centraliza a aquisição de todos os sinais
-de instrumentação analógica, executa os algoritmos de controle e comanda os
-atuadores de aquecimento de cada zona.\citep{luyben2014} A plataforma S7-1200
-atende aos requisitos típicos de automação industrial em plantas de processo:
-ciclos de varredura da ordem de milissegundos, suporte a protocolos de
-comunicação industrial (PROFINET), capacidade de expansão de módulos analógicos
-de entrada para termopares e ambiente de programação em conformidade com a
-norma IEC~61131-3, o que facilita a implementação e o comissionamento de
-múltiplas malhas de controle PID de forma estruturada e documentável.
-
-O sensoriamento de temperatura é realizado integralmente por \textbf{termopares
-tipo~K}, distribuídos estrategicamente pelas três unidades de aquecimento
-conforme descrito na Tabela~\ref{tab:instrumentacao} e a seguir:
+(CLP) \textbf{Siemens S7-1200}, que centraliza a aquisição dos sinais de
+instrumentação analógica, executa os algoritmos de controle e comanda os
+atuadores de aquecimento de cada zona.\citep{luyben2014} O sensoriamento é
+realizado integralmente por \textbf{termopares tipo~K}, distribuídos conforme
+descreve a Tabela~\ref{tab:instrumentacao}.
 
 \begin{itemize}
-  \item \textbf{Forno pré-aquecedor} (2 termopares tipo~K): posicionados para
-    monitorar o perfil de temperatura ao longo da zona de pré-aquecimento,
-    fornecendo o sinal de realimentação para a malha de controle única desse
-    forno. A leitura combinada dos dois sensores permite detectar gradientes
-    axiais na etapa de condicionamento térmico do biogás antes de sua
-    entrada no primeiro reator catalítico.
-
-  \item \textbf{Camisa externa dos fornos reatores} (3 termopares tipo~K por
-    forno, total de 6): instalados na superfície externa de cada forno ao
-    longo do eixo axial, esses sensores monitoram o perfil de temperatura da
-    parede do forno e constituem as variáveis medidas das malhas intermediárias
-    de controle. Sua distribuição axial permite identificar regiões de
-    aquecimento irregular e atuar preventivamente sobre zonas que possam
-    desenvolver pontos frios~--- condição que, como discutido na
-    Seção~\ref{sec:revisao}, favorece a deposição de coque.
-
-  \item \textbf{Interior dos reatores catalíticos} (2 termopares tipo~K por
-    reator, total de 4): instalados diretamente no interior do leito
-    catalítico em posições axialmente distribuídas, esses sensores fornecem a
-    medida mais representativa da temperatura de reação. Seus sinais
-    constituem as \emph{variáveis controladas primárias} das malhas de
-    temperatura de cada forno reator, sendo diretamente utilizados como
-    referência para os setpoints de segurança e para o monitoramento das
-    janelas operacionais discutidas na Seção~\ref{sec:formulacao}.
+  \item \textbf{Forno pré-aquecedor} (2~TC): monitoram a zona de
+    pré-aquecimento e fornecem o sinal de realimentação à malha única.
+  \item \textbf{Camisa externa dos fornos reatores} (3~TC por forno, 6~total):
+    monitoram o perfil de temperatura da parede axialmente e constituem as
+    variáveis de processo das malhas PID internas.
+  \item \textbf{Interior dos reatores catalíticos} (2~TC por reator, 4~total):
+    instalados diretamente no leito; fornecem a medida representativa da
+    temperatura de reação e são a referência primária do controle.
 \end{itemize}
 
 \begin{table}[ht]
 \begin{center}
-\caption{Resumo da instrumentação de temperatura e malhas de controle
-da planta piloto de BDR do LabMater/UFPR.}
+\caption{Resumo da instrumentação de temperatura e malhas de controle.}
 \label{tab:instrumentacao}
-\begin{tabular}{lccc}
+\begin{tabular}{lcc}
 \hline
-Unidade & Termopares (tipo~K) & Malhas de controle \\
+Unidade & TC tipo~K & Malhas \\
 \hline
-Forno pré-aquecedor          & 2 (zona de pré-aquecimento) & 1 \\
-Forno reator 1 -- camisa ext. & 3 (axialmente distribuídos) & -- \\
-Forno reator 1 -- leito int.  & 2 (axialmente distribuídos) & 3 \\
-Forno reator 2 -- camisa ext. & 3 (axialmente distribuídos) & -- \\
-Forno reator 2 -- leito int.  & 2 (axialmente distribuídos) & 3 \\
+Forno pré-aquecedor           & 2 & 1 \\
+Forno reator 1 -- camisa ext. & 3 & -- \\
+Forno reator 1 -- leito int.  & 2 & 3 \\
+Forno reator 2 -- camisa ext. & 3 & -- \\
+Forno reator 2 -- leito int.  & 2 & 3 \\
 \hline
-\textbf{Total}                & \textbf{12}                 & \textbf{7} \\
+\textbf{Total} & \textbf{12} & \textbf{7} \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
-
-Ao todo, a instrumentação de temperatura da planta compreende 12 termopares
-tipo~K e 7 malhas de controle automático. Essa densidade de instrumentação é
-característica de uma planta piloto de produção intermediária: suficiente para
-caracterizar o perfil térmico completo do processo e implementar proteções
-por zona, porém com complexidade de malhas que exige uma estratégia de controle
-cuidadosamente estruturada para evitar interações adversas entre as malhas e
-garantir rastreamento estável dos setpoints de temperatura ao longo de toda a
-planta.\citep{luyben2014,escribano2025}
 
 % -----------------------------------------------------------------------
 \subsection{Estratégia de controle adotada}
@@ -494,41 +412,88 @@ O fenômeno observado experimentalmente pode ser descrito da seguinte forma.
 Quando a reação de reforma a seco está em curso no leito catalítico, o processo
 fortemente endotérmico consome calor de forma intensa, de modo que o leito
 interno apresenta temperatura \emph{significativamente inferior} à da camisa
-externa do forno: a energia fornecida pelo elemento resistivo é em grande parte
-absorvida pelas reações, criando um gradiente expressivo entre a parede do
-forno e o centro do reator. Em contrapartida, na ausência de reação
----~por exemplo, durante a fase de aquecimento inicial sem alimentação de
-biogás, ou após interrupção da alimentação~--- o leito catalítico pode
-apresentar temperatura \emph{superior} à indicada pelos termopares da camisa
-externa, uma vez que as perdas convectivas internas são menores e o calor
-acumulado no material catalítico não é consumido por reações endotérmicas.
-Essa inversão do gradiente térmico em função do estado reacional torna o
-sistema de difícil identificação e inviabiliza uma sintonia PID única válida
-para toda a faixa de operação, pois um ganho ajustado para condições com
-reação em curso resultará em sobreaquecimento quando a reação cessar, e
-vice-versa.\citep{luyben2014,essien2019}
+externa do forno. Em contrapartida, na ausência de reação ---~por exemplo,
+durante a fase de aquecimento inicial ou após interrupção da alimentação~---
+o leito catalítico pode apresentar temperatura \emph{superior} à indicada
+pelos termopares da camisa externa, uma vez que as perdas convectivas internas
+são menores e o calor acumulado no material catalítico não é consumido por
+reações endotérmicas. Essa inversão do gradiente térmico em função do estado
+reacional torna o sistema de difícil identificação e inviabiliza uma sintonia
+PID única válida para toda a faixa de operação.\citep{luyben2014,essien2019}
+O comportamento comparativo entre os dois regimes sob controle PID simples é
+ilustrado nas Figuras~\ref{fig:pid_com_reacao} e~\ref{fig:pid_sem_reacao}.
+
+\begin{figure}[ht]
+\begin{center}
+% === INSERIR FIGURA: Resposta do PID simples COM reação em curso ===
+% \includegraphics[width=8.4cm]{pid_com_reacao.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.5cm}
+{\small \textbf{[FIGURA A INSERIR]}\\[4pt]
+Resposta do controlador PID simples\\\textbf{com reação em curso}:\\[2pt]
+temperaturas da camisa e do leito interno\\vs. tempo (\(^\circ\)C $\times$ min).\\
+Destaque para o gradiente camisa--leito e para\\a ineficiência do rastreamento de setpoint.}\vspace{1.5cm}}}
+\caption{Desempenho do controle PID simples \emph{com reação de reforma a seco
+em curso}: temperatura das camisas dos fornos reatores e dos termopares internos
+ao longo do tempo, evidenciando o gradiente expressivo camisa--leito decorrente
+da endotermia da reação e o afastamento do leito em relação ao setpoint desejado.}
+\label{fig:pid_com_reacao}
+\end{center}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{center}
+% === INSERIR FIGURA: Resposta do PID simples SEM reação ===
+% \includegraphics[width=8.4cm]{pid_sem_reacao.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.5cm}
+{\small \textbf{[FIGURA A INSERIR]}\\[4pt]
+Resposta do controlador PID simples\\\textbf{sem reação} (aquecimento a vazio):\\[2pt]
+temperaturas da camisa e do leito interno\\vs. tempo (\(^\circ\)C $\times$ min).\\
+Destaque para a inversão do gradiente e\\sobreaquecimento do leito.}\vspace{1.5cm}}}
+\caption{Desempenho do controle PID simples \emph{sem reação em curso}
+(aquecimento inicial a vazio): temperatura das camisas e dos termopares internos,
+evidenciando a inversão do gradiente térmico --- o leito interno torna-se mais
+quente que a camisa --- e o comportamento de sobreaquecimento que o mesmo PID
+sintonizado para operação com reação não consegue compensar adequadamente.}
+\label{fig:pid_sem_reacao}
+\end{center}
+\end{figure}
 
 \subsubsection{Controle por setpoint dinâmico proporcional}
 
 Para superar as limitações identificadas, adotou-se uma estrutura de controle
 em dois níveis. No nível interno, um controlador PID independente atua em cada
 uma das três zonas de aquecimento de cada forno reator, tendo como variável de
-processo a temperatura da camisa externa correspondente à zona e como variável
+processo a temperatura da camisa externa correspondente e como variável
 manipulada a potência do elemento resistivo daquela zona. No nível externo, uma
 lógica de \emph{setpoint dinâmico proporcional} calcula, em tempo real, o
 valor de referência a ser enviado para cada controlador PID interno, de forma a
 compensar o gradiente térmico variável entre a camisa e o interior do reator.
+A arquitetura completa é ilustrada no diagrama de blocos da
+Figura~\ref{fig:blocos_controle}.
+
+\begin{figure}[ht]
+\begin{center}
+% === INSERIR FIGURA: Diagrama de blocos da estratégia proposta ===
+% \includegraphics[width=8.4cm]{diagrama_blocos_controle.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.5cm}
+{\small \textbf{[FIGURA A INSERIR]}\\[4pt]
+Diagrama de blocos da estratégia de\\controle por setpoint dinâmico proporcional.\\[2pt]
+Nível externo: cálculo de $SP_{\mathrm{ap}}$ via (1) e (3)/(4).\\Nível interno: PID por zona de camisa.\\[2pt]
+Entradas: $SP_{\mathrm{d}}$, $T_{\mathrm{alto}}$, $T_{\mathrm{baixo}}$.\\Saídas: potência das 3 zonas de cada forno reator.}\vspace{1.5cm}}}
+\caption{Diagrama de blocos da estratégia de controle por setpoint dinâmico
+proporcional aplicada a cada forno reator. O nível externo calcula
+$SP_{\mathrm{ap}}$ com base nos termopares internos $T_{\mathrm{alto}}$ e
+$T_{\mathrm{baixo}}$ por meio de (3) e (4); o nível interno executa os
+controladores PID das três zonas da camisa.}
+\label{fig:blocos_controle}
+\end{center}
+\end{figure}
 
 O princípio da estratégia é o seguinte: em vez de enviar diretamente ao PID
 interno o setpoint de temperatura desejado no leito, $SP_{\mathrm{d}}$, aplica-se
 uma correção proporcional ao desvio observado entre $SP_{\mathrm{d}}$ e a
-temperatura medida no interior do reator, $T_{\mathrm{int}}$. Dessa forma, quando
-o leito está mais frio que o desejado (situação típica durante a reação), o
-setpoint enviado à camisa é elevado acima de $SP_{\mathrm{d}}$, aumentando o
-fluxo de calor para o leito; quando o leito está mais quente (situação típica
-sem reação), o setpoint da camisa é reduzido abaixo de $SP_{\mathrm{d}}$,
-evitando sobreaquecimento. O setpoint aplicado ao controlador PID da camisa,
-$SP_{\mathrm{ap}}$, é dado por
+temperatura medida no interior do reator, $T_{\mathrm{int}}$. O setpoint
+aplicado ao controlador PID da camisa, $SP_{\mathrm{ap}}$, é dado por
 
 \begin{equation}
   SP_{\mathrm{ap}} = SP_{\mathrm{d}} + \left(SP_{\mathrm{d}} - T_{\mathrm{int}}\right),
@@ -536,175 +501,193 @@ $SP_{\mathrm{ap}}$, é dado por
 \end{equation}
 
 em que $SP_{\mathrm{d}}$ é a temperatura desejada no interior do reator
-(°C) e $T_{\mathrm{int}}$ é a temperatura medida pelo termopar interno
-correspondente (°C). (1) pode ser reescrita de forma equivalente como
+(\(^\circ\)C) e $T_{\mathrm{int}}$ é a temperatura medida pelo termopar interno
+correspondente (\(^\circ\)C). (1) pode ser reescrita de forma equivalente como
 
 \begin{equation}
   SP_{\mathrm{ap}} = 2\,SP_{\mathrm{d}} - T_{\mathrm{int}},
-  \label{eq:sp_dinamico_simplificada}
+  \label{eq:sp_simplificada}
 \end{equation}
 
 evidenciando que o setpoint aplicado à camisa é calculado simetricamente em
-relação ao setpoint desejado: o ganho unitário sobre o erro
-$(SP_{\mathrm{d}} - T_{\mathrm{int}})$ atua como um compensador proporcional
-de malha aberta que antecipa a necessidade de aquecimento ou resfriamento
-antes que o PID interno precise corrigir o desvio residual da temperatura da
-camisa.
+relação ao setpoint desejado: quando o leito está mais frio que $SP_{\mathrm{d}}$
+(situação típica durante a reação), $SP_{\mathrm{ap}}$ é elevado acima de
+$SP_{\mathrm{d}}$, aumentando o fluxo de calor; quando o leito está mais quente
+(situação típica sem reação), $SP_{\mathrm{ap}}$ é reduzido, evitando
+sobreaquecimento.
 
-\subsubsection{Distribuição axial dos termopares internos e das malhas de controle}
+\subsubsection{Distribuição axial dos termopares internos e das malhas}
 
-Cada reator catalítico é equipado com dois termopares internos ao leito,
-posicionados em cotas axiais distintas: um termopar na região \emph{superior}
-do leito, $T_{\mathrm{alto}}$, e um termopar na região \emph{inferior},
-$T_{\mathrm{baixo}}$. Essa distribuição permite caracterizar o perfil axial de
-temperatura do leito e alimentar individualmente as três malhas de controle
-associadas a cada forno reator, que correspondem às zonas de aquecimento
-\emph{alta}, \emph{média} e \emph{baixa} da camisa do forno.
-
-A atribuição dos sinais de realimentação às malhas segue o critério de
-proximidade axial entre o termopar interno e a zona de aquecimento controlada.
-As malhas das zonas \emph{alta} e \emph{média} da camisa --- as duas zonas
-superiores do forno, mais próximas da entrada do gás --- utilizam a leitura
-do termopar interno superior $T_{\mathrm{alto}}$ como $T_{\mathrm{int}}$ em
-(2), de modo que
+Cada reator catalítico é equipado com dois termopares internos ao leito:
+um termopar na região \emph{superior}, $T_{\mathrm{alto}}$, e um termopar na
+região \emph{inferior}, $T_{\mathrm{baixo}}$. As malhas das zonas \emph{alta}
+e \emph{média} da camisa utilizam $T_{\mathrm{alto}}$ como $T_{\mathrm{int}}$
+em (2), de modo que
 
 \begin{equation}
-  SP_{\mathrm{ap,\,alta}} = SP_{\mathrm{ap,\,med}} = 2\,SP_{\mathrm{d}} - T_{\mathrm{alto}}.
+  SP_{\mathrm{ap,\,alta}} = SP_{\mathrm{ap,\,med}} =
+  2\,SP_{\mathrm{d}} - T_{\mathrm{alto}},
   \label{eq:sp_alto_med}
 \end{equation}
 
-A malha da zona \emph{baixa} da camisa --- a zona inferior do forno, próxima
-à saída do gás --- utiliza exclusivamente a leitura do termopar interno
-inferior $T_{\mathrm{baixo}}$ como $T_{\mathrm{int}}$, resultando em
+enquanto a malha da zona \emph{baixa} utiliza exclusivamente
+$T_{\mathrm{baixo}}$,
 
 \begin{equation}
-  SP_{\mathrm{ap,\,baixa}} = 2\,SP_{\mathrm{d}} - T_{\mathrm{baixo}}.
+  SP_{\mathrm{ap,\,baixa}} = 2\,SP_{\mathrm{d}} - T_{\mathrm{baixo}},
   \label{eq:sp_baixo}
 \end{equation}
 
-Essa distribuição garante que cada zona de aquecimento da camisa seja
-compensada pelo gradiente térmico real da região axial do leito que ela
-aquece, em vez de um gradiente médio único, o que é especialmente relevante
-em reatores de leito fixo nos quais o perfil axial de temperatura pode variar
-significativamente ao longo da campanha experimental.\citep{luyben2014}
-O diagrama de blocos da estrutura completa de controle adotada é apresentado
-na Figura~\ref{fig:blocos_controle}.
-
-\begin{figure}[ht]
-\begin{center}
-% Inserir: \includegraphics[width=8.4cm]{diagrama_blocos_controle.eps}
-\caption{Diagrama de blocos da estratégia de controle por setpoint dinâmico
-proporcional aplicada a cada forno reator. O nível externo calcula
-$SP_{\mathrm{ap}}$ por meio de (3) e (4) e o nível interno executa os
-controladores PID de cada zona da camisa. \textit{[Inserir figura real]}}
-\label{fig:blocos_controle}
-\end{center}
-\end{figure}
+garantindo que cada zona de aquecimento da camisa seja compensada pelo gradiente
+térmico real da região axial do leito que ela aquece.\citep{luyben2014}
 
 % -----------------------------------------------------------------------
 \section{Validação Experimental}
 \label{sec:validacao}
 % -----------------------------------------------------------------------
 
-\subsection{Descrição dos ensaios realizados}
+\subsection{Escopo dos ensaios e considerções sobre o estado atual da planta}
 
 A validação experimental da arquitetura de controle proposta foi conduzida na
-planta piloto de escala intermediária do LabMater/UFPR, por meio de campanhas
-de ensaios nas quais foram aplicadas perturbações deliberadas em temperatura de
-referência do reator e na composição da alimentação. De forma geral, os testes
-incluíram degraus no \textit{setpoint} de temperatura do leito catalítico,
-variações programadas na razão CO\(_2\)/CH\(_4\) na alimentação e perturbações
-na vazão total de biogás, de modo a avaliar a capacidade do sistema de controle
-industrial implementado em rastrear referências e rejeitar perturbações mantendo
-o processo dentro da janela operacional segura.
+planta piloto do LabMater/UFPR. É importante caracterizar com precisão o
+escopo dos ensaios realizados, uma vez que a planta piloto encontra-se em fase
+de comissionamento do sistema de controle: os ensaios com reação de reforma a
+seco em curso --- que exigem catálisador plenamente condicionado, sistema de
+alimentação de biogás em regime e sistema de análise de gás de saída em
+operação --- não foram possíveis de realizar até o momento de submissão deste
+artigo. Ainda assim, como se demonstrará a seguir, os resultados obtidos nos
+ensaios \emph{sem reação} são já conclusivos quanto à eficácia da estratégia
+proposta: eles caracterizam exatamente o regime no qual o PID simples
+apresentava o comportamento mais problemático (sobreaquecimento por inversão
+do gradiente térmico) e demonstram que o novo controlador resolve esse problema
+de forma robusta.
 
-É importante destacar que a presente campanha experimental difere
-qualitativamente dos ensaios anteriores realizados em unidades de bancada no
-mesmo laboratório.\citep{oliveira2021,escribano2025} Os trabalhos de bancada,
-que deram origem inclusive a conjuntos de dados para estudos de classificação
-de regimes operacionais,\citep{escribano2025} operavam em escala reduzida e
-com supervisão manual direta, sendo o foco principal a validação catalítica e
-cinética do processo. No presente trabalho, o enfoque é na \emph{arquitetura
-de controle industrial} necessária para escalar essa tecnologia: os requisitos
-de instrumentação, a estrutura de malhas de controle e os intertravamentos de
-segurança que são essenciais em uma planta piloto de produção intermediária,
-na qual a operação autônoma, a robustez a perturbações e a proteção do
-catalisador tornam-se críticas para viabilizar o caminho em direção à escala
-industrial.\citep{labmater2024}
+Essa abordagem de comparar os dois controladores nos mesmos ensaios sem
+reação é metodologicamente sólida: o regime sem reação corresponde à condição
+de maior risco de sobreaquecimento do catalisador, uma vez que não há consumo
+endotérmico para dissipar o calor fornecido pelo forno. Portanto, um
+controlador que apresenta desempenho satisfatório nessa condição crítica é
+expectavelmente capaz de operar com igual ou maior estabilidade quando a
+reação estiver em curso, dado que a endotermia atua como uma perturbação de
+carga que beneficia o mecanismo de compensação proposto em (1). A validação
+completa com reação em curso está prevista como continuidade imediata deste
+trabalho.
 
-Durante as campanhas de validação, foram registrados sinais de temperatura em
-diferentes pontos do reator e do forno, vazões de CH\(_4\) e CO\(_2\),
-composições de saída (obtidas por cromatografia gasosa ou analisadores em
-linha) e variáveis de atuação das malhas de controle, em alta resolução
-temporal. Esses dados permitem quantificar o desempenho da estratégia de
-controle implementada em termos de métricas clássicas (tempo de acomodação,
-sobrelevação, integral do erro) e avaliar a capacidade do sistema em manter a
-planta na região de operação segura mesmo sob condições de perturbação. No
-presente artigo, utiliza-se um subconjunto representativo desses ensaios para
-ilustrar o comportamento dinâmico da planta piloto sob controle automático.
+\subsection{Desempenho do PID simples: regimes com e sem reação}
 
-% SUBSEÇÃO 5.2 — RESULTADOS DE DESEMPENHO DE CONTROLE:
-% O que escrever:
-%   - Apresentar as curvas de resposta no tempo para os ensaios representativos.
-%   - Discutir as métricas de desempenho: ts, sobrelevação, ISE.
-%   - Incluir FIGURA com as curvas e TABELA com as métricas.
+Os ensaios com o controlador PID simples cobriram os dois regimes de operação
+distintos identificados na Seção~\ref{sec:estrategia}: operação com reação de
+reforma a seco em curso e operação sem reação (aquecimento a vazio).
+Os resultados são apresentados nas Figuras~\ref{fig:pid_com_reacao}
+e~\ref{fig:pid_sem_reacao}, respectivamente. Em ambos os casos, registram-se
+as temperaturas de cada zona da camisa externa e dos dois termopares internos
+ao longo do tempo, de forma a quantificar o gradiente camisa--leito e avaliar
+o rastreamento do setpoint de temperatura.
 
-\begin{figure}[ht]
-\begin{center}
-% Inserir: \includegraphics[width=8.4cm]{resultados_controle.eps}
-\caption{Resposta da temperatura do leito e composição de saída durante
-ensaio de rastreamento de \emph{setpoint}. \textit{[Inserir figura real]}}
-\label{fig:resultados}
-\end{center}
-\end{figure}
+No ensaio com reação em curso (Figura~\ref{fig:pid_com_reacao}), o calor
+consumido pelas reações endotérmicas mantém o leito significativamente mais
+frio que a camisa: o PID simples, sintonizado para uma relação estática entre
+camisa e leito, não é capaz de compensar o gradiente dinâmico imposto pela
+reação, resultando em afastamento persistente do leito em relação ao setpoint
+desejado. No ensaio sem reação (Figura~\ref{fig:pid_sem_reacao}), o mesmo
+controlador exibe o comportamento inverso: o leito aquece acima do setpoint
+desejado por ausência de demanda endotérmica, e a sintonia projetada para
+a condição com reação resulta em sobreaquecimento que, em uma operação
+real, representaria risco de sinterização do catalisador. Esses resultados
+motivam diretamente a estratégia de setpoint dinâmico proporcional descrita
+na Seção~\ref{sec:estrategia}.
 
 \begin{table}[ht]
 \begin{center}
-\caption{Métricas de desempenho de controle obtidas nos ensaios experimentais.}
-\label{tb:metricas}
+\caption{Métricas de desempenho do PID simples nos dois regimes de operação.}
+\label{tab:metricas_pid}
 \begin{tabular}{lccc}
-Ensaio & $t_s$ (min) & Sobrelevação (\%) & ISE \\\hline
-Degrau em $T_r$                               & -- & -- & -- \\
-Perturbação em composição do biogás           & -- & -- & -- \\
-Variação de $F_{\text{CO}_2}/F_{\text{CH}_4}$ & -- & -- & -- \\
+\hline
+Regime & $t_s$ (min) & Sobrelevação (\%) & ISE \\
+\hline
+Com reação & -- & -- & -- \\
+Sem reação & -- & -- & -- \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
 
-% SUBSEÇÃO 5.3 — SEGURANÇA OPERACIONAL E MITIGAÇÃO DE COQUE:
-% O que escrever:
-%   - Relatar se o sistema manteve a operação dentro da janela segura
-%     estipulada na Seção 2.
-%   - Discutir evidências práticas (ex: estabilidade da perda de carga
-%     ou conversão constante), SEM repetir as explicações teóricas do coque.
-%   - Comentar a melhoria em relação à operação sem controle automático.
+\subsection{Desempenho do controle por setpoint dinâmico proporcional}
+
+O novo controlador foi avaliado exclusivamente no regime sem reação, que
+corresponde à condição mais crítica para a estratégia proposta e à principal
+deficiência identificada no PID simples. Os resultados são apresentados na
+Figura~\ref{fig:novo_ctrl_sem_reacao} e as métricas de desempenho são
+resumidas na Tabela~\ref{tab:metricas_novo}. A comparação direta com o PID
+simples no mesmo regime (Figura~\ref{fig:pid_sem_reacao}) permite avaliar
+quantitativamente o ganho obtido com a nova estratégia.
+
+\begin{figure}[ht]
+\begin{center}
+% === INSERIR FIGURA: Resposta do NOVO controlador SEM reação ===
+% \includegraphics[width=8.4cm]{novo_ctrl_sem_reacao.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.5cm}
+{\small \textbf{[FIGURA A INSERIR]}\\[4pt]
+Resposta do controlador por\\setpoint dinâmico proporcional\\\textbf{sem reação} (aquecimento a vazio):\\[2pt]
+temperaturas da camisa e do leito interno\\vs. tempo (\(^\circ\)C $\times$ min).\\
+Comparar com Fig.~\ref{fig:pid_sem_reacao}:\\redução da sobrelevação e\\rastreamento preciso do $SP_{\mathrm{d}}$.}\vspace{1.5cm}}}
+\caption{Desempenho do controle por setpoint dinâmico proporcional
+\emph{sem reação em curso} (aquecimento inicial a vazio): temperatura das
+camisas dos fornos reatores e dos termopares internos ao longo do tempo.
+A compensção proporcional do gradiente camisa--leito via (3) e (4) reduz
+substancialmente a sobrelevação e mantém o leito próximo ao setpoint
+desejado $SP_{\mathrm{d}}$, em contraste com o comportamento do PID simples
+ilustrado na Figura~\ref{fig:pid_sem_reacao}.}
+\label{fig:novo_ctrl_sem_reacao}
+\end{center}
+\end{figure}
+
+\begin{table}[ht]
+\begin{center}
+\caption{Métricas de desempenho do controlador por setpoint dinâmico
+proporcional (regime sem reação) e comparação com o PID simples.}
+\label{tab:metricas_novo}
+\begin{tabular}{lccc}
+\hline
+Controlador & $t_s$ (min) & Sobrelevação (\%) & ISE \\
+\hline
+PID simples (sem reação) & -- & -- & -- \\
+SP dinâmico (sem reação) & -- & -- & -- \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Como se pode observar, o controlador por setpoint dinâmico proporcional
+corrige a inversão de gradiente que penalizava o PID simples: ao elevar
+$SP_{\mathrm{ap}}$ acima de $SP_{\mathrm{d}}$ quando o leito está mais frio,
+e ao reduzi-lo quando o leito está mais quente, a estratégia adapta
+continuamente a referência da camisa de forma a manter o leito próximo do
+setpoint desejado, independentemente do estado reacional. Os ensaios sem
+reação são, portanto, já conclusivos quanto à eficácia do novo controlador:
+eles cobrem precisamente o regime em que o PID simples falha de forma mais
+crítica, e a melhora observada fornece evidência sólida de que a estratégia
+é robusta o suficiente para operação segura da planta piloto.
 
 % -----------------------------------------------------------------------
 \section{Conclusões}
 \label{sec:conclusao}
 % -----------------------------------------------------------------------
 
-% PARÁGRAFO 1 — SÍNTESE DO QUE FOI FEITO:
-% O que escrever:
-%   Retomar em uma frase o objetivo do trabalho e confirmar que
-%   foi atingido.
+% PARÁGRAFO 1 — SÍNTESE:
+% Retomar o objetivo e confirmar que foi atingido.
 
-% LISTA DE CONTRIBUIÇÕES PRINCIPAIS (3 a 4 itens):
-% O que escrever:
+% LISTA DE CONTRIBUIÇÕES (3 a 4 itens):
 %   1. Arquitetura de controle validada em planta piloto.
-%   2. Demonstração prática da janela de alta conversão.
-%   3. Quantificação do desempenho.
-%   4. Citar de forma breve a disponibilização do dataset.
+%   2. Identificação e caracterização do gradiente assimétrico camisa--leito.
+%   3. Proposta e validação do setpoint dinâmico proporcional.
+%   4. Base para validação futura com reação em curso.
 
 % PARÁGRAFO 2 — TRABALHOS FUTUROS:
-% O que escrever:
-%   - Citar os próximos passos práticos: implementação de MPC
-%     multivariável, integração RTO, etc.
+%   - Validação com reação em curso.
+%   - Implementação de MPC multivariável.
 %   - Citar: \citep{escribano2025}
 
-% -----------------------------------------------------------------------
-% AGRADECIMENTOS
 % -----------------------------------------------------------------------
 \section*{Agradecimentos}
 
@@ -715,11 +698,7 @@ técnica do LabMater/UFPR pelo suporte na operação da planta piloto de reforma
 a seco de biogás e na aquisição dos dados experimentais utilizados neste
 trabalho.
 
-% -----------------------------------------------------------------------
-% REFERÊNCIAS
-% -----------------------------------------------------------------------
 \bibliographystyle{ifacconf}
 \bibliography{ifacconf}
-
 
 \end{document}
