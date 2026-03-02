@@ -1,0 +1,492 @@
+%===============================================================================
+% Template para artigo CBA/SBA - Adaptado do IFAC
+% Artigo: Controle e Automação da Planta Piloto de Hidrogênio por
+%         Reforma a Seco de Biogás – UFPR/LabMater
+%
+% ORDEM DE COMPILAÇÃO:
+%   1. pdflatex main.tex
+%   2. bibtex main
+%   3. pdflatex main.tex
+%   4. pdflatex main.tex
+%
+% CHAVES DO referencias.bib USADAS NESTE ARQUIVO:
+%   oliveira2021, oliveira2022, escribano2025, lavoie2014, luyben2014,
+%   mokashi2024, essien2019, thermodynamics2025, labmater2024,
+%   dissertacao2024, escribano_ipt, balancing2023, microwave2025,
+%   photothermal2024, scaling2024, sciencedirect_drm
+%===============================================================================
+\documentclass[a4paper]{ifacconf}
+
+\usepackage{graphicx,amsmath,url}
+\usepackage[round]{natbib}
+
+\def\portugues{1}
+
+\ifx\portugues\undefined
+\def\portugues{0}
+\fi
+
+\if\portugues0
+   \usepackage[english]{babel}
+  \else
+   \usepackage[spanish,brazil,english]{babel}
+\fi
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{ae}
+
+\if\portugues1
+ \newtheorem{teorema}[thm]{{\em Teorema}}{ }
+ \newtheorem{lema}[thm]{{\em Lema}}{ }
+ \newtheorem{corolario}[thm]{{\em Corolário}}{ }
+ \newenvironment{prova}{{\bf Prova.}}{ }
+\fi
+
+\begin{document}
+
+\if\portugues1
+\selectlanguage{brazil}
+
+\begin{frontmatter}
+
+\title{Controle e Automação de Planta Piloto de Produção de
+Hidrogênio por Reforma a Seco de Biogás no
+LabMater/UFPR\thanksref{footnoteinfo}}
+
+\thanks[footnoteinfo]{Reconhecimento do suporte financeiro deve vir
+nesta nota de rodapé.}
+
+\author[First]{Ricardo M. Israel}
+\author[Second]{Dr. Gustavo H. C. Oliveira}
+\author[Third]{Dr. Helton J. Alves}
+
+\address[First]{Departamento de Engenharia Elétrica, Universidade
+Federal do Paraná, Curitiba, Paraná, Brasil (e-mail: autor1@ufpr.br).}
+\address[Second]{Departamento de Engenharia Elétrica, Universidade
+Federal do Paraná, Curitiba, Paraná, Brasil (e-mail: autor2@ufpr.br).}
+\address[Third]{Departamento de Engenharia Química, Universidade
+Federal do Paraná, Curitiba, Paraná, Brasil (e-mail: autor3@ufpr.br).}
+
+% -----------------------------------------------------------------------
+% ABSTRACT (inglês)
+% -----------------------------------------------------------------------
+\selectlanguage{english}
+\renewcommand{\abstractname}{{\bf Abstract:~}}
+
+\begin{abstract}
+This paper presents the design and experimental validation of a process
+control architecture for a pilot-scale renewable hydrogen production plant
+based on dry reforming of \emph{biogas} (BDR), developed at the Laboratory
+of Materials and Renewable Energies (LabMater) of the Federal University of
+Paraná (UFPR). In the studied process, raw biogas---a CH$_4$/CO$_2$ mixture
+with variable composition and typical impurities---is converted into synthesis
+gas (H$_2$ + CO) via highly endothermic reactions, which makes the reactor
+strongly sensitive to heat supply, feed ratio and flow disturbances. These
+characteristics, combined with the risk of coke deposition and catalyst
+deactivation, impose strict operational constraints that require automatic
+control of reactor temperature and CO$_2$/CH$_4$ feed ratio within a safe
+operating window. The paper formulates the mathematical control problem for
+the LabMater/UFPR biogas dry reforming pilot plant, proposes a control
+structure tailored to this configuration, and validates it experimentally.
+Results show that the implemented architecture maintains the reactor in the
+target temperature range, ensures high CH$_4$ conversion and keeps the
+CO$_2$/CH$_4$ ratio within limits that mitigate coke formation, illustrating
+the specific challenges and benefits of controlling biogas, rather than pure
+methane, in dry reforming.
+\end{abstract}
+
+% -----------------------------------------------------------------------
+% RESUMO (português)
+% -----------------------------------------------------------------------
+\selectlanguage{brazil}
+\renewcommand{\abstractname}{{\bf Resumo:~}}
+
+\begin{abstract}
+Este artigo apresenta o projeto e a validação experimental de uma arquitetura
+de controle de processos para uma planta piloto de produção de hidrogênio
+renovável baseada na reforma a seco de \emph{biogás}, desenvolvida no
+Laboratório de Materiais e Energias Renováveis (LabMater) da UFPR. No processo
+estudado, o biogás bruto---mistura CH$_4$/CO$_2$ de composição variável e
+contendo impurezas típicas---é convertido em gás de síntese (H$_2$ + CO) por
+meio de reações fortemente endotérmicas, o que torna o reator sensível a
+perturbações no suprimento de calor, na razão CO$_2$/CH$_4$ e nas vazões de
+alimentação. Essas características, somadas ao risco de deposição de coque e
+desativação do catalisador, impõem restrições operacionais rígidas e demandam
+controle automático preciso da temperatura do leito e da razão de alimentação
+para manter a operação em uma janela segura. O trabalho formula o problema de
+controle para a planta piloto de reforma a seco de biogás do LabMater/UFPR,
+propõe uma estrutura de controle adequada a essa configuração e a valida
+experimentalmente, evidenciando os desafios adicionais do uso de biogás, em
+comparação ao metano puro, na operação e automação de processos de reforma a
+seco.
+\end{abstract}
+
+% -----------------------------------------------------------------------
+% PALAVRAS-CHAVE
+% -----------------------------------------------------------------------
+\selectlanguage{english}
+
+\begin{keyword}
+Biogas dry reforming; green hydrogen production; process control;
+pilot plant; LabMater/UFPR.
+
+\vskip 1mm
+\selectlanguage{brazil}
+{\noindent\it Palavras-chaves:} Reforma a seco de biogás; reforma a seco do
+metano; produção de hidrogênio verde; controle de processos; planta piloto;
+LabMater/UFPR.
+\end{keyword}
+
+\selectlanguage{brazil}
+
+\end{frontmatter}
+\fi
+
+%===============================================================================
+%  CORPO DO ARTIGO
+%===============================================================================
+
+% -----------------------------------------------------------------------
+\section{Introdução}
+% -----------------------------------------------------------------------
+
+A reforma a seco de biogás (BDR, do inglês \textit{biogas dry reforming})
+consiste na conversão de uma mistura CH\(_4\)/CO\(_2\) proveniente de digestão
+anaeróbia em gás de síntese (H\(_2\) + CO), utilizando o próprio CO\(_2\) do
+biogás como agente oxidante do metano.\citep{lavoie2014} Ao substituir o uso
+de metano puro por biogás, o processo passa a atuar diretamente sobre uma
+corrente renovável e de menor valor agregado, contribuindo simultaneamente para
+a valorização de resíduos orgânicos e para a mitigação de emissões de gases de
+efeito estufa.\citep{lavoie2014} Nesse contexto, a reforma a seco de biogás
+se destaca como rota promissora para a produção de hidrogênio renovável e gás
+de síntese integrados a cadeias de energia de baixo carbono.
+
+Do ponto de vista termodinâmico, a reação global de reforma a seco é fortemente
+endotérmica, com entalpia padrão da ordem de 247~kJ·mol\(^{-1}\), de modo que
+temperaturas elevadas e suprimento intenso de calor são necessários para
+alcançar conversões significativas de CH\(_4\) e CO\(_2\).\citep{thermodynamics2025}
+Estudos de equilíbrio mostram que, para misturas representativas de biogás, a
+conversão de metano aumenta com a temperatura e que faixas típicas de operação
+situam-se entre 650 e 900~\(^\circ\)C, enquanto abaixo de cerca de 640~\(^\circ\)C
+a reação deixa de ser espontânea e a formação de carbono sólido torna-se
+favorecida.\citep{thermodynamics2025,lavoie2014} Em comparação com a reforma a
+seco de metano puro, o uso de biogás introduz complexidades adicionais, como a
+variabilidade temporal da composição CH\(_4\)/CO\(_2\), a possível presença de
+espécies inertes (N\(_2\), O\(_2\)) e de traços de impurezas (por exemplo,
+H\(_2\)S), que afetam tanto o desempenho catalítico quanto o comportamento
+dinâmico do processo.
+
+Apesar da literatura extensa em desenvolvimento de catalisadores, estudos
+cinéticos e análises termodinâmicas para reforma a seco, há relativamente
+poucos trabalhos dedicados a controle e automação de processos de BDR em
+plantas piloto reais.\citep{luyben2014,essien2019} Em muitos casos, as
+estratégias de controle são avaliadas em reatores de bancada ou em modelos
+simulados de DRM com metano, sem considerar explicitamente as flutuações de
+composição e as incertezas associadas ao biogás. Em processos fortemente
+endotérmicos e suscetíveis à formação de coque, como a BDR, o controle de
+processo passa a ser elemento central para viabilizar operação estável e
+segura, especialmente quando se busca operar em janelas de alta conversão de
+CH\(_4\)/CO\(_2\) e baixa formação de carbono.\citep{luyben2014}
+
+Nesse cenário, o Laboratório de Materiais e Energias Renováveis (LabMater) da
+Universidade Federal do Paraná (UFPR) tem papel pioneiro no Brasil ao
+desenvolver e operar uma planta piloto de produção de hidrogênio a partir de
+\emph{reforma a seco de biogás}, baseada em reator de leito fixo catalítico e
+aquecimento elétrico.\citep{oliveira2021,labmater2024} A unidade opera
+tipicamente em faixas de 650--800~\(^\circ\)C e pressão atmosférica, com
+vazões de alimentação da ordem de dezenas de litros por hora de biogás
+sintético (CH\(_4\)/CO\(_2\) ajustável) e catalisadores à base de níquel
+desenvolvidos no próprio laboratório.\citep{oliveira2021,labmater2024}
+Resultados institucionais indicam conversão global de biogás superior a
+97~\% e produção de cerca de 30~L·h\(^{-1}\) de hidrogênio em regime
+contínuo, consolidando a planta como plataforma experimental representativa
+para estudos de controle de processos em BDR.\citep{labmater2024}
+
+A BDR é particularmente suscetível à deposição de carbono (coque) sobre o
+catalisador, decorrente de reações como a decomposição do metano e a reação
+de Boudouard, o que leva à perda de atividade catalítica, aumento de perda de
+carga e, em casos extremos, riscos operacionais associados à obstrução do
+leito.\citep{lavoie2014,thermodynamics2025} No caso do biogás, a variabilidade
+da razão CO\(_2\)/CH\(_4\) e a eventual presença de impurezas reforçam a
+necessidade de manter as variáveis de operação---em especial temperatura do
+leito, razão CO\(_2\)/CH\(_4\) e tempo de residência---dentro de uma janela
+que favoreça a reação desejada e limite a formação de coque. Em termos
+práticos, isso se traduz em restrições operacionais para temperatura, conversão
+mínima de metano e faixa admissível de razão CO\(_2\)/CH\(_4\), derivadas de
+análises termodinâmicas e de resultados experimentais prévios específicos para
+biogás.\citep{thermodynamics2025,oliveira2021}
+
+O restante deste artigo está organizado da seguinte forma. Na
+Seção~\ref{sec:formulacao} é apresentada a formulação matemática do problema
+de controle para a planta piloto de reforma a seco de biogás do LabMater/UFPR.
+A Seção~\ref{sec:revisao} revisa conceitos de controle de processos
+endotérmicos e o uso de análises termodinâmicas como suporte à definição de
+janelas operacionais e lógicas de intertravamento. A Seção~\ref{sec:processo}
+descreve o processo de BDR e a configuração da planta piloto, incluindo seus
+principais equipamentos e instrumentos. A Seção~\ref{sec:validacao} apresenta
+os ensaios experimentais realizados para validação da estratégia de controle
+proposta e discute os resultados obtidos. Por fim, a Seção~\ref{sec:conclusao}
+apresenta as conclusões e indicações de trabalhos futuros.
+
+% -----------------------------------------------------------------------
+\section{Formulação Matemática do Problema de Controle}
+\label{sec:formulacao}
+% -----------------------------------------------------------------------
+
+% SUBSEÇÃO 2.1 — MODELO DO PROCESSO:
+% O que escrever:
+%   - Apresentar a equação química da DRM com entalpia (eq. numerada).
+%   - Definir o vetor de estados x = [Tr, X_CH4, r_H2/CO]^T e
+%     explicar o significado físico de cada variável.
+%   - Definir o vetor de entradas (variáveis manipuladas):
+%     u = [P_forno, F_CH4, F_CO2]^T.
+%   - Listar as perturbações consideradas (variação na composição
+%     do biogás, flutuações de pressão).
+%   - Apresentar a forma genérica do modelo dinâmico:
+%     dx/dt = f(x, u, d)  e  y(t) = g(x) (eqs. numeradas).
+%   - Citar: \citep{oliveira2021}, \citep{escribano2025},
+%     \citep{mokashi2024}
+
+% SUBSEÇÃO 2.2 — PROBLEMA DE CONTROLE:
+% O que escrever:
+%   - Enunciar formalmente o problema: determinar u(t) tal que o
+%     sistema satisfaça requisitos de rastreamento e restrições.
+%   - Listar os requisitos operacionais como restrições matemáticas
+%     únicas e definitivas (derivadas do equilíbrio termodinâmico):
+%     * Tr em [650, 850] °C
+%     * X_CH4 > 0,90 (alvo)
+%     * r_H2/CO próximo de 1
+%     * 1 <= F_CO2/F_CH4 <= 1,5 (para limitar coque)
+%   - Citar: \citep{luyben2014}, \citep{thermodynamics2025}
+
+% SUBSEÇÃO 2.3 — CRITÉRIO DE DESEMPENHO E RESTRIÇÕES:
+% O que escrever:
+%   - Definir o índice de desempenho ISE (equação numerada):
+%     J = integral de ||e(t)||_Q^2 + ||Delta_u(t)||_R^2 dt
+%   - Explicar o significado de cada termo (erro de rastreamento,
+%     esforço de controle, matrizes de ponderação Q e R).
+%   - Explicar brevemente que as matrizes de ponderação evitam que a
+%     planta viole as restrições termodinâmicas definidas acima.
+
+% -----------------------------------------------------------------------
+\section{Revisão da Literatura de Base}
+\label{sec:revisao}
+% -----------------------------------------------------------------------
+
+\subsection{Controle de processos endotérmicos}
+
+Reatores tubulares aquecidos externamente, como aqueles empregados em processos
+de reforma a seco, apresentam forte acoplamento entre o balanço de energia no
+forno e o perfil de temperatura ao longo do leito catalítico, o que resulta em
+dinâmica lenta e não linear.\citep{luyben2014} Em aplicações industriais, é
+comum empregar estruturas de controle em cascata, nas quais uma malha interna
+regula a variável relacionada ao fornecimento de calor (por exemplo, potência
+do forno ou temperatura de parede), enquanto uma malha externa atua sobre a
+temperatura de saída do reator ou sobre um ponto representativo do
+leito.\citep{luyben2014} Essa abordagem melhora a rejeição a perturbações de
+carga e de composição e reduz o efeito de atrasos associados à inércia térmica
+do conjunto forno--reator.
+
+Para processos fortemente endotérmicos, controladores PID convencionais
+continuam sendo amplamente utilizados como base, porém frequentemente requerem
+estratégias de sintonia cuidadosa e, em alguns casos, adaptação de parâmetros
+para lidar com a não linearidade ao longo de diferentes pontos de
+operação.\citep{luyben2014} Estudos recentes em reforma a seco de metano com
+CO\(_2\) indicam que variações na razão de alimentação, na composição do gás
+de entrada e nos perfis de aquecimento podem alterar significativamente a
+sensibilidade do processo, motivando o uso de técnicas avançadas de controle,
+como estruturas neuro-fuzzy (ANFIS) e controle preditivo baseado em modelos
+(MPC), para melhorar o desempenho em malha fechada e respeitar restrições de
+segurança.\citep{essien2019} Em todos esses casos, a qualidade das medições de
+temperatura e vazão, bem como a localização adequada dos sensores ao longo do
+reator, é fundamental para o sucesso da estratégia de controle.
+
+\subsection{Análise termodinâmica como suporte ao controle}
+
+Análises termodinâmicas de equilíbrio, implementadas em simuladores de processo
+com modelos do tipo RGibbs, têm sido amplamente utilizadas para mapear janelas
+operacionais de DRM/BDR em função de temperatura, pressão e razão
+CO\(_2\)/CH\(_4\).\citep{thermodynamics2025,lavoie2014} Esses estudos permitem
+identificar regiões em que a conversão de metano e dióxido de carbono é elevada
+e a formação de carbono sólido é termodinamicamente desfavorecida, fornecendo
+limites superiores e inferiores para variáveis de operação como temperatura do
+leito e razão de alimentação. Mesmo que não representem a cinética completa do
+processo, tais modelos são particularmente úteis para estabelecer restrições e
+lógicas de intertravamento a serem respeitadas pelo sistema de controle.
+
+No contexto de plantas piloto que utilizam biogás, resultados de análise
+termodinâmica podem ser traduzidos em regras operacionais, por exemplo,
+definindo faixas admissíveis para temperatura de operação (como
+650--800~\(^\circ\)C), limites para a razão CO\(_2\)/CH\(_4\) (tipicamente
+maiores ou iguais a 1) e combinações de pressão e tempo de residência que
+evitem regiões com alta tendência à deposição de carbono.\citep{thermodynamics2025}
+Essas informações servem como base para o projeto de malhas regulatórias, de
+esquemas de proteção (intertravamentos que desligam o aquecimento ou ajustam
+vazões quando limites são violados) e, em níveis mais elevados, para problemas
+de otimização e controle preditivo em que as restrições derivadas da
+termodinâmica são explicitamente incorporadas ao problema de controle.
+
+% -----------------------------------------------------------------------
+\section{Descrição do Processo e da Planta Piloto}
+\label{sec:processo}
+% -----------------------------------------------------------------------
+
+\subsection{Configuração da planta piloto}
+
+A planta piloto analisada neste trabalho está instalada no LabMater/UFPR e é
+dedicada à reforma a seco de \emph{biogás}, utilizando um reator de leito fixo
+catalítico aquecido em forno elétrico de laboratório.\citep{oliveira2021,labmater2024}
+O reator consiste em um tubo metálico inserido em um forno de aquecimento
+resistivo, no qual é carregado um leito de catalisador à base de níquel
+desenvolvido pelo próprio laboratório (por exemplo, 20Ni/Si-MCM-41),
+dimensionado para operar em vazões da ordem de dezenas de litros por hora de
+biogás sintético sob pressão atmosférica.\citep{oliveira2021} A alimentação é
+composta tipicamente por misturas de CH\(_4\)/CO\(_2\) que reproduzem faixas
+de composição de biogás real, podendo incluir frações inertes para calibração
+e testes.
+
+A configuração da planta inclui linhas de alimentação independentes para
+metano e dióxido de carbono, equipadas com controladores de vazão mássica,
+sistema de mistura e pré-aquecimento, além do forno principal que fornece calor
+ao reator de leito fixo.\citep{oliveira2021,labmater2024} Na saída do reator,
+o efluente gasoso passa por um sistema de resfriamento e condicionamento antes
+de ser encaminhado à análise de composição por cromatografia gasosa ou
+analisadores em linha, dependendo do ensaio. Em condições nominais, a planta
+opera em faixas de 650--800~\(^\circ\)C, com conversão global de biogás
+superior a 97~\% e produção de cerca de 30~L·h\(^{-1}\) de hidrogênio em
+operação contínua, o que a torna adequada como plataforma experimental para
+estudos de automação e controle de processos de reforma a seco de
+biogás.\citep{labmater2024}
+
+\begin{figure}[ht]
+\begin{center}
+% Inserir: \includegraphics[width=8.4cm]{diagrama_planta.eps}
+\caption{Diagrama de processo simplificado (P\&ID) da planta piloto
+de reforma a seco de biogás do LabMater/UFPR. \textit{[Inserir figura real]}}
+\label{fig:planta}
+\end{center}
+\end{figure}
+
+% SUBSEÇÃO 4.2 — INSTRUMENTAÇÃO E ARQUITETURA DE CONTROLE:
+% O que escrever:
+%   - Listar os instrumentos instalados (Termopares tipo K, transmissores, MFCs).
+%   - Descrever o hardware/software de automação utilizado (CLP, SCADA).
+%   - Apresentar o diagrama de blocos da arquitetura de controle.
+%   - Citar: \citep{escribano2025}, \citep{luyben2014}
+
+% SUBSEÇÃO 4.3 — ESTRATÉGIA DE CONTROLE ADOTADA:
+% O que escrever:
+%   - Descrever detalhadamente a estrutura de controle implementada:
+%     * Malha primária: controle de temperatura do leito.
+%     * Malha secundária/razão: controle de fluxo de reagentes.
+%   - Conectar a estratégia com a formulação da Seção 2.
+
+% -----------------------------------------------------------------------
+\section{Validação Experimental}
+\label{sec:validacao}
+% -----------------------------------------------------------------------
+
+\subsection{Descrição dos ensaios realizados}
+
+A validação experimental da estratégia de controle proposta foi conduzida por
+meio de campanhas de ensaios na planta piloto de reforma a seco de biogás, nas
+quais foram aplicadas perturbações deliberadas em temperatura de referência do
+reator e na composição da alimentação.\citep{oliveira2021,escribano2025} De
+forma geral, os testes incluíram degraus no \textit{setpoint} de temperatura
+do leito catalítico, variações programadas na razão CO\(_2\)/CH\(_4\) na
+alimentação e perturbações na vazão total de biogás, de modo a avaliar a
+capacidade do sistema de controle em rastrear referências e rejeitar
+perturbações mantendo o processo dentro da janela operacional segura.
+
+Durante as campanhas, foram registrados sinais de temperatura em diferentes
+pontos do reator e do forno, vazões de CH\(_4\) e CO\(_2\), composições de
+saída (obtidas por cromatografia gasosa ou analisadores em linha) e variáveis
+de atuação das malhas de controle, em alta resolução temporal.\citep{escribano2025}
+Esses dados foram organizados em um conjunto estruturado (\textit{dataset}) que
+inclui rótulos de estados operacionais, permitindo análises posteriores de
+desempenho, estudo de regimes transitórios e aplicação de métodos de
+aprendizado de máquina para classificação de regimes e detecção de desvios. No
+presente artigo, utiliza-se um subconjunto representativo desses ensaios para
+ilustrar o comportamento dinâmico da planta sob controle automático.
+
+% SUBSEÇÃO 5.2 — RESULTADOS DE DESEMPENHO DE CONTROLE:
+% O que escrever:
+%   - Apresentar as curvas de resposta no tempo para os ensaios representativos.
+%   - Discutir as métricas de desempenho: ts, sobrelevação, ISE.
+%   - Incluir FIGURA com as curvas e TABELA com as métricas.
+
+\begin{figure}[ht]
+\begin{center}
+% Inserir: \includegraphics[width=8.4cm]{resultados_controle.eps}
+\caption{Resposta da temperatura do leito e composição de saída durante
+ensaio de rastreamento de \emph{setpoint}. \textit{[Inserir figura real]}}
+\label{fig:resultados}
+\end{center}
+\end{figure}
+
+\begin{table}[ht]
+\begin{center}
+\caption{Métricas de desempenho de controle obtidas nos ensaios experimentais.}
+\label{tb:metricas}
+\begin{tabular}{lccc}
+Ensaio & $t_s$ (min) & Sobrelevação (\%) & ISE \\\hline
+Degrau em $T_r$                               & -- & -- & -- \\
+Perturbação em composição do biogás           & -- & -- & -- \\
+Variação de $F_{\text{CO}_2}/F_{\text{CH}_4}$ & -- & -- & -- \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+% SUBSEÇÃO 5.3 — SEGURANÇA OPERACIONAL E MITIGAÇÃO DE COQUE:
+% O que escrever:
+%   - Relatar se o sistema manteve a operação dentro da janela segura
+%     estipulada na Seção 2.
+%   - Discutir evidências práticas (ex: estabilidade da perda de carga
+%     ou conversão constante), SEM repetir as explicações teóricas do coque.
+%   - Comentar a melhoria em relação à operação sem controle automático.
+
+% -----------------------------------------------------------------------
+\section{Conclusões}
+\label{sec:conclusao}
+% -----------------------------------------------------------------------
+
+% PARÁGRAFO 1 — SÍNTESE DO QUE FOI FEITO:
+% O que escrever:
+%   Retomar em uma frase o objetivo do trabalho e confirmar que
+%   foi atingido.
+
+% LISTA DE CONTRIBUIÇÕES PRINCIPAIS (3 a 4 itens):
+% O que escrever:
+%   1. Arquitetura de controle validada em planta piloto.
+%   2. Demonstração prática da janela de alta conversão.
+%   3. Quantificação do desempenho.
+%   4. Citar de forma breve a disponibilização do dataset.
+
+% PARÁGRAFO 2 — TRABALHOS FUTUROS:
+% O que escrever:
+%   - Citar os próximos passos práticos: implementação de MPC
+%     multivariável, integração RTO, etc.
+%   - Citar: \citep{escribano2025}
+
+% -----------------------------------------------------------------------
+% AGRADECIMENTOS
+% -----------------------------------------------------------------------
+\section*{Agradecimentos}
+
+Os autores agradecem o apoio financeiro das agências de fomento brasileiras,
+em particular ao CNPq, à CAPES e à Fundação Araucária, pelos recursos
+concedidos para o desenvolvimento desta pesquisa. Agradecem também à equipe
+técnica do LabMater/UFPR pelo suporte na operação da planta piloto de reforma
+a seco de biogás e na aquisição dos dados experimentais utilizados neste
+trabalho.
+
+% -----------------------------------------------------------------------
+% REFERÊNCIAS
+% -----------------------------------------------------------------------
+\bibliographystyle{ifacconf}
+\bibliography{ifacconf}
+
+
+\end{document}
