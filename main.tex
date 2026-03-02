@@ -189,19 +189,34 @@ processo passa a ser elemento central para viabilizar operação estável e
 segura, especialmente quando se busca operar em janelas de alta conversão de
 CH\(_4\)/CO\(_2\) e baixa formação de carbono.\citep{luyben2014}
 
-Nesse cenário, o Laboratório de Materiais e Energias Renováveis (LabMater) da
-Universidade Federal do Paraná (UFPR) tem papel pioneiro no Brasil ao
-desenvolver e operar uma planta piloto de produção de hidrogênio a partir de
-\emph{reforma a seco de biogás}, baseada em reator de leito fixo catalítico e
-aquecimento elétrico.\citep{oliveira2021,labmater2024} A unidade opera
-tipicamente em faixas de 650--800~\(^\circ\)C e pressão atmosférica, com
-vazões de alimentação da ordem de dezenas de litros por hora de biogás
-sintético (CH\(_4\)/CO\(_2\) ajustável) e catalisadores à base de níquel
-desenvolvidos no próprio laboratório.\citep{oliveira2021,labmater2024}
-Resultados institucionais indicam conversão global de biogás superior a
-97~\% e produção de cerca de 30~L·h\(^{-1}\) de hidrogênio em regime
-contínuo, consolidando a planta como plataforma experimental representativa
-para estudos de controle de processos em BDR.\citep{labmater2024}
+No Brasil, o Laboratório de Materiais e Energias Renováveis (LabMater) da
+Universidade Federal do Paraná (UFPR) vem desenvolvendo sistematicamente a
+rota de reforma a seco de biogás desde a escala de bancada. Trabalhos
+anteriores demonstraram a viabilidade catalítica do processo em unidades
+experimentais de bancada, incluindo a validação de catalisadores à base de
+níquel e o escalonamento da síntese catalítica para quantidades suficientes
+aos ensaios laboratoriais.\citep{oliveira2021,oliveira2022} Nesses sistemas
+de bancada, as variáveis de processo---temperatura, vazão e composição---são
+manipuladas manualmente ou por controladores simples de laboratório, o que é
+possível em vista da pequena escala envolvida e da supervisão direta e
+contínua do pesquisador durante os ensaios.\citep{oliveira2021}
+
+A transição desse conhecimento fundamental para uma \emph{planta de produção
+intermediária} --- etapa necessária antes da implantação industrial ---
+impõe uma mudança qualitativa nos requisitos de operação: a supervisão manual
+já não é viável, as distâncias térmicas são maiores, as inércias são mais
+lentas e as consequências de desvios operacionais tornam-se críticas do ponto
+de vista de segurança e custo.\citep{labmater2024} Nessa escala intermediária,
+a automação e o controle de processos deixam de ser acessórios e passam a
+ser requisitos fundamentais para manter a operação dentro da janela segura,
+garantir alta conversão de CH\(_4\)/CO\(_2\), controlar a razão de alimentação
+e proteger o cat alisador de deposição acelerada de coque. É precisamente
+nesse contexto que se insere o presente trabalho: a planta piloto do
+LabMater/UFPR, operando em faixas de 650--800~\(^\circ\)C e produzindo cerca
+de 30~L·h\(^{-1}\) de hidrogênio em regime contínuo,\citep{labmater2024}
+representa a plataforma experimental sobre a qual se formula, implementa e
+valida a arquitetura de controle industrial que viabiliza esse
+\emph{scale-up} de forma segura e reprodutível.
 
 A BDR é particularmente suscetível à deposição de carbono (coque) sobre o
 catalisador, decorrente de reações como a decomposição do metano e a reação
@@ -209,9 +224,9 @@ de Boudouard, o que leva à perda de atividade catalítica, aumento de perda de
 carga e, em casos extremos, riscos operacionais associados à obstrução do
 leito.\citep{lavoie2014,thermodynamics2025} Rotas alternativas de fornecimento
 de calor --- como aquecimento foto-térmico e assistência por micro-ondas ---
-têm sido investigadas justamente para reduzir gradientes térmicos e pontos frios
-no leito que favorecem a nucleação de coque, reforçando a importância do
-controle de temperatura como variável central na operação segura da
+têm sido investigadas justamente para reduzir gradientes térmicos e pontos
+frios no leito que favorecem a nucleação de coque, reforçando a importância
+do controle de temperatura como variável central na operação segura da
 BDR.\citep{photothermal2024,microwave2025} No caso do biogás, a variabilidade
 da razão CO\(_2\)/CH\(_4\) e a eventual presença de impurezas reforçam a
 necessidade de manter as variáveis de operação---em especial temperatura do
