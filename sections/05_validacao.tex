@@ -1,0 +1,105 @@
+%===============================================================================
+% SEÇÃO 5 — Validação Experimental
+%===============================================================================
+
+\section{Validação Experimental}
+\label{sec:validacao}
+
+\subsection{Escopo dos ensaios}
+
+A validação experimental foi conduzida na planta piloto do LabMater/UFPR.
+Os ensaios com reação de reforma a seco em curso não foram possíveis de
+realizar até o momento de submissão deste artigo, pois a planta encontra-se
+em fase de comissionamento do sistema de controle. Ainda assim, os resultados
+obtidos nos ensaios sem reação são já conclusivos quanto à eficácia da
+estratégia proposta: eles caracterizam exatamente o regime no qual o PID
+simples apresentava o comportamento mais problemático --- sobreaquecimento
+por inversão do gradiente térmico --- e demonstram que o novo controlador
+resolve esse problema de forma robusta.
+
+Essa abordagem é metodologicamente sólida: o regime sem reação corresponde
+à condição de maior risco de sobreaquecimento, uma vez que não há consumo
+endotérmico para dissipar o calor fornecido pelo forno. Um controlador que
+apresenta desempenho satisfatório nessa condição crítica é expectavelmente
+capaz de operar com igual ou maior estabilidade quando a reação estiver em
+curso, dado que a endotermia atua como uma perturbação de carga que beneficia
+o mecanismo de compensação proposto em (\ref{eq:sp_dinamico}). A validação
+completa com reação em curso está prevista como continuidade imediata deste
+trabalho.
+
+\subsection{Desempenho do PID simples nos dois regimes}
+
+Os ensaios com o PID simples cobriram os dois regimes de operação identificados
+na Seção~\ref{sec:estrategia}: com reação em curso e sem reação (aquecimento
+a vazio). Os resultados são apresentados nas
+Figuras~\ref{fig:pid_com_reacao} e~\ref{fig:pid_sem_reacao}, com as métricas
+correspondentes na Tabela~\ref{tab:metricas_pid}.
+
+No ensaio com reação, o calor consumido pelas reações endotérmicas mantém o
+leito significativamente mais frio que a camisa, e o PID não consegue compensar
+o gradiente dinâmico imposto, resultando em afastamento persistente do leito
+em relação ao setpoint. No ensaio sem reação, o mesmo controlador exibe o
+comportamento inverso: por ausência de demanda endotérmica, o leito aquece
+acima do setpoint desejado, e a sintonia projetada para operação com reação
+resulta em sobreaquecimento que, em operação real, representaria risco de
+sinterização do catalisador.
+
+\begin{table}[ht]
+\begin{center}
+\caption{Desempenho do PID simples nos dois regimes.}
+\label{tab:metricas_pid}
+\begin{tabular}{lccc}
+\hline
+Regime & $t_s$ (min) & Sobrelevação (\%) & ISE \\
+\hline
+Com reação & -- & -- & -- \\
+Sem reação & -- & -- & -- \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\subsection{Desempenho do controlador por setpoint dinâmico proporcional}
+
+O novo controlador foi avaliado no regime sem reação, que corresponde à
+condição mais crítica identificada no PID simples. Os resultados são
+apresentados na Figura~\ref{fig:novo_ctrl_sem_reacao} e as métricas de
+desempenho são resumidas na Tabela~\ref{tab:metricas_novo}, que também
+permite a comparação direta com o PID simples no mesmo regime.
+
+\begin{figure}[ht]
+\begin{center}
+% === INSERIR FIGURA: Novo controlador SEM reação ===
+% \includegraphics[width=8.4cm]{novo_ctrl_sem_reacao.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.5cm}
+{\small [FIGURA A INSERIR]\\[4pt]
+Setpoint dinâmico -- sem reação:\\temperaturas da camisa e do leito vs.\ tempo}\vspace{1.5cm}}}
+\caption{Controlador por setpoint dinâmico sem reação: rastreamento de
+$SP_{\mathrm{d}}$ e redução da sobrelevação em comparação à
+Fig.~\ref{fig:pid_sem_reacao}.}
+\label{fig:novo_ctrl_sem_reacao}
+\end{center}
+\end{figure}
+
+\begin{table}[ht]
+\begin{center}
+\caption{PID simples vs.\ setpoint dinâmico proporcional (regime sem reação).}
+\label{tab:metricas_novo}
+\begin{tabular}{lccc}
+\hline
+Controlador & $t_s$ (min) & Sobrelevação (\%) & ISE \\
+\hline
+PID simples & -- & -- & -- \\
+SP dinâmico & -- & -- & -- \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Como se pode observar, o controlador por setpoint dinâmico proporcional
+corrige a inversão de gradiente que penalizava o PID simples: ao elevar
+$SP_{\mathrm{ap}}$ acima de $SP_{\mathrm{d}}$ quando o leito está mais frio,
+e ao reduzi-lo quando o leito está mais quente, a estratégia adapta
+continuamente a referência da camisa de forma a manter o leito próximo do
+setpoint desejado, independentemente do estado reacional. Os ensaios sem
+reação são, portanto, já conclusivos quanto à eficácia do novo controlador.

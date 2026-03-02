@@ -1,0 +1,212 @@
+%===============================================================================
+% SEÇÃO 4 — Descrição do Processo e da Planta Piloto
+%===============================================================================
+
+\section{Descrição do Processo e da Planta Piloto}
+\label{sec:processo}
+
+\subsection{Configuração da planta piloto}
+
+A planta piloto analisada neste trabalho está instalada no LabMater/UFPR e é
+dedicada à reforma a seco de \emph{biogás}, utilizando um reator de leito fixo
+catalítico aquecido em forno elétrico.\citep{oliveira2021,labmater2024}
+O reator consiste em um tubo metálico inserido em um forno de aquecimento
+resistivo, no qual é carregado um leito de catalisador à base de níquel
+(por exemplo, 20Ni/Si-MCM-41), dimensionado para operar em vazões da ordem de
+dezenas de litros por hora de biogás sintético sob pressão
+atmosférica.\citep{oliveira2021} Em condições nominais, a planta opera em
+faixas de 650--800~\(^\circ\)C, com conversão global de biogás superior a
+97~\% e produção de cerca de 30~L·h\(^{-1}\) de hidrogênio em operação
+continua.\citep{labmater2024}
+
+\begin{figure}[ht]
+\begin{center}
+% === INSERIR FIGURA: Diagrama P&ID simplificado ===
+% \includegraphics[width=8.4cm]{diagrama_pid_planta.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.2cm}
+{\small [FIGURA A INSERIR]\\[4pt]
+Diagrama P\&ID simplificado da planta piloto}\vspace{1.2cm}}}
+\caption{Diagrama P\&ID simplificado da planta piloto de BDR -- LabMater/UFPR.}
+\label{fig:planta}
+\end{center}
+\end{figure}
+
+\subsection{Instrumentação e arquitetura de controle}
+
+A planta piloto é composta por três unidades de aquecimento elétrico dispostas
+em série ao longo do percurso do gás: um forno pré-aquecedor e dois fornos
+reatores. O forno pré-aquecedor é governado por uma única malha de controle
+de temperatura. Cada forno reator é operado por três malhas de controle
+independentes, totalizando sete malhas de controle automático distribuídas
+pela planta.
+
+O sistema de controle é implementado em um Controlador Lógico Programável
+(CLP) Siemens S7-1200, que centraliza a aquisição dos sinais de
+instrumentação analógica, executa os algoritmos de controle e comanda os
+atuadores de aquecimento de cada zona.\citep{luyben2014} O sensoriamento é
+realizado integralmente por termopares tipo~K, distribuídos conforme descreve
+a Tabela~\ref{tab:instrumentacao}.
+
+\begin{itemize}
+  \item Forno pré-aquecedor (2~TC): monitoram a zona de pré-aquecimento e
+    fornecem o sinal de realimentação à malha única.
+  \item Camisa externa dos fornos reatores (3~TC por forno, 6~total):
+    monitoram o perfil axial de temperatura da parede e constituem as
+    variáveis de processo das malhas PID internas.
+  \item Interior dos reatores catalíticos (2~TC por reator, 4~total):
+    instalados diretamente no leito; fornecem a medida representativa da
+    temperatura de reação e são a referência primária do controle.
+\end{itemize}
+
+\begin{table}[ht]
+\begin{center}
+\caption{Instrumentação de temperatura e malhas de controle da planta piloto.}
+\label{tab:instrumentacao}
+\begin{tabular}{lcc}
+\hline
+Unidade & TC tipo~K & Malhas \\
+\hline
+Forno pré-aquecedor           & 2 & 1 \\
+Forno reator 1 -- camisa ext. & 3 & -- \\
+Forno reator 1 -- leito int.  & 2 & 3 \\
+Forno reator 2 -- camisa ext. & 3 & -- \\
+Forno reator 2 -- leito int.  & 2 & 3 \\
+\hline
+Total & 12 & 7 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+% -----------------------------------------------------------------------
+\subsection{Estratégia de controle adotada}
+\label{sec:estrategia}
+% -----------------------------------------------------------------------
+
+\subsubsection{Comportamento térmico observado e limitação do PID simples}
+
+A primeira abordagem investigada para o controle de temperatura dos fornos
+reatores consistiu em uma malha simples PID por zona, na qual o controlador
+atuava diretamente sobre a potência de aquecimento do forno tendo como
+variável de processo a leitura do termopar interno ao leito catalítico. Essa
+estrutura revelou-se insatisfatória em operação real devido a um comportamento
+térmico assimétrico e de difícil modelagem estática: a relação entre a
+temperatura medida na camisa externa do forno e a temperatura efetiva no
+interior do reator catalítico não é fixa, variando de forma significativa
+conforme o estado reacional do sistema.\citep{luyben2014}
+
+O fenômeno observado pode ser descrito da seguinte forma. Quando a reação de
+reforma a seco está em curso, o processo fortemente endotérmico mantém o
+leito interno com temperatura significativamente inferior à da camisa externa.
+Em contrapartida, na ausência de reação ---~durante a fase de aquecimento
+inicial ou após interrupção da alimentação~--- o leito catalítico pode
+apresentar temperatura superior à indicada pelos termopares da camisa, uma vez
+que não há consumo endotérmico para dissipar o calor acumulado. Essa inversão
+do gradiente térmico em função do estado reacional inviabiliza uma sintonia
+PID única válida para toda a faixa de operação.\citep{luyben2014,essien2019}
+O comportamento comparativo nos dois regimes é ilustrado nas
+Figuras~\ref{fig:pid_com_reacao} e~\ref{fig:pid_sem_reacao}.
+
+\begin{figure}[ht]
+\begin{center}
+% === INSERIR FIGURA: PID simples COM reação ===
+% \includegraphics[width=8.4cm]{pid_com_reacao.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.5cm}
+{\small [FIGURA A INSERIR]\\[4pt]
+PID simples -- com reação em curso:\\temperaturas da camisa e do leito vs.\ tempo}\vspace{1.5cm}}}
+\caption{PID simples com reação em curso: gradiente camisa--leito decorrente
+da endotermia e afastamento do leito em relação a $SP_{\mathrm{d}}$.}
+\label{fig:pid_com_reacao}
+\end{center}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{center}
+% === INSERIR FIGURA: PID simples SEM reação ===
+% \includegraphics[width=8.4cm]{pid_sem_reacao.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.5cm}
+{\small [FIGURA A INSERIR]\\[4pt]
+PID simples -- sem reação (aquecimento a vazio):\\inversão do gradiente e sobreaquecimento}\vspace{1.5cm}}}
+\caption{PID simples sem reação: inversão do gradiente térmico e
+sobreaquecimento do leito em relação a $SP_{\mathrm{d}}$.}
+\label{fig:pid_sem_reacao}
+\end{center}
+\end{figure}
+
+\subsubsection{Controle por setpoint dinâmico proporcional}
+
+Para superar as limitações identificadas, adotou-se uma estrutura de controle
+em dois níveis. No nível interno, um controlador PID independente atua em cada
+uma das três zonas de aquecimento de cada forno reator, tendo como variável de
+processo a temperatura da camisa externa correspondente e como variável
+manipulada a potência do elemento resistivo daquela zona. No nível externo, uma
+lógica de \emph{setpoint dinâmico proporcional} calcula, em tempo real, o
+valor de referência a ser enviado para cada controlador PID interno, compensando
+o gradiente térmico variável entre a camisa e o interior do reator. A
+arquitetura completa é ilustrada na Figura~\ref{fig:blocos_controle}.
+
+\begin{figure}[ht]
+\begin{center}
+% === INSERIR FIGURA: Diagrama de blocos do novo controlador ===
+% \includegraphics[width=8.4cm]{diagrama_blocos_controle.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.5cm}
+{\small [FIGURA A INSERIR]\\[4pt]
+Diagrama de blocos -- setpoint dinâmico proporcional:\\nível externo: $SP_{\mathrm{ap}}$ via (3)/(4);\\nível interno: PID por zona de camisa}\vspace{1.5cm}}}
+\caption{Diagrama de blocos do controlador por setpoint dinâmico proporcional:
+nível externo calcula $SP_{\mathrm{ap}}$ via (3) e (4); nível interno executa
+os PIDs das três zonas da camisa.}
+\label{fig:blocos_controle}
+\end{center}
+\end{figure}
+
+O princípio da estratégia é o seguinte: em vez de enviar diretamente ao PID
+interno o setpoint de temperatura desejado no leito, $SP_{\mathrm{d}}$, aplica-se
+uma correção proporcional ao desvio observado entre $SP_{\mathrm{d}}$ e a
+temperatura medida no interior do reator, $T_{\mathrm{int}}$. O setpoint
+aplicado ao controlador PID da camisa, $SP_{\mathrm{ap}}$, é dado por
+
+\begin{equation}
+  SP_{\mathrm{ap}} = SP_{\mathrm{d}} + \left(SP_{\mathrm{d}} - T_{\mathrm{int}}\right),
+  \label{eq:sp_dinamico}
+\end{equation}
+
+em que $SP_{\mathrm{d}}$ é a temperatura desejada no interior do reator
+(\(^\circ\)C) e $T_{\mathrm{int}}$ é a temperatura medida pelo termopar interno
+correspondente (\(^\circ\)C). (\ref{eq:sp_dinamico}) pode ser reescrita de
+forma equivalente como
+
+\begin{equation}
+  SP_{\mathrm{ap}} = 2\,SP_{\mathrm{d}} - T_{\mathrm{int}},
+  \label{eq:sp_simplificada}
+\end{equation}
+
+evidenciando que o setpoint aplicado à camisa é calculado simetricamente em
+relação ao setpoint desejado: quando o leito está mais frio que $SP_{\mathrm{d}}$
+(situação típica durante a reação), $SP_{\mathrm{ap}}$ é elevado acima de
+$SP_{\mathrm{d}}$, aumentando o fluxo de calor; quando o leito está mais quente
+(situação típica sem reação), $SP_{\mathrm{ap}}$ é reduzido, evitando
+sobreaquecimento.
+
+\subsubsection{Distribuição axial dos termopares internos e das malhas}
+
+Cada reator catalítico é equipado com dois termopares internos ao leito:
+um termopar na região superior, $T_{\mathrm{alto}}$, e um termopar na
+região inferior, $T_{\mathrm{baixo}}$. As malhas das zonas alta e média
+da camisa utilizam $T_{\mathrm{alto}}$ como $T_{\mathrm{int}}$ em
+(\ref{eq:sp_simplificada}), de modo que
+
+\begin{equation}
+  SP_{\mathrm{ap,\,alta}} = SP_{\mathrm{ap,\,med}} =
+  2\,SP_{\mathrm{d}} - T_{\mathrm{alto}},
+  \label{eq:sp_alto_med}
+\end{equation}
+
+enquanto a malha da zona baixa utiliza exclusivamente $T_{\mathrm{baixo}}$,
+
+\begin{equation}
+  SP_{\mathrm{ap,\,baixa}} = 2\,SP_{\mathrm{d}} - T_{\mathrm{baixo}},
+  \label{eq:sp_baixo}
+\end{equation}
+
+garantindo que cada zona de aquecimento da camisa seja compensada pelo
+gradiente térmico real da região axial do leito que ela aquece.\citep{luyben2014}

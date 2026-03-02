@@ -1,0 +1,39 @@
+%===============================================================================
+% SEÇÃO 3 — Revisão da Literatura de Base
+%===============================================================================
+
+\section{Revisão da Literatura de Base}
+\label{sec:revisao}
+
+\subsection{Controle de processos endotérmicos}
+
+Reatores tubulares aquecidos externamente, como aqueles empregados em processos
+de reforma a seco, apresentam forte acoplamento entre o balanço de energia no
+forno e o perfil de temperatura ao longo do leito catalítico, o que resulta em
+dinâmica lenta e não linear.\citep{luyben2014} Em aplicações industriais, é
+comum empregar estruturas de controle em cascata, nas quais uma malha interna
+regula a variável relacionada ao fornecimento de calor, enquanto uma malha
+externa atua sobre a temperatura de saída do reator ou sobre um ponto
+representativo do leito.\citep{luyben2014} Essa abordagem melhora a rejeição
+a perturbações de carga e de composição e reduz o efeito de atrasos
+associados à inércia térmica do conjunto forno--reator.
+
+Estudos recentes em reforma a seco de metano com CO\(_2\) indicam que variações
+na razão de alimentação e nos perfis de aquecimento podem alterar
+significativamente a sensibilidade do processo, motivando o uso de técnicas
+avançadas como estruturas neuro-fuzzy (ANFIS) e controle preditivo baseado em
+modelos (MPC).\citep{essien2019} Em todos esses casos, a qualidade das
+medições de temperatura e a localização adequada dos sensores ao longo do
+reator são fundamentais para o sucesso da estratégia de controle.
+
+\subsection{Análise termodinâmica como suporte ao controle}
+
+Análises termodinâmicas de equilíbrio têm sido amplamente utilizadas para
+mapear janelas operacionais de DRM/BDR em função de temperatura, pressão e
+razão CO\(_2\)/CH\(_4\).\citep{thermodynamics2025,lavoie2014} Esses estudos
+permitem identificar regiões em que a conversão de CH\(_4\) e CO\(_2\) é
+elevada e a formação de carbono sólido é termodinamicamente desfavorecida,
+fornecendo limites superiores e inferiores para as variáveis de operação.
+Essas informações servem como base para o projeto de malhas regulatórias, de
+esquemas de proteção e, em níveis mais elevados, para problemas de otimização
+e controle preditivo.\citep{thermodynamics2025}
