@@ -11,7 +11,7 @@ Reatores tubulares aquecidos externamente, como os utilizados em processos de
 reforma a seco, apresentam forte acoplamento entre o balanço de energia no
 forno e o perfil de temperatura ao longo do leito catalítico, resultando em
 dinâmica lenta e não linear.\citep{luyben2014} Uma abordagem consagrada em
-aplicações industriais é o uso de estruturas de controle em cascata, nas quais
+aplicapões industriais é o uso de estruturas de controle em cascata, nas quais
 uma malha interna regula diretamente a variável associada ao fornecimento de
 calor enquanto uma malha externa atua sobre a temperatura de saída do reator
 ou sobre um ponto representativo do leito.\citep{luyben2014} Essa configuração
@@ -19,24 +19,24 @@ melhora a rejeição a perturbações de carga e de composição e reduz o efeit
 dos atrasos associados à inércia térmica do conjunto forno-reator.
 
 Embora estudos como o de \citeauthor{essien2019} proponham técnicas avançadas
---- estruturas neuro-fuzzy (ANFIS) e controle preditivo baseado em modelos (MPC)
---- para lidar com a não linearidade e a forte exigência energética da reforma a
-seco,\citep{essien2019} tais abordagens pressupõem a disponibilidade de modelos
-dinâmicos validados, infraestrutura computacional dedicada e procedimentos de
-identificação e treinamento de considerável complexidade. Para o cenário da
-planta piloto do LabMater/UFPR, em fase de comissionamento e sujeita às
-incertezas inerentes ao biogás, a arquitetura PID em cascata constitui a
-opção tecnicamente mais sólida. O controlador PID é determinista e possui
-comportamento inteiramente previsível, independente de dados de treinamento ou
-de modelos que possam divergir das condições reais de operação; seu
-desempenho não se degrada diante de variações na composição do biogás nem
-de perturbações não modeladas, garantindo robustez e confiabilidade
-operacional superiores às de métodos de controle avançado em um ambiente ainda
-não totalmente caracterizado. A prioridade, neste estágio, é estabelecer uma
-base de controle confiável e de comportamento previsível que assegure a
-integri dade da planta, deixando a eventual incorporação de estratégias
-avançadas para uma etapa futura, condicionada à disponibilidade de dados de
-identificação suficientes.
+(entre elas estruturas neuro-fuzzy, ANFIS, e controle preditivo baseado em
+modelos, MPC) para lidar com a não linearidade e a forte exigência energética
+da reforma a seco,\citep{essien2019} tais abordagens pressupõem a
+disponibilidade de modelos dinâmicos validados, infraestrutura computacional
+dedicada e procedimentos de identificação e treinamento de considerável
+complexidade. Para o cenário da planta piloto do LabMater/UFPR, em fase de
+comissionamento e sujeita às incertezas inerentes ao biogás, a arquitetura
+PID em cascata constitui a opção tecnicamente mais sólida. O controlador PID
+é determinista e possui comportamento inteiramente previsível, independente
+de dados de treinamento ou de modelos que possam divergir das condições reais
+de operação; seu desempenho não se degrada diante de variações na
+composição do biogás nem de perturbações não modeladas, garantindo robustez
+e confiabilidade operacional superiores às de métodos de controle avançado
+em um ambiente ainda não totalmente caracterizado. A prioridade, neste
+estágio, é estabelecer uma base de controle confiável e de comportamento
+previsível que assegure a integridade da planta, deixando a eventual
+incorporação de estratégias avançadas para uma etapa futura, condicionada
+à disponibilidade de dados de identificação suficientes.
 
 \subsection{Análise termodinâmica como suporte ao controle}
 
@@ -46,7 +46,7 @@ presão e razão CO\(_2\)/CH\(_4\).\citep{thermodynamics2025,lavoie2014} Esses
 estudos identificam as regiões em que a conversão de CH\(_4\) e CO\(_2\) é
 elevada e a formação de carbono sólido é termodinamicamente desfavorecida,
 fornecendo limites superiores e inferiores diretos para as variáveis de
-operação. Essas informações são valiosas tanto no projeto de malhas
+operação. Essas informações são vali osas tanto no projeto de malhas
 regulatórias quanto no desenvolvimento de esquemas de proteção e, em níveis
 hierárquicos mais elevados, em problemas de otimização em tempo real e
 controle preditivo.\citep{thermodynamics2025}
