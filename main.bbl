@@ -1,4 +1,4 @@
-\begin{thebibliography}{9}
+\begin{thebibliography}{7}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
@@ -7,26 +7,12 @@
   \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
   \urlstyle{rm}\Url}\fi
 
-\bibitem[{Escribano et~al.(2025)Escribano, Schreiner, de~Oliveira
-  et~al.}]{escribano2025}
-Escribano, R.A.N.G., Schreiner, M.A., de~Oliveira, L.E.S., et~al. (2025).
-\newblock A dataset for classifying operational states in dry reforming of
-  biogas processes.
-\newblock \emph{International Journal of Hydrogen Energy}, 158, 150314.
-\newblock \doi{10.1016/j.ijhydene.2025.150314}.
-
 \bibitem[{Essien et~al.(2019)}]{essien2019}
 Essien, E. et~al. (2019).
 \newblock Adaptive neuro-fuzzy inference system ({ANFIS}) based robust model
   predictive control for carbon dioxide reforming of methane.
 \newblock \emph{Cleaner Engineering and Technology}.
 \newblock \doi{10.1016/j.clet.2019.100005}.
-
-\bibitem[{Kaur et~al.(2025)}]{microwave2025}
-Kaur, H. et~al. (2025).
-\newblock Recent advances in microwave-assisted dry reforming of methane.
-\newblock \emph{Frontiers in Chemistry}, 13, 1681282.
-\newblock \doi{10.3389/fchem.2025.1681282}.
 
 \bibitem[{{LabMater/UFPR}(2024)}]{labmater2024}
 {LabMater/UFPR} (2024).
@@ -54,14 +40,14 @@ Oliveira, L.G. et~al. (2021).
 \newblock Obten{\c{c}}{\~{a}}o de g{\'a}s de s{\'i}ntese por reforma a seco do
   metano em unidade piloto.
 \newblock \emph{Mat{\'e}ria (Rio de Janeiro)}, 26(3), e13095.
-\newblock \doi{10.1590/S1517-707620210003.13095}.
+\newblock \doi{10.1590/S1517-707620210003.13024}.
 
-\bibitem[{Varotto et~al.(2024)Varotto, Laverdura et~al.}]{photothermal2024}
-Varotto, L., Laverdura, U.P., et~al. (2024).
-\newblock Photo-thermal dry reforming of methane with {PGM}-free and
-  {PGM}-based catalysts: A review.
-\newblock \emph{Materials}, 17(15), 3809.
-\newblock \doi{10.3390/ma17153809}.
+\bibitem[{Oliveira et~al.(2022)}]{oliveira2022}
+Oliveira, L.G. et~al. (2022).
+\newblock Dry reforming of biogas in a pilot unit: scale-up of catalyst
+  synthesis and green hydrogen production.
+\newblock \emph{Journal of Cleaner Production}.
+\newblock Citado em relat{\'o}rio t{\'e}cnico IPT.
 
 \bibitem[{Wysocka et~al.(2025)}]{thermodynamics2025}
 Wysocka, I. et~al. (2025).

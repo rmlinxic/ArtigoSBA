@@ -31,55 +31,75 @@
 \babel@aux{english}{}
 \babel@aux{brazil}{}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introdução}{1}{}\protected@file@percent }
-\citation{oliveira2021,labmater2024}
-\citation{oliveira2021,labmater2024}
+\citation{oliveira2021,oliveira2022}
+\citation{oliveira2021}
+\citation{labmater2024}
 \citation{labmater2024}
 \citation{lavoie2014,thermodynamics2025}
-\citation{photothermal2024,microwave2025}
 \citation{thermodynamics2025,oliveira2021}
-\citation{luyben2014}
 \citation{luyben2014}
 \citation{luyben2014}
 \citation{essien2019}
 \citation{thermodynamics2025,lavoie2014}
 \citation{thermodynamics2025}
+\citation{oliveira2021,labmater2024}
+\citation{oliveira2021}
+\citation{labmater2024}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Formulação Matemática do Problema de Controle}{2}{}\protected@file@percent }
 \newlabel{sec:formulacao}{{2}{2}{}{section.\theHpart .2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Revisão da Literatura de Base}{2}{}\protected@file@percent }
 \newlabel{sec:revisao}{{3}{2}{}{section.\theHpart .3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Controle de processos endotérmicos}{2}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Análise termodinâmica como suporte ao controle}{2}{}\protected@file@percent }
-\citation{oliveira2021,labmater2024}
-\citation{oliveira2021}
-\citation{oliveira2021,labmater2024}
-\citation{labmater2024}
-\citation{oliveira2021,escribano2025}
-\citation{escribano2025}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Descrição do Processo e da Planta Piloto}{2}{}\protected@file@percent }
+\newlabel{sec:processo}{{4}{2}{}{section.\theHpart .4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Configuração da planta piloto}{2}{}\protected@file@percent }
+\citation{luyben2014}
+\citation{luyben2014}
+\citation{luyben2014,essien2019}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Diagrama P\&ID simplificado da planta piloto de BDR -- LabMater/UFPR.}}{3}{}\protected@file@percent }
+\newlabel{fig:planta}{{1}{3}{}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Instrumentação e arquitetura de controle}{3}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Instrumentação de temperatura e malhas de controle da planta piloto.}}{3}{}\protected@file@percent }
+\newlabel{tab:instrumentacao}{{1}{3}{}{table.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Estratégia de controle adotada}{3}{}\protected@file@percent }
+\newlabel{sec:estrategia}{{4.3}{3}{}{subsection.\theHpart .4.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Comportamento térmico observado e limitação do PID simples}{3}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces PID simples com reação em curso: gradiente camisa--leito decorrente da endotermia e afastamento do leito em relação a $SP_{\mathrm  {d}}$.}}{3}{}\protected@file@percent }
+\newlabel{fig:pid_com_reacao}{{2}{3}{}{figure.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces PID simples sem reação: inversão do gradiente térmico e sobreaquecimento do leito em relação a $SP_{\mathrm  {d}}$.}}{3}{}\protected@file@percent }
+\newlabel{fig:pid_sem_reacao}{{3}{3}{}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}Controle por setpoint dinâmico proporcional}{3}{}\protected@file@percent }
+\citation{luyben2014}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Diagrama de blocos do controlador por setpoint dinâmico proporcional: nível externo calcula $SP_{\mathrm  {ap}}$ via (3) e (4); nível interno executa os PIDs das três zonas da camisa.}}{4}{}\protected@file@percent }
+\newlabel{fig:blocos_controle}{{4}{4}{}{figure.4}{}}
+\newlabel{eq:sp_dinamico}{{1}{4}{}{equation.1}{}}
+\newlabel{eq:sp_simplificada}{{2}{4}{}{equation.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.3}Distribuição axial dos termopares internos e das malhas}{4}{}\protected@file@percent }
+\newlabel{eq:sp_alto_med}{{3}{4}{}{equation.3}{}}
+\newlabel{eq:sp_baixo}{{4}{4}{}{equation.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Validação Experimental}{4}{}\protected@file@percent }
+\newlabel{sec:validacao}{{5}{4}{}{section.\theHpart .5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Escopo dos ensaios}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Desempenho do PID simples nos dois regimes}{4}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Desempenho do PID simples nos dois regimes.}}{4}{}\protected@file@percent }
+\newlabel{tab:metricas_pid}{{2}{4}{}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Desempenho do controlador por setpoint dinâmico proporcional}{4}{}\protected@file@percent }
 \bibstyle{ifacconf}
 \bibdata{ifacconf}
-\bibcite{escribano2025}{{1}{2025}{{Escribano et~al.}}{{Escribano, Schreiner, de~Oliveira et~al.}}}
-\bibcite{essien2019}{{2}{2019}{{Essien et~al.}}{{}}}
-\bibcite{microwave2025}{{3}{2025}{{Kaur et~al.}}{{}}}
-\bibcite{labmater2024}{{4}{2024}{{LabMater/UFPR}}{{}}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Descrição do Processo e da Planta Piloto}{3}{}\protected@file@percent }
-\newlabel{sec:processo}{{4}{3}{}{section.\theHpart .4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Configuração da planta piloto}{3}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Diagrama de processo simplificado (P\&ID) da planta piloto de reforma a seco de biogás do LabMater/UFPR. \textit  {[Inserir figura real]}}}{3}{}\protected@file@percent }
-\newlabel{fig:planta}{{1}{3}{}{figure.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Validação Experimental}{3}{}\protected@file@percent }
-\newlabel{sec:validacao}{{5}{3}{}{section.\theHpart .5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Descrição dos ensaios realizados}{3}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Resposta da temperatura do leito e composição de saída durante ensaio de rastreamento de \emph  {setpoint}. \textit  {[Inserir figura real]}}}{3}{}\protected@file@percent }
-\newlabel{fig:resultados}{{2}{3}{}{figure.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Métricas de desempenho de controle obtidas nos ensaios experimentais.}}{3}{}\protected@file@percent }
-\newlabel{tb:metricas}{{1}{3}{}{table.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusões}{3}{}\protected@file@percent }
-\newlabel{sec:conclusao}{{6}{3}{}{section.\theHpart .6}{}}
-\bibcite{lavoie2014}{{5}{2014}{{Lavoie}}{{}}}
-\bibcite{luyben2014}{{6}{2014}{{Luyben}}{{}}}
-\bibcite{oliveira2021}{{7}{2021}{{Oliveira et~al.}}{{}}}
-\bibcite{photothermal2024}{{8}{2024}{{Varotto et~al.}}{{Varotto, Laverdura et~al.}}}
-\bibcite{thermodynamics2025}{{9}{2025}{{Wysocka et~al.}}{{}}}
-\global\c@lastpage=4
+\bibcite{essien2019}{{1}{2019}{{Essien et~al.}}{{}}}
+\bibcite{labmater2024}{{2}{2024}{{LabMater/UFPR}}{{}}}
+\bibcite{lavoie2014}{{3}{2014}{{Lavoie}}{{}}}
+\bibcite{luyben2014}{{4}{2014}{{Luyben}}{{}}}
+\bibcite{oliveira2021}{{5}{2021}{{Oliveira et~al.}}{{}}}
+\bibcite{oliveira2022}{{6}{2022}{{Oliveira et~al.}}{{}}}
+\bibcite{thermodynamics2025}{{7}{2025}{{Wysocka et~al.}}{{}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Controlador por setpoint dinâmico sem reação: rastreamento de $SP_{\mathrm  {d}}$ e redução da sobrelevação em comparação à Fig.~\ref {fig:pid_sem_reacao}.}}{5}{}\protected@file@percent }
+\newlabel{fig:novo_ctrl_sem_reacao}{{5}{5}{}{figure.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces PID simples vs.\ setpoint dinâmico proporcional (regime sem reação).}}{5}{}\protected@file@percent }
+\newlabel{tab:metricas_novo}{{3}{5}{}{table.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusões}{5}{}\protected@file@percent }
+\newlabel{sec:conclusao}{{6}{5}{}{section.\theHpart .6}{}}
+\global\c@lastpage=5
 \global\NAT@numbersfalse
-\gdef \@abspage@last{4}
+\gdef \@abspage@last{5}
