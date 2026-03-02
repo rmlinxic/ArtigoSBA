@@ -421,7 +421,7 @@ conforme descrito na Tabela~\ref{tab:instrumentacao} e a seguir:
     monitorar o perfil de temperatura ao longo da zona de pré-aquecimento,
     fornecendo o sinal de realimentação para a malha de controle única desse
     forno. A leitura combinada dos dois sensores permite detectar gradientes
-    axiais na etapa de condiciona-mento térmico do biogás antes de sua
+    axiais na etapa de condicionamento térmico do biogás antes de sua
     entrada no primeiro reator catalítico.
 
   \item \textbf{Camisa externa dos fornos reatores} (3 termopares tipo~K por
@@ -473,14 +473,133 @@ cuidadosamente estruturada para evitar interações adversas entre as malhas e
 garantir rastreamento estável dos setpoints de temperatura ao longo de toda a
 planta.\citep{luyben2014,escribano2025}
 
-% SUBSEÇÃO 4.3 — ESTRATÉGIA DE CONTROLE ADOTADA:
-% O que escrever:
-%   - Descrever detalhadamente a estrutura de controle implementada:
-%     * Malha primária: controle de temperatura do leito (TCs internos).
-%     * Malha secundária/cascata: temperatura da camisa (TCs externos).
-%     * Malha do pré-aquecedor: controle independente de temperatura.
-%   - Conectar a estratégia com a formulação da Seção 2.
-%   - Descrever a lógica de intertravamento entre malhas.
+% -----------------------------------------------------------------------
+\subsection{Estratégia de controle adotada}
+\label{sec:estrategia}
+% -----------------------------------------------------------------------
+
+\subsubsection{Comportamento térmico observado e limitação do PID simples}
+
+A primeira abordagem investigada para o controle de temperatura dos fornos
+reatores consistiu em uma malha simples PID por zona, na qual o controlador
+atuava diretamente sobre a potência de aquecimento do forno tendo como
+variável de processo a leitura do termopar interno ao leito catalítico. Essa
+estrutura, mais simples de implementar, revelou-se insatisfatória em operação
+real devido a um comportamento térmico assimétrico e de difícil modelagem
+estática: a relação entre a temperatura medida na camisa externa do forno e
+a temperatura efetiva no interior do reator catalítico não é fixa, variando
+de forma significativa conforme o estado reacional do sistema.\citep{luyben2014}
+
+O fenômeno observado experimentalmente pode ser descrito da seguinte forma.
+Quando a reação de reforma a seco está em curso no leito catalítico, o processo
+fortemente endotérmico consome calor de forma intensa, de modo que o leito
+interno apresenta temperatura \emph{significativamente inferior} à da camisa
+externa do forno: a energia fornecida pelo elemento resistivo é em grande parte
+absorvida pelas reações, criando um gradiente expressivo entre a parede do
+forno e o centro do reator. Em contrapartida, na ausência de reação
+---~por exemplo, durante a fase de aquecimento inicial sem alimentação de
+biogás, ou após interrupção da alimentação~--- o leito catalítico pode
+apresentar temperatura \emph{superior} à indicada pelos termopares da camisa
+externa, uma vez que as perdas convectivas internas são menores e o calor
+acumulado no material catalítico não é consumido por reações endotérmicas.
+Essa inversão do gradiente térmico em função do estado reacional torna o
+sistema de difícil identificação e inviabiliza uma sintonia PID única válida
+para toda a faixa de operação, pois um ganho ajustado para condições com
+reação em curso resultará em sobreaquecimento quando a reação cessar, e
+vice-versa.\citep{luyben2014,essien2019}
+
+\subsubsection{Controle por setpoint dinâmico proporcional}
+
+Para superar as limitações identificadas, adotou-se uma estrutura de controle
+em dois níveis. No nível interno, um controlador PID independente atua em cada
+uma das três zonas de aquecimento de cada forno reator, tendo como variável de
+processo a temperatura da camisa externa correspondente à zona e como variável
+manipulada a potência do elemento resistivo daquela zona. No nível externo, uma
+lógica de \emph{setpoint dinâmico proporcional} calcula, em tempo real, o
+valor de referência a ser enviado para cada controlador PID interno, de forma a
+compensar o gradiente térmico variável entre a camisa e o interior do reator.
+
+O princípio da estratégia é o seguinte: em vez de enviar diretamente ao PID
+interno o setpoint de temperatura desejado no leito, $SP_{\mathrm{d}}$, aplica-se
+uma correção proporcional ao desvio observado entre $SP_{\mathrm{d}}$ e a
+temperatura medida no interior do reator, $T_{\mathrm{int}}$. Dessa forma, quando
+o leito está mais frio que o desejado (situação típica durante a reação), o
+setpoint enviado à camisa é elevado acima de $SP_{\mathrm{d}}$, aumentando o
+fluxo de calor para o leito; quando o leito está mais quente (situação típica
+sem reação), o setpoint da camisa é reduzido abaixo de $SP_{\mathrm{d}}$,
+evitando sobreaquecimento. O setpoint aplicado ao controlador PID da camisa,
+$SP_{\mathrm{ap}}$, é dado por
+
+\begin{equation}
+  SP_{\mathrm{ap}} = SP_{\mathrm{d}} + \left(SP_{\mathrm{d}} - T_{\mathrm{int}}\right),
+  \label{eq:sp_dinamico}
+\end{equation}
+
+em que $SP_{\mathrm{d}}$ é a temperatura desejada no interior do reator
+(°C) e $T_{\mathrm{int}}$ é a temperatura medida pelo termopar interno
+correspondente (°C). (1) pode ser reescrita de forma equivalente como
+
+\begin{equation}
+  SP_{\mathrm{ap}} = 2\,SP_{\mathrm{d}} - T_{\mathrm{int}},
+  \label{eq:sp_dinamico_simplificada}
+\end{equation}
+
+evidenciando que o setpoint aplicado à camisa é calculado simetricamente em
+relação ao setpoint desejado: o ganho unitário sobre o erro
+$(SP_{\mathrm{d}} - T_{\mathrm{int}})$ atua como um compensador proporcional
+de malha aberta que antecipa a necessidade de aquecimento ou resfriamento
+antes que o PID interno precise corrigir o desvio residual da temperatura da
+camisa.
+
+\subsubsection{Distribuição axial dos termopares internos e das malhas de controle}
+
+Cada reator catalítico é equipado com dois termopares internos ao leito,
+posicionados em cotas axiais distintas: um termopar na região \emph{superior}
+do leito, $T_{\mathrm{alto}}$, e um termopar na região \emph{inferior},
+$T_{\mathrm{baixo}}$. Essa distribuição permite caracterizar o perfil axial de
+temperatura do leito e alimentar individualmente as três malhas de controle
+associadas a cada forno reator, que correspondem às zonas de aquecimento
+\emph{alta}, \emph{média} e \emph{baixa} da camisa do forno.
+
+A atribuição dos sinais de realimentação às malhas segue o critério de
+proximidade axial entre o termopar interno e a zona de aquecimento controlada.
+As malhas das zonas \emph{alta} e \emph{média} da camisa --- as duas zonas
+superiores do forno, mais próximas da entrada do gás --- utilizam a leitura
+do termopar interno superior $T_{\mathrm{alto}}$ como $T_{\mathrm{int}}$ em
+(2), de modo que
+
+\begin{equation}
+  SP_{\mathrm{ap,\,alta}} = SP_{\mathrm{ap,\,med}} = 2\,SP_{\mathrm{d}} - T_{\mathrm{alto}}.
+  \label{eq:sp_alto_med}
+\end{equation}
+
+A malha da zona \emph{baixa} da camisa --- a zona inferior do forno, próxima
+à saída do gás --- utiliza exclusivamente a leitura do termopar interno
+inferior $T_{\mathrm{baixo}}$ como $T_{\mathrm{int}}$, resultando em
+
+\begin{equation}
+  SP_{\mathrm{ap,\,baixa}} = 2\,SP_{\mathrm{d}} - T_{\mathrm{baixo}}.
+  \label{eq:sp_baixo}
+\end{equation}
+
+Essa distribuição garante que cada zona de aquecimento da camisa seja
+compensada pelo gradiente térmico real da região axial do leito que ela
+aquece, em vez de um gradiente médio único, o que é especialmente relevante
+em reatores de leito fixo nos quais o perfil axial de temperatura pode variar
+significativamente ao longo da campanha experimental.\citep{luyben2014}
+O diagrama de blocos da estrutura completa de controle adotada é apresentado
+na Figura~\ref{fig:blocos_controle}.
+
+\begin{figure}[ht]
+\begin{center}
+% Inserir: \includegraphics[width=8.4cm]{diagrama_blocos_controle.eps}
+\caption{Diagrama de blocos da estratégia de controle por setpoint dinâmico
+proporcional aplicada a cada forno reator. O nível externo calcula
+$SP_{\mathrm{ap}}$ por meio de (3) e (4) e o nível interno executa os
+controladores PID de cada zona da camisa. \textit{[Inserir figura real]}}
+\label{fig:blocos_controle}
+\end{center}
+\end{figure}
 
 % -----------------------------------------------------------------------
 \section{Validação Experimental}
