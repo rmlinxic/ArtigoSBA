@@ -50,11 +50,20 @@ Tabela~\ref{tab:instrumentacao}.
   \item Forno pré-aquecedor (2~TC): monitoram a zona de pré-aquecimento e
     fornecem o sinal de realimentação à malha única.
   \item Camisa externa dos fornos reatores (3~TC por forno, 6~total):
-    monitoram o perfil axial de temperatura da parede e constituem as
-    variáveis de processo das malhas PID internas.
+    medem o perfil axial de temperatura da parede e constituem a variável de
+    processo (PV) das malhas PID internas (\emph{inner loops}) de cada zona;
+    a variável manipulada (MV) correspondente é a potência fornecida ao
+    elemento resistivo daquela zona de aquecimento.
   \item Interior dos reatores catalíticos (2~TC por reator, 4~total):
-    instalados diretamente no leito, fornecem a medida representativa da
-    temperatura de reação e são a referência primária do controle.
+    instalados diretamente no leito, medem a temperatura de reação e definem
+    o setpoint objetivo ($SP_{\mathrm{d}}$) do sistema de controle. A escolha
+    da temperatura da camisa como PV das malhas internas, em vez da temperatura
+    do leito, decorre de um requisito de segurança operacional: ao regular a
+    camisa, o controlador impõe um limite superior à temperatura do forno,
+    protegendo a integridade física da planta contra sobreaquecimento. O
+    objetivo final de manter a temperatura do leito catalítico no valor
+    desejado é perseguido indiretamente, por meio do mecanismo de setpoint
+    dinâmico proporcional descrito na Seção~\ref{sec:estrategia}.
 \end{itemize}
 
 \begin{table}[ht]
@@ -66,10 +75,10 @@ Tabela~\ref{tab:instrumentacao}.
 Unidade & TC tipo~K & Malhas \\
 \hline
 Forno pré-aquecedor              & 2 & 1 \\
-Forno reator 1 (camisa ext.)     & 3 & 0 \\
-Forno reator 1 (leito int.)      & 2 & 3 \\
-Forno reator 2 (camisa ext.)     & 3 & 0 \\
-Forno reator 2 (leito int.)      & 2 & 3 \\
+Forno reator 1 (camisa ext.)     & 3 & 3 \\
+Forno reator 1 (leito int.)      & 2 & 0 \\
+Forno reator 2 (camisa ext.)     & 3 & 3 \\
+Forno reator 2 (leito int.)      & 2 & 0 \\
 \hline
 Total & 12 & 7 \\
 \hline
@@ -86,11 +95,11 @@ Total & 12 & 7 \\
 
 A primeira abordagem investigada consistiu em uma malha simples PID por zona,
 na qual o controlador atuava diretamente sobre a potência de aquecimento do
-forno tendo como variável de processo a leitura do termopar interno ao leito
-catalítico. Essa estrutura revelou-se insatisfatória em operação real devido a
-um comportamento térmico assimétrico: a relação entre a temperatura da camisa
-externa e a temperatura efetiva no interior do reator não é fixa, variando de
-forma significativa conforme o estado reacional do sistema.\citep{luyben2014}
+forno tendo como variável de processo a leitura dos termopares das camisas
+dos reatores. Essa estrutura revelou-se insatisfatória em operação real
+devido a um comportamento térmico assimétrico: a relação entre a temperatura
+da camisa e a temperatura efetiva no interior do reator não é fixa, variando
+de forma significativa conforme o estado reacional do sistema.\citep{luyben2014}
 
 O fenômeno pode ser descrito da seguinte forma. Com a reação em curso, o
 caráter fortemente endotérmico do processo mantém o leito interno
@@ -138,7 +147,7 @@ processo a temperatura da camisa externa correspondente e como variável
 manipulada a potência do elemento resistivo daquela zona. No nível externo, uma
 lógica de \emph{setpoint dinâmico proporcional} calcula, a cada ciclo de
 controle, o valor de referência a ser enviado a cada PID interno, compensando
-auto maticamente o gradiente térmico entre a camisa e o interior do reator. A
+automaticamente o gradiente térmico entre a camisa e o interior do reator. A
 arquitetura completa é ilustrada na Figura~\ref{fig:blocos_controle}.
 
 \begin{figure}[ht]
@@ -176,7 +185,7 @@ reescrita de forma equivalente como
   \label{eq:sp_simplificada}
 \end{equation}
 
-mostran do que o setpoint aplicado à camisa é calculado simetricamente em
+mostrando que o setpoint aplicado à camisa é calculado simetricamente em
 relação ao valor desejado: quando o leito está mais frio que $SP_{\mathrm{d}}$
 (situação típica durante a reação), $SP_{\mathrm{ap}}$ sobe acima de
 $SP_{\mathrm{d}}$, aumentando o fluxo de calor; quando o leito está mais
