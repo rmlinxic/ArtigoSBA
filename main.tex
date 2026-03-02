@@ -388,19 +388,99 @@ de reforma a seco de biogás do LabMater/UFPR. \textit{[Inserir figura real]}}
 \end{center}
 \end{figure}
 
-% SUBSEÇÃO 4.2 — INSTRUMENTAÇÃO E ARQUITETURA DE CONTROLE:
-% O que escrever:
-%   - Listar os instrumentos instalados (Termopares tipo K, transmissores, MFCs).
-%   - Descrever o hardware/software de automação utilizado (CLP, SCADA).
-%   - Apresentar o diagrama de blocos da arquitetura de controle.
-%   - Citar: \citep{escribano2025}, \citep{luyben2014}
+\subsection{Instrumentação e arquitetura de controle}
+
+A planta piloto é composta por três unidades de aquecimento elétrico dispostas
+em série ao longo do percurso do gás: um \textbf{forno pré-aquecedor} e dois
+\textbf{fornos reatores}. O forno pré-aquecedor é responsável por elevar a
+temperatura da mistura gasosa de biogás sintético até a faixa de admissão
+do primeiro leito catalítico, sendo governado por uma única malha de controle
+de temperatura. Cada forno reator, por sua vez, aquece um reator de leito
+fixo catalítico individual e é operado por três malhas de controle
+independentes, totalizando \textbf{sete malhas de controle automático}
+distribuídas pela planta (uma no pré-aquecedor e três em cada um dos dois
+fornos reatores).
+
+O sistema de controle é implementado em um Controlador Lógico Programável
+(CLP) \textbf{Siemens S7-1200}, que centraliza a aquisição de todos os sinais
+de instrumentação analógica, executa os algoritmos de controle e comanda os
+atuadores de aquecimento de cada zona.\citep{luyben2014} A plataforma S7-1200
+atende aos requisitos típicos de automação industrial em plantas de processo:
+ciclos de varredura da ordem de milissegundos, suporte a protocolos de
+comunicação industrial (PROFINET), capacidade de expansão de módulos analógicos
+de entrada para termopares e ambiente de programação em conformidade com a
+norma IEC~61131-3, o que facilita a implementação e o comissionamento de
+múltiplas malhas de controle PID de forma estruturada e documentável.
+
+O sensoriamento de temperatura é realizado integralmente por \textbf{termopares
+tipo~K}, distribuídos estrategicamente pelas três unidades de aquecimento
+conforme descrito na Tabela~\ref{tab:instrumentacao} e a seguir:
+
+\begin{itemize}
+  \item \textbf{Forno pré-aquecedor} (2 termopares tipo~K): posicionados para
+    monitorar o perfil de temperatura ao longo da zona de pré-aquecimento,
+    fornecendo o sinal de realimentação para a malha de controle única desse
+    forno. A leitura combinada dos dois sensores permite detectar gradientes
+    axiais na etapa de condiciona-mento térmico do biogás antes de sua
+    entrada no primeiro reator catalítico.
+
+  \item \textbf{Camisa externa dos fornos reatores} (3 termopares tipo~K por
+    forno, total de 6): instalados na superfície externa de cada forno ao
+    longo do eixo axial, esses sensores monitoram o perfil de temperatura da
+    parede do forno e constituem as variáveis medidas das malhas intermediárias
+    de controle. Sua distribuição axial permite identificar regiões de
+    aquecimento irregular e atuar preventivamente sobre zonas que possam
+    desenvolver pontos frios~--- condição que, como discutido na
+    Seção~\ref{sec:revisao}, favorece a deposição de coque.
+
+  \item \textbf{Interior dos reatores catalíticos} (2 termopares tipo~K por
+    reator, total de 4): instalados diretamente no interior do leito
+    catalítico em posições axialmente distribuídas, esses sensores fornecem a
+    medida mais representativa da temperatura de reação. Seus sinais
+    constituem as \emph{variáveis controladas primárias} das malhas de
+    temperatura de cada forno reator, sendo diretamente utilizados como
+    referência para os setpoints de segurança e para o monitoramento das
+    janelas operacionais discutidas na Seção~\ref{sec:formulacao}.
+\end{itemize}
+
+\begin{table}[ht]
+\begin{center}
+\caption{Resumo da instrumentação de temperatura e malhas de controle
+da planta piloto de BDR do LabMater/UFPR.}
+\label{tab:instrumentacao}
+\begin{tabular}{lccc}
+\hline
+Unidade & Termopares (tipo~K) & Malhas de controle \\
+\hline
+Forno pré-aquecedor          & 2 (zona de pré-aquecimento) & 1 \\
+Forno reator 1 -- camisa ext. & 3 (axialmente distribuídos) & -- \\
+Forno reator 1 -- leito int.  & 2 (axialmente distribuídos) & 3 \\
+Forno reator 2 -- camisa ext. & 3 (axialmente distribuídos) & -- \\
+Forno reator 2 -- leito int.  & 2 (axialmente distribuídos) & 3 \\
+\hline
+\textbf{Total}                & \textbf{12}                 & \textbf{7} \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Ao todo, a instrumentação de temperatura da planta compreende 12 termopares
+tipo~K e 7 malhas de controle automático. Essa densidade de instrumentação é
+característica de uma planta piloto de produção intermediária: suficiente para
+caracterizar o perfil térmico completo do processo e implementar proteções
+por zona, porém com complexidade de malhas que exige uma estratégia de controle
+cuidadosamente estruturada para evitar interações adversas entre as malhas e
+garantir rastreamento estável dos setpoints de temperatura ao longo de toda a
+planta.\citep{luyben2014,escribano2025}
 
 % SUBSEÇÃO 4.3 — ESTRATÉGIA DE CONTROLE ADOTADA:
 % O que escrever:
 %   - Descrever detalhadamente a estrutura de controle implementada:
-%     * Malha primária: controle de temperatura do leito.
-%     * Malha secundária/razão: controle de fluxo de reagentes.
+%     * Malha primária: controle de temperatura do leito (TCs internos).
+%     * Malha secundária/cascata: temperatura da camisa (TCs externos).
+%     * Malha do pré-aquecedor: controle independente de temperatura.
 %   - Conectar a estratégia com a formulação da Seção 2.
+%   - Descrever a lógica de intertravamento entre malhas.
 
 % -----------------------------------------------------------------------
 \section{Validação Experimental}
