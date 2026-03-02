@@ -210,7 +210,7 @@ de vista de segurança e custo.\citep{labmater2024} Nessa escala intermediária,
 a automação e o controle de processos deixam de ser acessórios e passam a
 ser requisitos fundamentais para manter a operação dentro da janela segura,
 garantir alta conversão de CH\(_4\)/CO\(_2\), controlar a razão de alimentação
-e proteger o cat alisador de deposição acelerada de coque. É precisamente
+e proteger o catalisador de deposição acelerada de coque. É precisamente
 nesse contexto que se insere o presente trabalho: a planta piloto do
 LabMater/UFPR, operando em faixas de 650--800~\(^\circ\)C e produzindo cerca
 de 30~L·h\(^{-1}\) de hidrogênio em regime contínuo,\citep{labmater2024}
@@ -409,26 +409,40 @@ de reforma a seco de biogás do LabMater/UFPR. \textit{[Inserir figura real]}}
 
 \subsection{Descrição dos ensaios realizados}
 
-A validação experimental da estratégia de controle proposta foi conduzida por
-meio de campanhas de ensaios na planta piloto de reforma a seco de biogás, nas
-quais foram aplicadas perturbações deliberadas em temperatura de referência do
-reator e na composição da alimentação.\citep{oliveira2021,escribano2025} De
-forma geral, os testes incluíram degraus no \textit{setpoint} de temperatura
-do leito catalítico, variações programadas na razão CO\(_2\)/CH\(_4\) na
-alimentação e perturbações na vazão total de biogás, de modo a avaliar a
-capacidade do sistema de controle em rastrear referências e rejeitar
-perturbações mantendo o processo dentro da janela operacional segura.
+A validação experimental da arquitetura de controle proposta foi conduzida na
+planta piloto de escala intermediária do LabMater/UFPR, por meio de campanhas
+de ensaios nas quais foram aplicadas perturbações deliberadas em temperatura de
+referência do reator e na composição da alimentação. De forma geral, os testes
+incluíram degraus no \textit{setpoint} de temperatura do leito catalítico,
+variações programadas na razão CO\(_2\)/CH\(_4\) na alimentação e perturbações
+na vazão total de biogás, de modo a avaliar a capacidade do sistema de controle
+industrial implementado em rastrear referências e rejeitar perturbações mantendo
+o processo dentro da janela operacional segura.
 
-Durante as campanhas, foram registrados sinais de temperatura em diferentes
-pontos do reator e do forno, vazões de CH\(_4\) e CO\(_2\), composições de
-saída (obtidas por cromatografia gasosa ou analisadores em linha) e variáveis
-de atuação das malhas de controle, em alta resolução temporal.\citep{escribano2025}
-Esses dados foram organizados em um conjunto estruturado (\textit{dataset}) que
-inclui rótulos de estados operacionais, permitindo análises posteriores de
-desempenho, estudo de regimes transitórios e aplicação de métodos de
-aprendizado de máquina para classificação de regimes e detecção de desvios. No
+É importante destacar que a presente campanha experimental difere
+qualitativamente dos ensaios anteriores realizados em unidades de bancada no
+mesmo laboratório.\citep{oliveira2021,escribano2025} Os trabalhos de bancada,
+que deram origem inclusive a conjuntos de dados para estudos de classificação
+de regimes operacionais,\citep{escribano2025} operavam em escala reduzida e
+com supervisão manual direta, sendo o foco principal a validação catalítica e
+cinética do processo. No presente trabalho, o enfoque é na \emph{arquitetura
+de controle industrial} necessária para escalar essa tecnologia: os requisitos
+de instrumentação, a estrutura de malhas de controle e os intertravamentos de
+segurança que são essenciais em uma planta piloto de produção intermediária,
+na qual a operação autônoma, a robustez a perturbações e a proteção do
+catalisador tornam-se críticas para viabilizar o caminho em direção à escala
+industrial.\citep{labmater2024}
+
+Durante as campanhas de validação, foram registrados sinais de temperatura em
+diferentes pontos do reator e do forno, vazões de CH\(_4\) e CO\(_2\),
+composições de saída (obtidas por cromatografia gasosa ou analisadores em
+linha) e variáveis de atuação das malhas de controle, em alta resolução
+temporal. Esses dados permitem quantificar o desempenho da estratégia de
+controle implementada em termos de métricas clássicas (tempo de acomodação,
+sobrelevação, integral do erro) e avaliar a capacidade do sistema em manter a
+planta na região de operação segura mesmo sob condições de perturbação. No
 presente artigo, utiliza-se um subconjunto representativo desses ensaios para
-ilustrar o comportamento dinâmico da planta sob controle automático.
+ilustrar o comportamento dinâmico da planta piloto sob controle automático.
 
 % SUBSEÇÃO 5.2 — RESULTADOS DE DESEMPENHO DE CONTROLE:
 % O que escrever:
