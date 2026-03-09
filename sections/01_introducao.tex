@@ -7,9 +7,7 @@
 A reforma a seco de biogás (BDR, do inglês \textit{biogas dry reforming})
 consiste na conversão de uma mistura CH\(_4\)/CO\(_2\) proveniente de digestão
 anaeróbia em gás de síntese (H\(_2\) + CO), utilizando o próprio CO\(_2\) do
-biogás como agente oxidante do metano \citep{lavoie2014}. AO CITAR REFERENCIA, O PONTO TEM QUE VIR DEPOIS E NAO ANTES COMO ESTAVA
-
-Ao substituir o metano
+biogás como agente oxidante do metano.\citep{lavoie2014} Ao substituir o metano
 puro pelo biogás, o processo passa a atuar sobre uma corrente renovável e de
 menor valor agregado, contribuindo tanto para a valorização de resíduos orgânicos
 quanto para a mitigação de emissões de gases de efeito estufa.\citep{lavoie2014}
@@ -18,7 +16,7 @@ hidrogênio renovável e gás de síntese integrados a cadeias de energia de bai
 carbono.
 
 Do ponto de vista termodinâmico, a reação é fortemente endotérmica, com entalpia
-padrão da ordem de 247~kJ\(·\)mol\(^{-1}\), de forma que temperaturas elevadas e
+padrão da ordem de 247~kJ\(\cdot\)mol\(^{-1}\), de forma que temperaturas elevadas e
 suprimento intenso de calor são necessários para se atingir conversões
 significativas.\citep{thermodynamics2025} Estudos de equilíbrio indicam que,
 para misturas representativas de biogás, a conversão de metano aumenta
@@ -31,55 +29,6 @@ composição CH\(_4\)/CO\(_2\) varia ao longo do tempo e o gás pode conter
 espécies inertes (N\(_2\), O\(_2\)) e traços de impurezas como H\(_2\)S, afetando
 tanto o desempenho catalítico quanto o comportamento dinâmico do processo.
 
-Apesar do volume expressivo de publicações sobre desenvolvimento de catalisadores,
-cinética reacional e análises termodinâmicas para reforma a seco, há relativamente
-poucos trabalhos dedicados ao controle e à automação de processos de BDR em
-plantas piloto reais \citep{luyben2014,essien2019}. Na maioria dos casos, as
-estratégias de controle são avaliadas em reatores de bancada ou em modelos
-simulados de DRM com metano puro, sem considerar as flutuações de composição e
-as incertezas inerentes ao biogás. Em processos fortemente endotérmicos e
-suscetíveis à formação de coque, como a BDR, o controle passa a ser um elemento
-central para viabilizar operação estável e segura, especialmente quando se
-busca operar em janelas de alta conversão e baixa deposição de
-carbono \citep{luyben2014}.
-
-MUDEI ESTE PARAGRAFO
-
-No Brasil, a Universidade Federal do Paraná (UFPR) vem desenvolvendo a rota de reforma a seco de biogás de forma sistemática, deste a escala de bancada até uma unidade piloto.
-Trabalhos iniciais demonstraram a viabilidade catalítica do processo,
-incluindo a validação de catalisadores à base de níquel e o escalonamento da
-síntese catalítica para as quantidades exigidas pelos ensaios em maior
-escala \citep{oliveira2021,oliveira2022}. Nessas unidades, as variáveis de processo
-(temperatura, vazão e composição) são manipuladas manualmente ou por
-controladores simples de laboratório, o que é viável em vista da pequena escala
-e da supervisão direta do pesquisador durante os ensaios \citep{oliveira2021}.
-
-A transição da escala de bancada para uma planta piloto operacional, a planta B2H2
-
-%1.
-%OLIVEIRA, L. G. ; OLIVEIRA, G. H. C. ; FERREIRA, J. C. S. ; VILELA JUNIOR, J. A. %; ALVES, H. J. . Projeto B2H2: Produção de hidrogênio renovável para geração %distribuída assistida por IA. In: 4o Congresso Brasileiro do Hidrogênio, 2025, %Brasilia. Anais do 4o Congresso Brasileiro do Hidrogênio, 2025.
-
-%2.
-%FERREIRA, J. C. S. ; ESCRIBANO, R. A. N. G. ; Schreiner, M. A. ; Ponciano, P. C. %; OLIVEIRA, G. H. C. ; VILELA JUNIOR, J. A. ; ALVES, H. J. . Do Resíduo Orgânico %à Rede Elétrica: Produção On-Grid de Hidrogênio Renovável com Supervisão %Inteligente na Planta B2H2. In: 4o Congresso Brasileiro do Hidrogênio, 2025, %Brasilia. Anais do 4o Congresso Brasileiro do Hidrogênio, 2025.
-
-Quando falar da planta, cite estes dois artigos acima!
-
-, que é uma etapa necessária antes da implantação industrial, impõe uma mudanças qualitativa nos requisitos de operação. A supervisão manual já não é
-viável, as distâncias térmicas são maiores, as inércias são mais lentas e os
-desvios operacionais têm consequências críticas do ponto de vista de
-segurança e custo. Nessa escala, a automação e o controle
-de processos deixam de ser acessórios e passam a ser requisitos fundamentais
-para manter a operação dentro da janela segura, garantir alta conversão de
-CH\(_4\)/CO\(_2\) e proteger o catalisador de deposição acelerada de coque.
-É precisamente nesse contexto que se insere o presente trabalho. A planta
-piloto B2H2, com reação A SECO (QUAL) operando entre 650--800~\(^\circ\)C e produzindo ao final cerca
-de 30~L\(·\)h\(^{-1}\) de hidrogênio em regime contínuo,
-constituí a plataforma experimental sobre a qual se formula, implementa e
-valida a arquitetura de controle industrial que viabiliza esse \emph{scale-up}
-de forma segura e reprodutível.
-
-ESTE LANCE AQUI DO BRD DEVERIA TER IDO PARA ANTES DE COMECAR A FALAR DA UFPR
-
 A BDR é particularmente suscetível à deposição de carbono (coque) sobre o
 catalisador, decorrente de reações como a decomposição do metano e a reação
 de Boudouard, resultando em perda de atividade catalítica, aumento da perda de
@@ -90,11 +39,50 @@ necessário manter as variáveis de operação dentro de uma janela que faça
 prevalecer a reação desejada sobre os caminhos de formação de
 coque.\citep{thermodynamics2025,oliveira2021}
 
+Apesar do volume expressivo de publicações sobre desenvolvimento de catalisadores,
+cinética reacional e análises termodinâmicas para reforma a seco, há relativamente
+poucos trabalhos dedicados ao controle e à automação de processos de BDR em
+plantas piloto reais.\citep{luyben2014,essien2019} Na maioria dos casos, as
+estratégias de controle são avaliadas em reatores de bancada ou em modelos
+simulados de DRM com metano puro, sem considerar as flutuações de composição e
+as incertezas inerentes ao biogás. Em processos fortemente endotérmicos e
+suscetíveis à formação de coque, como a BDR, o controle passa a ser um elemento
+central para viabilizar operação estável e segura, especialmente quando se
+busca operar em janelas de alta conversão e baixa deposição de
+carbono.\citep{luyben2014}
+
+No Brasil, a Universidade Federal do Paraná (UFPR) vem desenvolvendo a rota de
+reforma a seco de biogás de forma sistemática, desde a escala de bancada até
+uma unidade piloto. Trabalhos iniciais demonstraram a viabilidade catalítica do
+processo, incluindo a validação de catalisadores à base de níquel e o
+escalonamento da síntese catalítica para as quantidades exigidas pelos ensaios
+em maior escala.\citep{oliveira2021,oliveira2022} Nessas unidades, as variáveis
+de processo (temperatura, vazão e composição) são manipuladas manualmente ou
+por controladores simples de laboratório, o que é viável em vista da pequena
+escala e da supervisão direta do pesquisador durante os ensaios.\citep{oliveira2021}
+
+A transição da escala de bancada para uma planta piloto operacional, etapa
+necessária antes da implantação industrial, impõe uma mudança qualitativa nos
+requisitos de operação. A supervisão manual já não é viável, as distâncias
+térmicas são maiores, as inércias são mais lentas e os desvios operacionais
+têm consequências críticas do ponto de vista de segurança e custo. Nessa
+escala, a automação e o controle de processos deixam de ser acessórios e
+passam a ser requisitos fundamentais para manter a operação dentro da janela
+segura, garantir alta conversão de CH\(_4\)/CO\(_2\) e proteger o catalisador
+de deposição acelerada de coque. É precisamente nesse contexto que se insere o
+presente trabalho. A planta piloto B2H2\citep{oliveira2025a,ferreira2025b}, dedicada
+à reforma a seco de biogás (BDR) e operando entre 650--800~\(^\circ\)C com
+produtividade de cerca de 30~L\(\cdot\)h\(^{-1}\) de hidrogênio em regime
+contínuo, constitui a plataforma experimental sobre a qual se formula,
+implementa e valida a arquitetura de controle industrial que viabiliza esse
+\emph{scale-up} de forma segura e reprodutível.
+
 O restante deste artigo está organizado da seguinte forma. A
 Seção~\ref{sec:formulacao} apresenta a formulação matemática do problema de
-controle. AS SECOES 2 e 3 ME PARECEM SER OU TRATAR DA MESMA COISA. TALVEZ UMA PUDESSE SER ELIMINADA. A Seção~\ref{sec:revisao} revisa conceitos de controle de processos
-endotérmicos e o uso de análises termodinâmicas como suporte à definição de
-janelas operacionais QUE JANELAS VC SE REFERE AQUI?. A Seção~\ref{sec:processo} descreve a configuração da
-planta piloto. A Seção~\ref{sec:validacao} apresenta e discute os resultados
-experimentais. Por fim, a Seção~\ref{sec:conclusao} traz as conclusões e
-indica trabalhos futuros.
+controle. A Seção~\ref{sec:revisao} revisa conceitos de controle de processos
+endotérmicos e o uso de análises termodinâmicas como suporte à definição das
+janelas operacionais de temperatura e razão CO\(_2\)/CH\(_4\). A
+Seção~\ref{sec:processo} descreve a configuração da planta piloto. A
+Seção~\ref{sec:validacao} apresenta e discute os resultados experimentais.
+Por fim, a Seção~\ref{sec:conclusao} traz as conclusões e indica trabalhos
+futuros.
