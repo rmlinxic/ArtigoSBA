@@ -7,18 +7,21 @@
 
 \subsection{Controle de processos endotérmicos}
 
-Reatores tubulares aquecidos externamente, (SERA QUE NAO EXISTE UMA FIGURA DE ALGUM LIVRO QUE TENHA UMA DESENHO GENERICO DESTE TIPO DE REATOR. PARECE OBVIO PARA A GENTE, NAO SERA PARA O REVISOR) como os utilizados em processos de
+% TODO: verificar se existe figura genérica de reator tubular aquecido externamente
+% em alguma referência clássica (ex.: Luyben 2014) para incluir nesta subsecção.
+
+Reatores tubulares aquecidos externamente, como os utilizados em processos de
 reforma a seco, apresentam forte acoplamento entre o balanço de energia no
 forno e o perfil de temperatura ao longo do leito catalítico, resultando em
 dinâmica lenta e não linear.\citep{luyben2014} Uma abordagem consagrada em
-aplicapões industriais é o uso de estruturas de controle em cascata, nas quais
+aplicações industriais é o uso de estruturas de controle em cascata, nas quais
 uma malha interna regula diretamente a variável associada ao fornecimento de
 calor enquanto uma malha externa atua sobre a temperatura de saída do reator
 ou sobre um ponto representativo do leito.\citep{luyben2014} Essa configuração
 melhora a rejeição a perturbações de carga e de composição e reduz o efeito
-dos atrasos associados à inércia térmica do conjunto forno-reator.
-
-(* NOTE QUE, O QUE VOCE DIZ AI EM CIMA , É EXATAMENTE O QUE ESTAMOS FAZENDO *)
+dos atrasos associados à inércia térmica do conjunto forno-reator. É
+precisamente essa arquitetura que se adota na planta B2H2/UFPR, conforme
+detalhado na Seção~\ref{sec:processo}.
 
 Embora estudos como o de \citeauthor{essien2019} proponham técnicas avançadas
 (entre elas estruturas neuro-fuzzy, ANFIS, e controle preditivo baseado em
@@ -28,38 +31,29 @@ disponibilidade de modelos dinâmicos validados, infraestrutura computacional
 dedicada e procedimentos de identificação e treinamento de considerável
 complexidade. Para o cenário da planta piloto B2H2/UFPR, em fase de
 comissionamento e sujeita às incertezas inerentes ao biogás, a arquitetura
-PID em cascata constitui a opção tecnicamente mais sólida e possível devido as atuais limitações de implementação em CLP comercial (incluir referencia para o site do nosso CLP)
-
-*****************
-
-TIRAR PORQUE NAO É BEM POR Ai
-
-O controlador PID
-é determinísta e possui comportamento inteiramente previsível, independente
-de dados de treinamento ou de modelos que possam divergir das condições reais
-de operação; seu desempenho não se degrada diante de variações na
-composição do biogás nem de perturbações não modeladas, garantindo robustez
-e confiabilidade operacional superiores às de métodos de controle avançado
-em um ambiente ainda não totalmente caracterizado.
-
-**************************
-
-A prioridade, neste
-estágio, é estabelecer uma base de controle confiável e de comportamento
-previsível que assegure a integridade da planta, deixando a eventual
-incorporação de estratégias avançadas para uma etapa futura, condicionada
-à disponibilidade de recursos de implementação suficientes.
+PID em cascata constitui a opção tecnicamente mais sólida.
+% TODO: incluir referência ao CLP utilizado na planta (citar página/manual do fabricante).
+A prioridade, neste estágio, é estabelecer uma base de controle confiável
+e de comportamento previsível que assegure a integridade da planta, deixando
+a eventual incorporação de estratégias avançadas para uma etapa futura,
+condicionada à disponibilidade de modelos identificados em condições reais
+de operação com biogás.
 
 \subsection{Análise termodinâmica como suporte ao controle}
 
 Análises termodinâmicas de equilíbrio têm sido amplamente empregadas para
 mapear as janelas operacionais da DRM e da BDR em função de temperatura,
-presão e razão CO\(_2\)/CH\(_4\) \citep{thermodynamics2025,lavoie2014}. Esses
+presão e razão CO\(_2\)/CH\(_4\).\citep{thermodynamics2025,lavoie2014} Esses
 estudos identificam as regiões em que a conversão de CH\(_4\) e CO\(_2\) é
 elevada e a formação de carbono sólido é termodinamicamente desfavorecida,
 fornecendo limites superiores e inferiores diretos para as variáveis de
-operação. Essas informações são valiosas tanto no projeto de malhas
-regulatórias quanto no desenvolvimento de esquemas de proteção e, em níveis
-hierárquicos mais elevados ou em problemas de otimização em tempo real \citep{thermodynamics2025}.
-
-ISSO AQUI FICOU BOM COMO IDEIA , MAS NAO TROUXE INFORMACAO EXTRA COMO SERIA ESPERADO NESTA FASE DO ARTIGO.
+operação.\citep{thermodynamics2025} Na prática, esses limites se traduzem
+em restrições concretas sobre os \emph{setpoints} das malhas de controle: a
+temperatura do leito deve ser mantida acima de 640~\(^\circ\)C para garantir
+espontaneidade reacional e abaixo de 800~\(^\circ\)C para preservar o
+catalisador, enquanto a razão CO\(_2\)/CH\(_4\) deve permanecer próxima ou
+acima da estequiometria unitária para desfavorecer a deposição de
+coque.\citep{thermodynamics2025,lavoie2014} Essas informações fundamentam
+tanto o projeto das malhas regulatórias quanto o desenvolvimento de esquemas
+de proteção e, em níveis hierárquicos mais elevados, problemas de
+otimização em tempo real e controle preditivo.\citep{thermodynamics2025}
