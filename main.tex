@@ -1,9 +1,9 @@
 %===============================================================================
 % ORDEM DE COMPILAÇÃO:
-%   1. pdflatex main.tex
-%   2. bibtex main
-%   3. pdflatex main.tex
-%   4. pdflatex main.tex
+% 1. pdflatex main.tex
+% 2. bibtex main
+% 3. pdflatex main.tex
+% 4. pdflatex main.tex
 %===============================================================================
 \documentclass[a4paper]{ifacconf}
 
@@ -17,9 +17,9 @@
 \fi
 
 \if\portugues0
-   \usepackage[english]{babel}
-  \else
-   \usepackage[spanish,brazil,english]{babel}
+\usepackage[english]{babel}
+\else
+\usepackage[spanish,brazil,english]{babel}
 \fi
 
 \usepackage[T1]{fontenc}
@@ -27,10 +27,10 @@
 \usepackage{ae}
 
 \if\portugues1
- \newtheorem{teorema}[thm]{{\em Teorema}}{ }
- \newtheorem{lema}[thm]{{\em Lema}}{ }
- \newtheorem{corolario}[thm]{{\em Corolário}}{ }
- \newenvironment{prova}{{\bf Prova.}}{ }
+\newtheorem{teorema}[thm]{{\em Teorema}}{ }
+\newtheorem{lema}[thm]{{\em Lema}}{ }
+\newtheorem{corolario}[thm]{{\em Corolário}}{ }
+\newenvironment{prova}{{\bf Prova.}}{ }
 \fi
 
 \begin{document}
@@ -42,24 +42,19 @@
 
 \title{Controle e Automação de Planta Piloto de Produção de
 Hidrogênio por Reforma a Seco de Biogás no
-LabMater/UFPR\thanksref{footnoteinfo}}
+LabMater/UFPR. Este titulo ainda nao esta ok. Explicar conversando. \thanksref{footnoteinfo}}
 
-\thanks[footnoteinfo]{Reconhecimento do suporte financeiro deve vir
-nesta nota de rodapé.}
+\thanks[footnoteinfo]{Este trabalho teve o apoio COPEL Geração Distribuição pelo contrato PD-06491.0005/2023}
 
 \author[First]{Ricardo M. Israel}
-\author[Second]{Dr. Gustavo H. C. Oliveira}
-\author[Third]{Dr. Helton J. Alves}
-\author[Fourth]{Dr. Jo\~ao Am\'erico Vilela Junior}
+\author[First]{Gustavo H. C. Oliveira}
+\author[Second]{Helton J. Alves}
+\author[First]{Jo\~ao A. Vilela Jr}
 
-\address[First]{Departamento de Engenharia Elétrica, Universidade
-Federal do Paraná, Curitiba, Paraná, Brasil (e-mail: ricardo.israel@ufpr.br).}
-\address[Second]{Departamento de Engenharia Elétrica, Universidade
-Federal do Paraná, Curitiba, Paraná, Brasil (e-mail: gustavo.oliveira@ufpr.br).}
-\address[Third]{Departamento de Engenharia Química, Universidade
-Federal do Paraná, Curitiba, Paraná, Brasil (e-mail: helton.alves@ufpr.br).}
-\address[Fourth]{Departamento de Engenharia Elétrica, Universidade
-Federal do Paraná, Curitiba, Paraná, Brasil (e-mail: vilela@ufpr.br).}
+\address[First]{Departamento de Engenharia Elétrica}
+\address[Second]{Departamento de Engenharia Química \\
+Universidade Federal do Paraná, Curitiba, Paraná, Brasil \\
+e-mail: (ricardo.israel,gustavo.oliveira,helton.alves,vilela)@ufpr.br}
 
 \selectlanguage{english}
 \renewcommand{\abstractname}{{\bf Abstract:~}}
@@ -128,7 +123,7 @@ LabMater/UFPR.
 \fi
 
 %===============================================================================
-%  SEÇÕES (cada uma em seu próprio arquivo)
+% SEÇÕES (cada uma em seu próprio arquivo)
 %===============================================================================
 
 \input{sections/01_introducao}
