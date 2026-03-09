@@ -87,6 +87,114 @@ Total & 12 & 7 \\
 \end{table}
 
 % -----------------------------------------------------------------------
+\subsection{Sinais de controle das malhas}
+\label{sec:sinais_controle}
+% -----------------------------------------------------------------------
+
+Esta subseção descreve formalmente as variáveis de processo, variáveis
+manipuladas e sinais de referência de cada malha de controle, estabelecendo
+a nomenclatura utilizada ao longo do artigo.
+
+\subsubsection{Definição das variáveis por malha}
+
+Cada uma das sete malhas automáticas é caracterizada pela tripla
+\(\{SP,\,PV,\,MV\}\). Para as malhas dos fornos reatores, os sinais assumem
+os papéis descritos a seguir, com índices $i \in \{1,2\}$ para o reator e
+$j \in \{\text{alta, med, baixa}\}$ para a zona axial:
+
+\begin{itemize}
+  \item \textbf{Variável de processo} (\textit{process variable}, PV):
+    temperatura medida pelo termopar da camisa externa da zona $j$ do
+    reator $i$, denotada $T^{(i)}_{\text{cam},j}$.
+  \item \textbf{Variável manipulada} (\textit{manipulated variable}, MV):
+    potência elétrica aplicada ao elemento resistivo da zona $j$ do reator $i$,
+    denotada $P^{(i)}_j$, expressa em percentual da potência nominal (\%).
+  \item \textbf{Referência interna} (\textit{setpoint} aplicado ao PID),
+    $SP^{(i)}_{\mathrm{ap},j}$: calculada dinamicamente pela lógica de nível
+    externo conforme as equações~(\ref{eq:sp_alto_med})--(\ref{eq:sp_baixo}),
+    a partir do setpoint desejado $SP_{\mathrm{d}}$ e da temperatura do leito
+    $T^{(i)}_{\mathrm{int},j}$.
+\end{itemize}
+
+Para a malha do forno pré-aquecedor, o sinal de PV é a temperatura da zona
+de pré-aquecimento e a MV é a potência do resistor correspondente; o setpoint
+é fixado diretamente pelo operador.
+
+% --- ESPAÇO PARA DISCUSSÃO: Sinais de controle medidos ---
+% TODO: Inserir aqui a análise dos sinais registrados durante os ensaios.
+% Sugestões de conteúdo:
+%   - Faixa de variação observada de cada MV (P^(i)_j) ao longo dos ensaios
+%   - Tempos de resposta entre variação de MV e resposta de PV
+%   - Comparação entre SP_ap calculado e T_cam medida (seguimento de referência)
+%   - Discussão sobre saturação ou limitação de atuador observada nos ensaios
+% -----------------------------------------------------------------
+
+\subsubsection{Sinal de controle da potência de aquecimento}
+\label{sec:sinal_mv}
+
+A variável manipulada $P^{(i)}_j$ é gerada pela saída do controlador PID
+correspondente e enviada ao CLP S7-1200, que a converte em um sinal de
+acionamento do elemento resistivo por modulação de fase ou ciclo completo.
+O sinal de controle é limitado ao intervalo $[0,\,100]\,\%$ da potência
+nominal, garantindo operação segura e evitando sobrecarga dos atuadores.
+
+% --- ESPAÇO PARA DISCUSSÃO: Comportamento do sinal MV ---
+% TODO: Descrever aqui o comportamento observado do sinal de potência
+%       (MV) durante os ensaios de aquecimento. Por exemplo:
+%   - O sinal de MV atinge saturação (100%) durante o aquecimento inicial?
+%   - Como o MV evolui após atingir o regime estacionário?
+%   - Há diferença entre as zonas alta, média e baixa?
+%   - Incluir figura: P^(i)_j vs. tempo (sinal de controle ao longo do ensaio)
+% -----------------------------------------------------------------
+
+\begin{figure}[ht]
+\begin{center}
+% === INSERIR FIGURA: Sinais de controle (MV) vs. tempo ===
+% \includegraphics[width=8.4cm]{sinais_mv.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.5cm}
+{\small [FIGURA A INSERIR]\\[4pt]
+Sinais de controle $P^{(i)}_j$ (MV) vs.\ tempo para as três zonas\\
+do reator durante ensaio representativo}\vspace{1.5cm}}}
+\caption{Sinais de controle (potência de aquecimento, MV) das três zonas
+do forno reator ao longo de um ensaio representativo.}
+\label{fig:sinais_mv}
+\end{center}
+\end{figure}
+
+\subsubsection{Sinal de erro e atuação do controlador PID}
+\label{sec:sinal_erro}
+
+O erro de controle da malha interna é definido como
+
+\begin{equation}
+  e^{(i)}_j(t) = SP^{(i)}_{\mathrm{ap},j}(t) - T^{(i)}_{\mathrm{cam},j}(t),
+  \label{eq:erro_malha}
+\end{equation}
+
+onde $SP^{(i)}_{\mathrm{ap},j}(t)$ é a referência calculada pelo nível externo
+e $T^{(i)}_{\mathrm{cam},j}(t)$ é a temperatura da camisa medida naquele instante.
+O controlador PID discreto implementado no CLP opera na forma padrão com
+anti-windup, gerando a ação de controle
+
+\begin{equation}
+  P^{(i)}_j(k) = K_p\,e^{(i)}_j(k)
+    + \frac{K_p}{T_i}\sum_{n=0}^{k}e^{(i)}_j(n)\,\Delta t
+    + K_p\,T_d\,\frac{e^{(i)}_j(k)-e^{(i)}_j(k-1)}{\Delta t},
+  \label{eq:pid_discreto}
+\end{equation}
+
+onde $K_p$, $T_i$ e $T_d$ são os parâmetros de ganho proporcional, tempo
+integral e tempo derivativo, respectivamente, e $\Delta t$ é o período de
+amostragem do CLP.
+
+% --- ESPAÇO PARA DISCUSSÃO: Parâmetros PID e sintonização ---
+% TODO: Inserir aqui os valores de K_p, T_i, T_d utilizados na sintonia final,
+%       e descrever o método de sintonia adotado (ex.: Ziegler-Nichols,
+%       sintonia empírica, etc.). Discutir se a mesma sintonia foi aplicada
+%       a todas as zonas ou se foi necessário ajuste individual por zona.
+% -----------------------------------------------------------------
+
+% -----------------------------------------------------------------------
 \subsection{Estratégia de controle adotada}
 \label{sec:estrategia}
 % -----------------------------------------------------------------------
@@ -137,6 +245,13 @@ do leito em relação a $SP_{\mathrm{d}}$.}
 \label{fig:pid_sem_reacao}
 \end{center}
 \end{figure}
+
+% --- ESPAÇO PARA DISCUSSÃO: Sinais de controle no PID simples ---
+% TODO: Discutir o comportamento dos sinais de controle (MV e PV) observados
+%       nos ensaios com PID simples, em ambos os regimes (com e sem reação).
+%       Relacionar o comportamento da MV (potência) com o comportamento
+%       da PV (temperatura de camisa) e do leito interno.
+% -----------------------------------------------------------------
 
 \subsubsection{Controle por setpoint dinâmico proporcional}
 
@@ -192,6 +307,16 @@ $SP_{\mathrm{d}}$, aumentando o fluxo de calor; quando o leito está mais
 quente (situação típica sem reação), $SP_{\mathrm{ap}}$ é reduzido,
 evitando o sobreaquecimento.
 
+% --- ESPAÇO PARA DISCUSSÃO: Dinâmica do sinal SP_ap ---
+% TODO: Descrever a dinâmica observada do sinal SP_ap calculado ao longo
+%       dos ensaios. Questões a abordar:
+%   - Qual a faixa de variação observada de SP_ap em relação a SP_d?
+%   - O sinal SP_ap é suave ou apresenta oscilações? Por quê?
+%   - Há saturação de SP_ap acima do limite de temperatura do forno?
+%   - Incluir figura: SP_ap, T_cam e T_int vs. tempo (três curvas sobrepostas)
+%     para ilustrar o mecanismo de compensação dinâmica.
+% -----------------------------------------------------------------
+
 \subsubsection{Distribuição axial dos termopares internos e das malhas}
 
 Cada reator catalítico possui dois termopares internos ao leito: um na região
@@ -214,3 +339,11 @@ enquanto a malha da zona baixa utiliza exclusivamente $T_{\mathrm{baixo}}$,
 
 garantindo que cada zona da camisa seja compensada pelo gradiente térmico real
 da região axial do leito que ela aquece.\citep{luyben2014}
+
+% --- ESPAÇO PARA DISCUSSÃO: Perfil axial dos sinais de controle ---
+% TODO: Discutir as diferenças entre os sinais das zonas alta, média e baixa.
+%   - Os valores de SP_ap diferem significativamente entre as zonas?
+%   - O perfil axial de temperatura (T_alto vs. T_baixo) é uniforme?
+%   - A estratégia de associar T_alto às zonas alta+média e T_baixo à
+%     zona baixa se mostrou adequada? Há necessidade de refinamento?
+% -----------------------------------------------------------------
