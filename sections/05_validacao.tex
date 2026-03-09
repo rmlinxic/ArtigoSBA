@@ -17,9 +17,9 @@ mais problemático, o sobreaquecimento por inversão do gradiente térmico, e
 demonst ram que o novo controlador resolve esse problema de forma robusta.
 
 Essa abordagem é metodologicamente sólida. O regime sem reação corresponde à
-condição de maior risco de sobreaquecimento, já que não há consumo
+condicião de maior risco de sobreaquecimento, já que não há consumo
 endotérmico para dissipar o calor fornecido pelo forno. Um controlador que
-presenta bom desempenho nessa condição crítica tende a operar com igual ou
+apresenta bom desempenho nessa condição crítica tende a operar com igual ou
 maior estabilidade quando a reação estiver em curso, pois a endotermia atua
 como uma perturbação de carga que favorece o mecanismo de compensação
 proposto em~(\ref{eq:sp_dinamico}). A validação completa com reação em curso
@@ -48,7 +48,7 @@ do catalisador.
 \label{tab:metricas_pid}
 \begin{tabular}{lccc}
 \hline
-Regime & $t_s$ (min) & Sobrelevação (\%) & ISE \\
+Regime & $t_s$ (min) & Sobrelevanção (\%) & ISE \\
 \hline
 Com reação & -- & -- & -- \\
 Sem reação & -- & -- & -- \\
@@ -56,6 +56,65 @@ Sem reação & -- & -- & -- \\
 \end{tabular}
 \end{center}
 \end{table}
+
+% --- ESPAÇO PARA DISCUSSÃO: Sinais do PID simples durante os ensaios ---
+% TODO: Analisar os sinais de controle registrados nos ensaios com PID simples:
+%   - Incluir figura com as curvas de MV (potência) e PV (T_cam) vs. tempo
+%     para o regime sem reação, destacando o sobreaquecimento.
+%   - Comparar os perfis de sinal de controle (MV) entre os dois regimes:
+%     o PID "abre" a potência de forma similar nos dois casos?
+%   - Identificar o instante em que ocorre a inversão do gradiente térmico
+%     no sinal de PV (T_cam vs. T_int) e relacionar com a resposta da MV.
+%   - Preencher a Tabela~\ref{tab:metricas_pid} com os valores medidos.
+% -----------------------------------------------------------------
+
+\subsection{Sinais de controle: PID simples vs.\ setpoint dinâmico}
+\label{sec:comparacao_sinais}
+
+A comparação entre as duas estratégias pode ser conduzida não apenas pelas
+métricas de desempenho da saída (temperatura do leito), mas também pela
+analíse dos sinais internos de controle. Em particular, o comportamento da
+variável manipulada $P^{(i)}_j$ e do sinal de referência $SP^{(i)}_{\mathrm{ap},j}$
+revela de forma direta como cada estratégia reage às perturbações térmicas
+do processo.
+
+% --- ESPAÇO PARA DISCUSSÃO: Comparação dos sinais de controle ---
+% TODO: Inserir aqui a discussão comparativa dos sinais de controle entre
+%       as duas estratégias. Sugestões de conteúdo:
+%
+%   (a) Sinal de MV (potência):
+%       - O controlador de setpoint dinâmico reduz a potência mais
+%         rapidamente que o PID simples quando o leito se aproxima de SP_d?
+%       - Há diferença no esforço de controle (energia total consumida)?
+%
+%   (b) Sinal de referência SP_ap:
+%       - Mostrar a evolução de SP_ap calculado ao longo do ensaio.
+%       - Em que momento SP_ap converge para SP_d? O que isso indica?
+%
+%   (c) Sinal de erro e^(i)_j:
+%       - Comparar o erro residual em regime estacionário nas duas estratégias.
+%       - O erro da malha interna (e_j = SP_ap - T_cam) é reduzido
+%         mesmo quando SP_ap varia dinamicamente?
+%
+%   Incluir figura com as quatro curvas sobrepostas:
+%   SP_d (linha de referência), SP_ap (dinâmico), T_cam (PV), T_int (leito)
+%   para um ensaio representativo com o novo controlador.
+% -----------------------------------------------------------------
+
+\begin{figure}[ht]
+\begin{center}
+% === INSERIR FIGURA: Comparação de sinais de controle ===
+% \includegraphics[width=8.4cm]{comparacao_sinais_controle.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.5cm}
+{\small [FIGURA A INSERIR]\\[4pt]
+Comparação dos sinais: $SP_{\mathrm{d}}$, $SP_{\mathrm{ap}}$,
+$T_{\mathrm{cam}}$ e $T_{\mathrm{int}}$ vs.\ tempo\\(regime sem reação, setpoint dinâmico)}\vspace{1.5cm}}}
+\caption{Sinais de controle do novo controlador no regime sem reação:
+setpoint desejado $SP_{\mathrm{d}}$, setpoint calculado $SP_{\mathrm{ap}}$,
+temperatura da camisa $T_{\mathrm{cam}}$ e temperatura do leito $T_{\mathrm{int}}$.}
+\label{fig:sinais_novo_ctrl}
+\end{center}
+\end{figure}
 
 \subsection{Desempenho do controlador por setpoint dinâmico proporcional}
 
@@ -73,7 +132,7 @@ o PID simples no mesmo regime.
 {\small [FIGURA A INSERIR]\\[4pt]
 Setpoint dinâmico, sem reação:\\temperaturas da camisa e do leito vs.\ tempo}\vspace{1.5cm}}}
 \caption{Controlador por setpoint dinâmico sem reação: rastreamento de
-$SP_{\mathrm{d}}$ e redução da sobrelevação em comparação à
+$SP_{\mathrm{d}}$ e redução da sobrelevanção em comparação à
 Fig.~\ref{fig:pid_sem_reacao}.}
 \label{fig:novo_ctrl_sem_reacao}
 \end{center}
@@ -85,7 +144,7 @@ Fig.~\ref{fig:pid_sem_reacao}.}
 \label{tab:metricas_novo}
 \begin{tabular}{lccc}
 \hline
-Controlador & $t_s$ (min) & Sobrelevação (\%) & ISE \\
+Controlador & $t_s$ (min) & Sobrelevanção (\%) & ISE \\
 \hline
 PID simples & -- & -- & -- \\
 SP dinâmico & -- & -- & -- \\
@@ -100,3 +159,12 @@ ciclo com base na diferença observada entre o leito e a meta desejada, a
 estratégia mantém o leito próximo de $SP_{\mathrm{d}}$ independentemente
 do estado reacional. Os ensaios sem reação são, portanto, já conclusivos
 quanto à eficácia do novo controlador.
+
+% --- ESPAÇO PARA DISCUSSÃO: Esforço de controle e análise energética ---
+% TODO: Discutir o esforço de controle do novo controlador em comparação
+%       com o PID simples, se dados estiverem disponíveis:
+%   - A integral da potência (energia consumida) é menor com o novo controlador?
+%   - O novo controlador apresenta menor número de ciclos de liga/desliga
+%     dos atuadores, aumentando a vida útil dos elementos resistivos?
+%   - Preencher Tabela~\ref{tab:metricas_novo} com os valores medidos.
+% -----------------------------------------------------------------
