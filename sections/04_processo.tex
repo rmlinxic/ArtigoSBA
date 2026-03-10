@@ -16,7 +16,7 @@ resistivo, carregado com um leito de catalisador à base de níquel
 dezenas de litros por hora de biogás sintético sob pressão
 atmosférica.\citep{oliveira2021} Em condições nominais, a planta opera entre
 650 e 800~\(^\circ\)C, com conversão global de biogás superior a 97~\% e
-produção de cerca de 30~L\(·\)h\(^{-1}\) de hidrogênio em regime
+produção de cerca de 30~L\(\cdot\)h\(^{-1}\) de hidrogênio em regime
 contínuo.\citep{labmater2024}
 
 \begin{figure}[ht]
@@ -176,12 +176,13 @@ e $T^{(i)}_{\mathrm{cam},j}(t)$ é a temperatura da camisa medida naquele instan
 O controlador PID discreto implementado no CLP opera na forma padrão com
 anti-windup, gerando a ação de controle
 
-\begin{equation}
+% Equação quebrada em multline para caber na coluna de 8,4 cm (SBA/IFAC)
+\begin{multline}
   P^{(i)}_j(k) = K_p\,e^{(i)}_j(k)
-    + \frac{K_p}{T_i}\sum_{n=0}^{k}e^{(i)}_j(n)\,\Delta t
+    + \frac{K_p}{T_i}\sum_{n=0}^{k}e^{(i)}_j(n)\,\Delta t \\
     + K_p\,T_d\,\frac{e^{(i)}_j(k)-e^{(i)}_j(k-1)}{\Delta t},
   \label{eq:pid_discreto}
-\end{equation}
+\end{multline}
 
 onde $K_p$, $T_i$ e $T_d$ são os parâmetros de ganho proporcional, tempo
 integral e tempo derivativo, respectivamente, e $\Delta t$ é o período de
