@@ -63,6 +63,7 @@ Universidade Federal do Paraná, Curitiba, PR, Brasil\\
 \selectlanguage{english}
 \renewcommand{\abstractname}{{\bf Abstract:~}}
 
+% Abstract e Resumo em bloco único, separados por \vskip 1mm (padrão SBA/IFAC)
 \begin{abstract}
 This paper presents the design and experimental validation of a process
 control architecture for a pilot-scale renewable hydrogen production plant
@@ -83,24 +84,22 @@ target temperature range, ensures high CH$_4$ conversion and keeps the
 CO$_2$/CH$_4$ ratio within limits that mitigate coke formation, illustrating
 the specific challenges and benefits of controlling biogas, rather than pure
 methane, in dry reforming.
-\end{abstract}
 
+\vskip 1mm% não altere esse espaçamento
 \selectlanguage{brazil}
-\renewcommand{\abstractname}{{\bf Resumo:~}}
-
-\begin{abstract}
-Este artigo apresenta o projeto e a validação experimental de uma arquitetura
-de controle de processos para uma planta piloto de produção de hidrogênio
-renovável baseada na reforma a seco de \emph{biogás}, desenvolvida no
-Laboratório de Materiais e Energias Renováveis (LabMater) da UFPR. No processo
-estudado, o biogás bruto---mistura CH$_4$/CO$_2$ de composição variável e
-contendo impurezas típicas---é convertido em gás de síntese (H$_2$ + CO) por
-meio de reações fortemente endotérmicas, o que torna o reator sensível a
-perturbações no suprimento de calor, na razão CO$_2$/CH$_4$ e nas vazões de
-alimentação. Essas características, somadas ao risco de deposição de coque e
-desativação do catalisador, impõem restrições operacionais rígidas e demandam
-controle automático preciso da temperatura do leito e da razão de alimentação
-para manter a operação em uma janela segura. O trabalho formula o problema de
+{\noindent \bf Resumo}: Este artigo apresenta o projeto e a validação
+experimental de uma arquitetura de controle de processos para uma planta
+piloto de produção de hidrogênio renovável baseada na reforma a seco de
+\emph{biogás}, desenvolvida no Laboratório de Materiais e Energias
+Renováveis (LabMater) da UFPR. No processo estudado, o biogás bruto---mistura
+CH$_4$/CO$_2$ de composição variável e contendo impurezas típicas---é
+convertido em gás de síntese (H$_2$ + CO) por meio de reações fortemente
+endotérmicas, o que torna o reator sensível a perturbações no suprimento de
+calor, na razão CO$_2$/CH$_4$ e nas vazões de alimentação. Essas
+características, somadas ao risco de deposição de coque e desativação do
+catalisador, impõem restrições operacionais rígidas e demandam controle
+automático preciso da temperatura do leito e da razão de alimentação para
+manter a operação em uma janela segura. O trabalho formula o problema de
 controle para a planta piloto de reforma a seco de biogás do LabMater/UFPR,
 propõe uma estrutura de controle adequada a essa configuração e a valida
 experimentalmente, evidenciando os desafios adicionais do uso de biogás, em
@@ -114,7 +113,7 @@ seco.
 Biogas dry reforming; green hydrogen production; process control;
 pilot plant; LabMater/UFPR.
 
-\vskip 1mm
+\vskip 1mm% não altere esse espaçamento
 \selectlanguage{brazil}
 {\noindent\it Palavras-chaves:} Reforma a seco de biogás; reforma a seco do
 metano; produção de hidrogênio verde; controle de processos; planta piloto;
