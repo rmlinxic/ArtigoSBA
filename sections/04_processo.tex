@@ -111,7 +111,7 @@ $j \in \{\text{alta, med, baixa}\}$ para a zona axial:
     denotada $P^{(i)}_j$, expressa em percentual da potência nominal (\%).
   \item \textbf{Referência interna} (\textit{setpoint} aplicado ao PID),
     $SP^{(i)}_{\mathrm{ap},j}$: calculada dinamicamente pela lógica de nível
-    externo conforme as equações~(\ref{eq:sp_alto_med})--(\ref{eq:sp_baixo}),
+    externo conforme as equações~\eqref{eq:sp_alto_med}--\eqref{eq:sp_baixo},
     a partir do setpoint desejado $SP_{\mathrm{d}}$ e da temperatura do leito
     $T^{(i)}_{\mathrm{int},j}$.
 \end{itemize}
@@ -272,10 +272,10 @@ arquitetura completa é ilustrada na Figura~\ref{fig:blocos_controle}.
 % \includegraphics[width=8.4cm]{diagrama_blocos_controle.eps}
 \fbox{\parbox{7.5cm}{\centering\vspace{1.5cm}
 {\small [FIGURA A INSERIR]\\[4pt]
-Diagrama de blocos, setpoint dinâmico proporcional:\\nível externo: $SP_{\mathrm{ap}}$ via (3)/(4);\\nível interno: PID por zona de camisa}\vspace{1.5cm}}}
+Diagrama de blocos, setpoint dinâmico proporcional:\\nível externo: $SP_{\mathrm{ap}}$ via \eqref{eq:sp_alto_med}/\eqref{eq:sp_baixo};\\nível interno: PID por zona de camisa}\vspace{1.5cm}}}
 \caption{Diagrama de blocos do controlador por setpoint dinâmico proporcional:
-nível externo calcula $SP_{\mathrm{ap}}$ via (3) e (4); nível interno executa
-os PIDs das três zonas da camisa.}
+nível externo calcula $SP_{\mathrm{ap}}$ via \eqref{eq:sp_alto_med} e
+\eqref{eq:sp_baixo}; nível interno executa os PIDs das três zonas da camisa.}
 \label{fig:blocos_controle}
 \end{center}
 \end{figure}
@@ -293,7 +293,7 @@ aplicado ao controlador PID da camisa, $SP_{\mathrm{ap}}$, é dado por
 
 em que $SP_{\mathrm{d}}$ é a temperatura desejada no interior do reator
 (\(^\circ\)C) e $T_{\mathrm{int}}$ é a leitura do termopar interno
-correspondente (\(^\circ\)C). A equação~(\ref{eq:sp_dinamico}) pode ser
+correspondente (\(^\circ\)C). A equação~\eqref{eq:sp_dinamico} pode ser
 reescrita de forma equivalente como
 
 \begin{equation}
@@ -323,7 +323,7 @@ evitando o sobreaquecimento.
 Cada reator catalítico possui dois termopares internos ao leito: um na região
 superior, $T_{\mathrm{alto}}$, e um na região inferior, $T_{\mathrm{baixo}}$.
 As malhas das zonas alta e média da camisa utilizam $T_{\mathrm{alto}}$ como
-$T_{\mathrm{int}}$ na equação~(\ref{eq:sp_simplificada}), resultando em
+$T_{\mathrm{int}}$ na equação~\eqref{eq:sp_simplificada}, resultando em
 
 \begin{equation}
   SP_{\mathrm{ap,\,alta}} = SP_{\mathrm{ap,\,med}} =
