@@ -1,4 +1,4 @@
-\begin{thebibliography}{7}
+\begin{thebibliography}{9}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
@@ -13,6 +13,16 @@ Essien, E. et~al. (2019).
   predictive control for carbon dioxide reforming of methane.
 \newblock \emph{Cleaner Engineering and Technology}.
 \newblock \doi{10.1016/j.clet.2019.100005}.
+
+\bibitem[{Ferreira et~al.(2025)Ferreira, Escribano, Schreiner, Ponciano,
+  Oliveira, {Vilela Junior}, and Alves}]{ferreira2025b}
+Ferreira, J.C.S., Escribano, R.A.N.G., Schreiner, M.A., Ponciano, P.C.,
+  Oliveira, G.H.C., {Vilela Junior}, J.A., and Alves, H.J. (2025).
+\newblock Do res{\'i}duo org{\^{a}}nico {\`{a}} rede el{\'e}trica:
+  Produ{\c{c}}{\~{a}}o {On-Grid} de hidrog{\^{e}}nio renov{\'a}vel com
+  supervis{\~{a}}o inteligente na planta {B2H2}.
+\newblock In \emph{Anais do 4{\textordmasculine} Congresso Brasileiro do
+  Hidrog{\^{e}}nio}. Bras{\'i}lia, DF, Brasil.
 
 \bibitem[{{LabMater/UFPR}(2024)}]{labmater2024}
 {LabMater/UFPR} (2024).
@@ -34,6 +44,15 @@ Luyben, W.L. (2014).
 \newblock \emph{Industrial {\&} Engineering Chemistry Research}, 53(37),
   14423--14439.
 \newblock \doi{10.1021/ie5023942}.
+
+\bibitem[{Oliveira et~al.(2025)Oliveira, Oliveira, Ferreira, {Vilela Junior},
+  and Alves}]{oliveira2025a}
+Oliveira, L.G., Oliveira, G.H.C., Ferreira, J.C.S., {Vilela Junior}, J.A., and
+  Alves, H.J. (2025).
+\newblock Projeto {B2H2}: Produ{\c{c}}{\~{a}}o de hidrog{\^{e}}nio
+  renov{\'a}vel para gera{\c{c}}{\~{a}}o distribu{\'i}da assistida por {IA}.
+\newblock In \emph{Anais do 4{\textordmasculine} Congresso Brasileiro do
+  Hidrog{\^{e}}nio}. Bras{\'i}lia, DF, Brasil.
 
 \bibitem[{Oliveira et~al.(2021)}]{oliveira2021}
 Oliveira, L.G. et~al. (2021).
