@@ -14,7 +14,7 @@ Reatores tubulares aquecidos externamente, como os utilizados em processos de
 reforma a seco, apresentam forte acoplamento entre o balanço de energia no
 forno e o perfil de temperatura ao longo do leito catalítico, resultando em
 dinâmica lenta e não linear.\citep{luyben2014} Uma abordagem consagrada em
-aplicações industriais é o uso de estruturas de controle em cascata, nas quais
+aplicacões industriais é o uso de estruturas de controle em cascata, nas quais
 uma malha interna regula diretamente a variável associada ao fornecimento de
 calor enquanto uma malha externa atua sobre a temperatura de saída do reator
 ou sobre um ponto representativo do leito.\citep{luyben2014} Essa configuração
@@ -23,19 +23,23 @@ dos atrasos associados à inércia térmica do conjunto forno-reator. É
 precisamente essa arquitetura que se adota na planta B2H2/UFPR, conforme
 detalhado na Seção~\ref{sec:processo}.
 
-Embora estudos como o de \citeauthor{essien2019} proponham técnicas avançadas
-(entre elas estruturas neuro-fuzzy, ANFIS, e controle preditivo baseado em
-modelos, MPC) para lidar com a não linearidade e a forte exigência energética
-da reforma a seco,\citep{essien2019} tais abordagens pressupõem a
-disponibilidade de modelos dinâmicos validados, infraestrutura computacional
-dedicada e procedimentos de identificação e treinamento de considerável
-complexidade. Para o cenário da planta piloto B2H2/UFPR, em fase de
-comissionamento e sujeita às incertezas inerentes ao biogás, a arquitetura
-PID em cascata constitui a opção tecnicamente mais sólida.
+Buscando simplicidade operacional e viabilidade prática para o estágio atual
+da planta piloto, adotou-se uma estrutura PID aprimorada como estratégia
+central de controle. Embora estudos como o de \citeauthor{essien2019} proponham
+abordagens de maior complexidade computacional --- entre elas estruturas
+neuro-fuzzy, ANFIS e controle preditivo baseado em modelos (MPC)
+---,\citep{essien2019} a implementação dessas técnicas exige controladores
+com capacidade de cómputo significativamente superior àquela dos
+equipamentos industriais de custo acessível, além de modelos dinâmicos
+validados e procedimentos de identificação de considerável complexidade.
+Diante das restrições de orçamento associadas à plataforma experimental
+B2H2/UFPR, a alternativa prática foi a estrutura PID aprimorada --- cujas
+modificações em relação ao controlador clássico constituem precisamente o
+objeto central deste trabalho.
 % TODO: incluir referência ao CLP utilizado na planta (citar página/manual do fabricante).
 A prioridade, neste estágio, é estabelecer uma base de controle confiável
 e de comportamento previsível que assegure a integridade da planta, deixando
-a eventual incorporação de estratégias avançadas para uma etapa futura,
+a eventual incorporação de estratégias mais avançadas para uma etapa futura,
 condicionada à disponibilidade de modelos identificados em condições reais
 de operação com biogás.
 
