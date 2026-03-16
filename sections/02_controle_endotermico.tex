@@ -11,21 +11,21 @@
 \subsection{Formulação do problema de controle}
 \label{sec:formulacao}
 
-% TODO: verificar se existe figura genérica de reator tubular aquecido externamente
-% em alguma referência clássica (ex.: Luyben 2014) para incluir nesta subsecção.
-%
-% *** ESPAÇO RESERVADO PARA FIGURA DO REATOR ***
-% Substituir o bloco abaixo pela figura real quando disponível.
-%
-% \begin{figure}[htb]
-%   \centering
-%   \includegraphics[width=0.9\columnwidth]{figures/reator_esquematico}
-%   \caption{Representação esquemática do reator tubular da planta B2H2/UFPR.
-%            Indicar: zona de aquecimento (forno), leito catalítico, pontos
-%            de medida de temperatura (TC) e posição do sensor de referência
-%            para a malha de controle cascata.}
-%   \label{fig:reator}
-% \end{figure}
+\begin{figure}[ht]
+\begin{center}
+% === INSERIR FIGURA: Representação esquemática do reator ===
+% \includegraphics[width=8.4cm]{reator_esquematico.eps}
+\fbox{\parbox{7.5cm}{\centering\vspace{1.2cm}
+{\small [FIGURA A INSERIR]\\[4pt]
+Representação esquemática do reator tubular da planta B2H2/UFPR\\[2pt]
+(forno, leito catalítico, termopares e malhas de controle)}\vspace{1.2cm}}}
+\caption{Representação esquemática do reator tubular da planta B2H2/UFPR,
+indicando a zona de aquecimento, o leito catalítico, os pontos de medida
+de temperatura (TC) e a posição dos sensores de referência para as
+malhas de controle.}
+\label{fig:reator}
+\end{center}
+\end{figure}
 
 O processo de reforma a seco de biogás envolve um reator tubular de leito
 fixo inserido em um forno elétrico. Sua dinâmica é descrita, de forma
@@ -74,7 +74,7 @@ térmicas da ordem de dezenas de minutos. Isso torna a resposta intrinsecamente
 lenta e reduz a capacidade de rejeitar perturbações de carga com agilidade.\citep{luyben2014}
 
 Além da inércia térmica, outros aspectos do sistema impõem restrições
-praticas ao controlador:
+práticas ao controlador:
 \begin{itemize}
   \item \textbf{Atraso de transporte e distribuição de temperatura:} o perfil
     axial de temperatura ao longo do leito pode apresentar gradientes
