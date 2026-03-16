@@ -12,8 +12,8 @@ puro pelo biogás, o processo passa a atuar sobre uma corrente renovável e de
 menor valor agregado, contribuindo tanto para a valorização de resíduos orgânicos
 quanto para a mitigação de emissões de gases de efeito estufa.\citep{lavoie2014}
 Nesse contexto, a BDR se destaca como rota promissora para a produção de
-hidrogênio renovável e gás de síntese integrados a cadeias de energia de baixo
-carbono.
+hidrogênio renovável e gás de síntese integrados a cadeias de conversão de
+resíduos em energia de baixo carbono.
 
 Do ponto de vista termodinâmico, a reação é fortemente endotérmica, com entalpia
 padrão da ordem de 247~kJ\(\cdot\)mol\(^{-1}\), de forma que temperaturas elevadas e
@@ -61,21 +61,37 @@ de processo (temperatura, vazão e composição) são manipuladas manualmente ou
 por controladores simples de laboratório, o que é viável em vista da pequena
 escala e da supervisão direta do pesquisador durante os ensaios.\citep{oliveira2021}
 
-A transição da escala de bancada para uma planta piloto operacional, etapa
-necessária antes da implantação industrial, impõe uma mudança qualitativa nos
-requisitos de operação. A supervisão manual já não é viável, as distâncias
-térmicas são maiores, as inércias são mais lentas e os desvios operacionais
-têm consequências críticas do ponto de vista de segurança e custo. Nessa
-escala, a automação e o controle de processos deixam de ser acessórios e
-passam a ser requisitos fundamentais para manter a operação dentro da janela
-segura, garantir alta conversão de CH\(_4\)/CO\(_2\) e proteger o catalisador
-de deposição acelerada de coque. É precisamente nesse contexto que se insere o
-presente trabalho. A planta piloto B2H2\citep{oliveira2025a,ferreira2025b}, dedicada
-à reforma a seco de biogás (BDR) e operando entre 650--800~\(^\circ\)C com
-produtividade de cerca de 30~L\(\cdot\)h\(^{-1}\) de hidrogênio em regime
-contínuo, constitui a plataforma experimental sobre a qual se formula,
-implementa e valida a arquitetura de controle industrial que viabiliza esse
-\emph{scale-up} de forma segura e reprodutível.
+A planta B2H2 (Biogas-to-H\(_2\)), inaugurada em outubro de 2025 no Centro
+Politécnico da UFPR, representa a materialização dessa trajetória de pesquisa
+em escala operacional.\citep{oliveira2025a,ferreira2025b} Mais do que um reator
+isolado, a B2H2 constitui uma \textit{plataforma integrada de conversão de
+resíduos em energia}: o processo inicia-se em um biodigestor anaeróbio
+alimentado com resíduos orgânicos do Restaurante Universitário, que serve
+cerca de 14\,000 refeições por dia, e o biogás resultante percorre toda a
+cadeia produtiva --- reforma catalítica a seco, purificação por adsorção a
+variação de pressão (PSA), armazenamento de H\(_2\) e geração de energia
+elétrica injetada na rede do próprio campus.\citep{oliveira2025a} O impacto
+sustentável desse ciclo é singular: resíduos que seriam descartados transformam-se
+em hidrogênio renovável de alta pureza sem consumo de água, com emissões de
+CO\(_2\) substancialmente reduzidas e potencial de tornar-se carbono-negativo
+mediante captura do CO\(_2\) excedente do biogás.\citep{ferreira2025b}
+A BDR é, nesse contexto, o núcleo termoquímico que torna possível toda essa
+cadeia --- e é precisamente o controle dessa reação que constitui o objeto de
+estudo do presente trabalho.
+
+A transição da escala de bancada para uma planta piloto operacional impõe uma
+mudança qualitativa nos requisitos de operação. A supervisão manual já não é
+viável, as distâncias térmicas são maiores, as inércias são mais lentas e os
+desvios operacionais têm consequências críticas do ponto de vista de segurança
+e custo. Nessa escala, a automação e o controle de processos deixam de ser
+acessórios e passam a ser requisitos fundamentais para manter a operação dentro
+da janela segura, garantir alta conversão de CH\(_4\)/CO\(_2\) e proteger o
+catalisador de deposição acelerada de coque. A planta piloto B2H2\citep{oliveira2025a,ferreira2025b},
+operando entre 650--800~\(^\circ\)C com produtividade de cerca de
+30~L\(\cdot\)h\(^{-1}\) de hidrogênio em regime contínuo, constitui a plataforma
+experimental sobre a qual se formula, implementa e valida a arquitetura de
+controle industrial que viabiliza esse \emph{scale-up} de forma segura e
+reprodutível.
 
 O restante deste artigo está organizado da seguinte forma. A
 Seção~\ref{sec:formulacao} apresenta a formulação matemática do problema de
