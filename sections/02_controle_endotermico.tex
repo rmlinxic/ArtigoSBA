@@ -1,0 +1,162 @@
+%===============================================================================
+% SEÇÃO 2 — Controle de Processos Endotérmicos com Reatores Tubulares
+%===============================================================================
+
+\section{Controle de Processos Endotérmicos}
+\label{sec:controle_endotermico}
+
+% -----------------------------------------------------------------------
+% 2.1 — FORMULAÇÃO DO PROBLEMA DE CONTROLE
+% -----------------------------------------------------------------------
+\subsection{Formulação do problema de controle}
+\label{sec:formulacao}
+
+% TODO: verificar se existe figura genérica de reator tubular aquecido externamente
+% em alguma referência clássica (ex.: Luyben 2014) para incluir nesta subsecção.
+%
+% *** ESPAÇO RESERVADO PARA FIGURA DO REATOR ***
+% Substituir o bloco abaixo pela figura real quando disponível.
+%
+% \begin{figure}[htb]
+%   \centering
+%   \includegraphics[width=0.9\columnwidth]{figures/reator_esquematico}
+%   \caption{Representação esquemática do reator tubular da planta B2H2/UFPR.
+%            Indicar: zona de aquecimento (forno), leito catalítico, pontos
+%            de medida de temperatura (TC) e posição do sensor de referência
+%            para a malha de controle cascata.}
+%   \label{fig:reator}
+% \end{figure}
+
+O processo de reforma a seco de biogás envolve um reator tubular de leito
+fixo inserido em um forno elétrico, cuja dinâmica é descrita, de forma
+genérica, pela equação de estado
+\begin{equation}
+  \dot{x}(t) = f\bigl(x(t),\,u(t),\,d(t)\bigr), \qquad y(t) = g\bigl(x(t)\bigr),
+  \label{eq:estadogenerico}
+\end{equation}
+onde $x = [T_r,\; X_{\mathrm{CH}_4},\; r_{\mathrm{H}_2/\mathrm{CO}}]^\top$
+é o vetor de estados (temperatura do leito, conversão de metano e razão
+H\(_2\)/CO), $u = [P_{\mathrm{forno}},\; F_{\mathrm{CH}_4},\; F_{\mathrm{CO}_2}]^\top$
+é o vetor de entradas manipuladas e $d$ representa perturbações
+exernas (composição do biogás, temperatura ambiente,
+pressão de operação).\citep{oliveira2021,luyben2014}
+
+O problema de controle consiste em determinar $u(t)$ tal que o sistema
+(\ref{eq:estadogenerico}) satisfaça, em regime permanente e durante transientes,
+as seguintes restrições operacionais:\citep{luyben2014,thermodynamics2025}
+\begin{align}
+  T_r &\in [650,\;800]~^\circ\text{C}, \label{eq:restr_T} \\
+  X_{\mathrm{CH}_4} &> 0{,}90, \label{eq:restr_X} \\
+  1 &\leq F_{\mathrm{CO}_2}/F_{\mathrm{CH}_4} \leq 1{,}5. \label{eq:restr_razao}
+\end{align}
+
+O critério de desempenho adotado é o Índice de Erro Quadrático Integrado
+ponderado, com penalização sobre os incrementos de controle:
+\begin{equation}
+  J = \int_0^\infty \Bigl[\|e(t)\|_Q^2 + \|\Delta u(t)\|_R^2 \Bigr]\,dt,
+  \label{eq:ISE}
+\end{equation}
+onde $Q \succ 0$ e $R \succ 0$ são matrizes de ponderamento que refletem
+relativa importância do erro de rastreamento frente ao custo de atuação.
+
+% -----------------------------------------------------------------------
+% 2.2 — DESAFIOS DO CONTROLE EM FORNOS COM REATORES TUBULARES
+% -----------------------------------------------------------------------
+\subsection{Desafios dinâmicos do forno-reator tubular}
+\label{sec:desafios}
+
+Reatores tubulares de leito fixo inseridos em fornos elétricos apresentam
+características dinâmicas que dificultam significativamente o projeto de
+malhas de controle convencionais.\citep{luyben2014} O primeiro intempérie é a
+elevada inércia térmica do sistema: a massa de material refratário do forno,
+alinhada com a massa do leito catalítico e das paredes do reator, resulta em
+constantes de tempo térmicas da ordem de dezenas de minutos, tornando a
+resposta lenta e prejudicando a rejeitação de perturbações de carga.\citep{luyben2014}
+
+Alguns dos principais desafios operacionais desse tipo de configuração são:
+\begin{itemize}
+  \item \textbf{Atraso de transporte e distribuição de temperatura:} o perfil
+    axial de temperatura ao longo do leito pode apresentar gradientes
+    consideráveis, de modo que a temperatura medida por um único sensor não
+    representa necessariamente o estado térmico global do leito.\citep{luyben2014}
+  \item \textbf{Acoplamento térmico forno-reator:} a potência elétrica entregue
+    ao forno afeta a temperatura da mufla, que por sua vez transfere calor
+    ao reator por radiação e condução; esse acoplamento é altamente não
+    linear e varia com a temperatura.\citep{luyben2014}
+  \item \textbf{Não linearidade da reação:} a cinética da reforma a seco é
+    fortemente não linear em temperatura, e a entalpia de reação
+    (\(\approx 247~\text{kJ}\cdot\text{mol}^{-1}\)) atua como uma pertubação
+    endotérmica de magnitude variável sobre o balanço de energia do forno,
+    dificultando a manutenção de um ponto de operação fixo.\citep{thermodynamics2025}
+  \item \textbf{Variabilidade da alimentação:} no caso do biogás, a
+    composição CH\(_4\)/CO\(_2\) e a presença de inertes (N\(_2\), H\(_2\)S)
+    variam ao longo do tempo, alterando o calor absorvido pela reação e
+    deslocando o ponto de operação sem aviso prévio ao controlador.
+    \citep{lavoie2014,thermodynamics2025}
+  \item \textbf{Risco de formação de coque:} quedas de temperatura abaixo de
+    640~\(^\circ\)C, ainda que transitórias, favorecem a deposição de
+    carbono sólido, impondo assimetria nas consequências do erro de
+    controle: o custo de um erro negativo (subaquecimento) é muito maior
+    do que o de um erro positivo de mesma magnitude.\citep{thermodynamics2025,lavoie2014}
+\end{itemize}
+
+% -----------------------------------------------------------------------
+% 2.3 — ESTRATÉGIA DE CONTROLE ADOTADA E SUA JUSTIFICATIVA
+% -----------------------------------------------------------------------
+\subsection{Estratégia de controle adotada}
+\label{sec:estrategia}
+
+Uma abordagem consagrada em aplicações industriais de fornos com reatores
+tubulares é o uso de estruturas em cascata, nas quais uma malha interna
+regula diretamente a variável associada ao fornecimento de calor enquanto
+uma malha externa atua sobre a temperatura de saída do reator ou sobre um
+ponto representativo do leito.\citep{luyben2014} Essa configuração melhora a
+rejeição a perturbações de carga e de composição e reduz o efeito dos
+atrasos associados à inércia térmica do conjunto forno-reator, sendo
+precisamente a arquitetura adotada na planta B2H2/UFPR,
+conforme detalhado na Seção~\ref{sec:processo}.
+
+A literatura registra propostas de estratégias de maior complexidade
+computacional para processos de reforma a seco, entre elas controle
+preditivo baseado em modelos (MPC), estruturas neuro-fuzzy e
+ANFIS.\citep{essien2019} Essas abordagens possuem mérito documentado em
+plataformas computacionais adequadas, pois permitem lidar de forma explícita
+com não linearidades e restrições operacionais. Entretanto, sua implementação
+exige controladores lógicos programáveis (CLPs) ou computadores industriais
+com capacidade de cómputo e memória significativamente superior àquela dos
+equipamentos de custo acessível disponíveis para a plataforma experimental
+B2H2/UFPR --- o que, no estágio atual de comissionamento da planta, inviabiliza
+essa rota.\citep{essien2019,luyben2014}
+
+Diante dessas restrições de hardware, a estratégia PID aprimorada --- cujas
+modificações estruturais em relação ao controlador PID clássico constituem
+o objeto central deste trabalho --- configura-se como a alternativa de
+maior viabilidade prática para o nível de infraestrutura disponível,
+assegurando comportamento previsível, confiável e de fácil manutenção
+em campo. A eventual incorporação de estratégias avançadas permanece como
+perspectiva de trabalho futuro, condicionada à disponibilidade de
+hardware compatível e de modelos identificados em condições reais de
+operação com biogás.\citep{essien2019}
+
+% -----------------------------------------------------------------------
+% 2.4 — ANÁLISE TERMODINÂMICA COMO SUPORTE AO CONTROLE
+% -----------------------------------------------------------------------
+\subsection{Análise termodinâmica como suporte ao controle}
+\label{sec:revisao}
+
+Análises termodinâmicas de equilíbrio têm sido amplamente empregadas para
+mapear as janelas operacionais da DRM e da BDR em função de temperatura,
+presão e razão CO\(_2\)/CH\(_4\).\citep{thermodynamics2025,lavoie2014} Esses
+estudos identificam as regiões em que a conversão de CH\(_4\) e CO\(_2\) é
+elevada e a formação de carbono sólido é termodinamicamente desfavorecida,
+fornecendo limites superiores e inferiores diretos para as variáveis de
+operação.\citep{thermodynamics2025} Na prática, esses limites se traduzem
+em restrições concretas sobre os \emph{setpoints} das malhas de controle:
+a temperatura do leito deve ser mantida acima de 640~\(^\circ\)C para garantir
+espontaneidade reacional e abaixo de 800~\(^\circ\)C para preservar o
+catalisador, enquanto a razão CO\(_2\)/CH\(_4\) deve permanecer próxima ou
+acima da estequiometria unitária para desfavorecer a deposição de
+coque.\citep{thermodynamics2025,lavoie2014} Essas informações fundamentam
+tanto o projeto das malhas regulatórias quanto o desenvolvimento de esquemas
+de proteção e, em níveis hierárquicos mais elevados, problemas de
+otimização em tempo real.\citep{thermodynamics2025}
