@@ -28,22 +28,22 @@
 % \end{figure}
 
 O processo de reforma a seco de biogás envolve um reator tubular de leito
-fixo inserido em um forno elétrico, cuja dinâmica é descrita, de forma
+fixo inserido em um forno elétrico. Sua dinâmica é descrita, de forma
 genérica, pela equação de estado
 \begin{equation}
   \dot{x}(t) = f\bigl(x(t),\,u(t),\,d(t)\bigr), \qquad y(t) = g\bigl(x(t)\bigr),
   \label{eq:estadogenerico}
 \end{equation}
 onde $x = [T_r,\; X_{\mathrm{CH}_4},\; r_{\mathrm{H}_2/\mathrm{CO}}]^\top$
-é o vetor de estados (temperatura do leito, conversão de metano e razão
-H\(_2\)/CO), $u = [P_{\mathrm{forno}},\; F_{\mathrm{CH}_4},\; F_{\mathrm{CO}_2}]^\top$
-é o vetor de entradas manipuladas e $d$ representa perturbações
-exernas (composição do biogás, temperatura ambiente,
-pressão de operação).\citep{oliveira2021,luyben2014}
+é o vetor de estados, composto pela temperatura do leito, conversão de
+metano e razão H\(_2\)/CO. O vetor de entradas manipuladas é
+$u = [P_{\mathrm{forno}},\; F_{\mathrm{CH}_4},\; F_{\mathrm{CO}_2}]^\top$,
+e $d$ representa as perturbações externas, tais como a composição do
+biogás, a temperatura ambiente e a pressão de operação.\citep{oliveira2021,luyben2014}
 
-O problema de controle consiste em determinar $u(t)$ tal que o sistema
-(\ref{eq:estadogenerico}) satisfaça, em regime permanente e durante transientes,
-as seguintes restrições operacionais:\citep{luyben2014,thermodynamics2025}
+O problema de controle consiste em determinar $u(t)$ de modo que o sistema
+(\ref{eq:estadogenerico}) satisfaça, tanto em regime permanente quanto durante
+transientes, as seguintes restrições operacionais:\citep{luyben2014,thermodynamics2025}
 \begin{align}
   T_r &\in [650,\;800]~^\circ\text{C}, \label{eq:restr_T} \\
   X_{\mathrm{CH}_4} &> 0{,}90, \label{eq:restr_X} \\
@@ -56,8 +56,8 @@ ponderado, com penalização sobre os incrementos de controle:
   J = \int_0^\infty \Bigl[\|e(t)\|_Q^2 + \|\Delta u(t)\|_R^2 \Bigr]\,dt,
   \label{eq:ISE}
 \end{equation}
-onde $Q \succ 0$ e $R \succ 0$ são matrizes de ponderamento que refletem
-relativa importância do erro de rastreamento frente ao custo de atuação.
+onde $Q \succ 0$ e $R \succ 0$ são matrizes de ponderamento que expressam
+a importância relativa do erro de rastreamento frente ao custo de atuação.
 
 % -----------------------------------------------------------------------
 % 2.2 — DESAFIOS DO CONTROLE EM FORNOS COM REATORES TUBULARES
@@ -66,38 +66,38 @@ relativa importância do erro de rastreamento frente ao custo de atuação.
 \label{sec:desafios}
 
 Reatores tubulares de leito fixo inseridos em fornos elétricos apresentam
-características dinâmicas que dificultam significativamente o projeto de
-malhas de controle convencionais.\citep{luyben2014} O primeiro intempérie é a
-elevada inércia térmica do sistema: a massa de material refratário do forno,
-alinhada com a massa do leito catalítico e das paredes do reator, resulta em
-constantes de tempo térmicas da ordem de dezenas de minutos, tornando a
-resposta lenta e prejudicando a rejeitação de perturbações de carga.\citep{luyben2014}
+características dinâmicas que dificultam o projeto de malhas de controle
+convencionais.\citep{luyben2014} O primeiro desafio é a elevada inércia
+térmica do sistema: a massa de material refratário do forno, somada à
+massa do leito catalítico e das paredes do reator, gera constantes de tempo
+térmicas da ordem de dezenas de minutos. Isso torna a resposta intrinsecamente
+lenta e reduz a capacidade de rejeitar perturbações de carga com agilidade.\citep{luyben2014}
 
-Alguns dos principais desafios operacionais desse tipo de configuração são:
+Além da inércia térmica, outros aspectos do sistema impõem restrições
+praticas ao controlador:
 \begin{itemize}
   \item \textbf{Atraso de transporte e distribuição de temperatura:} o perfil
     axial de temperatura ao longo do leito pode apresentar gradientes
-    consideráveis, de modo que a temperatura medida por um único sensor não
-    representa necessariamente o estado térmico global do leito.\citep{luyben2014}
-  \item \textbf{Acoplamento térmico forno-reator:} a potência elétrica entregue
-    ao forno afeta a temperatura da mufla, que por sua vez transfere calor
-    ao reator por radiação e condução; esse acoplamento é altamente não
-    linear e varia com a temperatura.\citep{luyben2014}
-  \item \textbf{Não linearidade da reação:} a cinética da reforma a seco é
-    fortemente não linear em temperatura, e a entalpia de reação
-    (\(\approx 247~\text{kJ}\cdot\text{mol}^{-1}\)) atua como uma pertubação
+    consideráveis. Por isso, a leitura de um único sensor não é, necessariamente,
+    representativa do estado térmico global do leito.\citep{luyben2014}
+  \item \textbf{Acoplamento térmico não linear forno-reator:} a potência elétrica
+    fornecida ao forno aquece a mufla, que transfere calor ao reator por
+    radiação e condução. Esse acoplamento é altamente não linear e se
+    intensifica com o aumento da temperatura de operação.\citep{luyben2014}
+  \item \textbf{Não linearidade cinética:} a cinética da reforma a seco varia
+    fortemente com a temperatura, e a entalpia de reação
+    (\(\approx 247~\text{kJ}\cdot\text{mol}^{-1}\)) age como uma perturbação
     endotérmica de magnitude variável sobre o balanço de energia do forno,
-    dificultando a manutenção de um ponto de operação fixo.\citep{thermodynamics2025}
-  \item \textbf{Variabilidade da alimentação:} no caso do biogás, a
-    composição CH\(_4\)/CO\(_2\) e a presença de inertes (N\(_2\), H\(_2\)S)
-    variam ao longo do tempo, alterando o calor absorvido pela reação e
-    deslocando o ponto de operação sem aviso prévio ao controlador.
-    \citep{lavoie2014,thermodynamics2025}
-  \item \textbf{Risco de formação de coque:} quedas de temperatura abaixo de
-    640~\(^\circ\)C, ainda que transitórias, favorecem a deposição de
-    carbono sólido, impondo assimetria nas consequências do erro de
-    controle: o custo de um erro negativo (subaquecimento) é muito maior
-    do que o de um erro positivo de mesma magnitude.\citep{thermodynamics2025,lavoie2014}
+    o que dificulta a manutenção de um ponto de operação fixo.\citep{thermodynamics2025}
+  \item \textbf{Variabilidade da alimentação:} a composição CH\(_4\)/CO\(_2\)
+    do biogás e a presença de inertes como N\(_2\) e H\(_2\)S variam ao longo
+    do tempo, alterando o calor absorvido pela reação e deslocando o ponto
+    de operação de forma imprevisível para o controlador.\citep{lavoie2014,thermodynamics2025}
+  \item \textbf{Assimetria no custo do erro de controle:} quedas de temperatura
+    abaixo de 640~\(^\circ\)C, mesmo que transitórias, favorecem a deposição
+    de carbono sólido sobre o catalisador. Isso impõe uma assimetria clara
+    nas consequências do erro: o impacto de um desvio negativo é muito maior
+    do que o de um desvio positivo de mesma magnitude.\citep{thermodynamics2025,lavoie2014}
 \end{itemize}
 
 % -----------------------------------------------------------------------
@@ -106,36 +106,36 @@ Alguns dos principais desafios operacionais desse tipo de configuração são:
 \subsection{Estratégia de controle adotada}
 \label{sec:estrategia}
 
-Uma abordagem consagrada em aplicações industriais de fornos com reatores
-tubulares é o uso de estruturas em cascata, nas quais uma malha interna
-regula diretamente a variável associada ao fornecimento de calor enquanto
-uma malha externa atua sobre a temperatura de saída do reator ou sobre um
-ponto representativo do leito.\citep{luyben2014} Essa configuração melhora a
-rejeição a perturbações de carga e de composição e reduz o efeito dos
-atrasos associados à inércia térmica do conjunto forno-reator, sendo
-precisamente a arquitetura adotada na planta B2H2/UFPR,
-conforme detalhado na Seção~\ref{sec:processo}.
+Em aplicações industriais envolvendo fornos com reatores tubulares, uma
+abordagem amplamente consolidada é o controle em cascata. Nessa estrutura,
+uma malha interna regula diretamente a variável associada ao fornecimento
+de calor, enquanto uma malha externa atua sobre a temperatura de saída do
+reator ou sobre um ponto representativo do leito.\citep{luyben2014} Essa
+configuração melhora a rejeição a perturbações de carga e de composição
+e atenua o efeito dos atrasos associados à inércia térmica do conjunto
+forno-reator. É precisamente essa arquitetura que se adota na planta B2H2/UFPR,
+como detalhado na Seção~\ref{sec:processo}.
 
 A literatura registra propostas de estratégias de maior complexidade
-computacional para processos de reforma a seco, entre elas controle
-preditivo baseado em modelos (MPC), estruturas neuro-fuzzy e
-ANFIS.\citep{essien2019} Essas abordagens possuem mérito documentado em
-plataformas computacionais adequadas, pois permitem lidar de forma explícita
-com não linearidades e restrições operacionais. Entretanto, sua implementação
-exige controladores lógicos programáveis (CLPs) ou computadores industriais
-com capacidade de cómputo e memória significativamente superior àquela dos
-equipamentos de custo acessível disponíveis para a plataforma experimental
-B2H2/UFPR --- o que, no estágio atual de comissionamento da planta, inviabiliza
+computacional para processos de reforma a seco, entre elas controle preditivo
+baseado em modelos (MPC), estruturas neuro-fuzzy e ANFIS.\citep{essien2019}
+Essas abordagens possuem mérito documentado em plataformas computacionais
+adequadas, pois permitem tratar de forma explícita não linearidades e
+restrições operacionais. Sua implementação, contudo, exige controladores
+lógicos programáveis ou computadores industriais com capacidade de cómputo
+e memória significativamente superior àquela dos equipamentos de custo
+acessível disponíveis para a plataforma experimental B2H2/UFPR. No estágio
+atual de comissionamento da planta, essa restrição de hardware inviabiliza
 essa rota.\citep{essien2019,luyben2014}
 
-Diante dessas restrições de hardware, a estratégia PID aprimorada --- cujas
-modificações estruturais em relação ao controlador PID clássico constituem
-o objeto central deste trabalho --- configura-se como a alternativa de
-maior viabilidade prática para o nível de infraestrutura disponível,
-assegurando comportamento previsível, confiável e de fácil manutenção
-em campo. A eventual incorporação de estratégias avançadas permanece como
-perspectiva de trabalho futuro, condicionada à disponibilidade de
-hardware compatível e de modelos identificados em condições reais de
+Diante desse cenário, a estratégia PID aprimorada configura-se como a
+alternativa de maior viabilidade prática para o nível de infraestrutura
+disponível. As modificações estruturais em relação ao controlador PID
+clássico constituem, justamente, o objeto central deste trabalho. A
+estratégia resultante assegura comportamento previsível, confiável e de
+fácil manutenção em campo. A eventual incorporação de estratégias avançadas
+permanece como perspectiva de trabalho futuro, condicionada à disponibilidade
+de hardware compatível e de modelos identificados em condições reais de
 operação com biogás.\citep{essien2019}
 
 % -----------------------------------------------------------------------
@@ -150,12 +150,12 @@ presão e razão CO\(_2\)/CH\(_4\).\citep{thermodynamics2025,lavoie2014} Esses
 estudos identificam as regiões em que a conversão de CH\(_4\) e CO\(_2\) é
 elevada e a formação de carbono sólido é termodinamicamente desfavorecida,
 fornecendo limites superiores e inferiores diretos para as variáveis de
-operação.\citep{thermodynamics2025} Na prática, esses limites se traduzem
-em restrições concretas sobre os \emph{setpoints} das malhas de controle:
+operação.\citep{thermodynamics2025} Na prática, esses limites se traduzem em
+restrições concretas sobre os \emph{setpoints} das malhas de controle:
 a temperatura do leito deve ser mantida acima de 640~\(^\circ\)C para garantir
-espontaneidade reacional e abaixo de 800~\(^\circ\)C para preservar o
-catalisador, enquanto a razão CO\(_2\)/CH\(_4\) deve permanecer próxima ou
-acima da estequiometria unitária para desfavorecer a deposição de
+a espontaneidade reacional e abaixo de 800~\(^\circ\)C para preservar o
+catalisador, ao passo que a razão CO\(_2\)/CH\(_4\) deve permanecer próxima
+ou acima da estequiometria unitária para desfavorecer a deposição de
 coque.\citep{thermodynamics2025,lavoie2014} Essas informações fundamentam
 tanto o projeto das malhas regulatórias quanto o desenvolvimento de esquemas
 de proteção e, em níveis hierárquicos mais elevados, problemas de
